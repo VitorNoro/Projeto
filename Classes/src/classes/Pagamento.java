@@ -5,16 +5,24 @@
  */
 package classes;
 
+import BLL.PersistenceManager;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Query;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -35,6 +43,8 @@ public class Pagamento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name="SEQ_GEN_PAG", sequenceName="PAGAMENTO_SEQ", allocationSize=1)
+        @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GEN_PAG")
     @Column(name = "CODIGO")
     private Integer codigo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -52,6 +62,8 @@ public class Pagamento implements Serializable {
     @JoinColumn(name = "VENDA", referencedColumnName = "CODIGO")
     @ManyToOne
     private Venda venda;
+    
+    private static EntityManager em;
 
     public Pagamento() {
     }
@@ -137,5 +149,66 @@ public class Pagamento implements Serializable {
     public String toString() {
         return "classes.Pagamento[ codigo=" + codigo + " ]";
     }
+    
+    public void createT() {
+        em = PersistenceManager.getEntityManager();
+        em.getTransaction().begin();
+        em.persist((Pagamento)this);
+        em.getTransaction().commit();
+        this.read(this.getCodigo());
+    }
+    
+    /**
+     * Lê um cliente da BD
+     * @param codigo ID do cliente a ler da BD
+     */    
+    public void read(Integer Codigo){
+        
+        em = PersistenceManager.getEntityManager();
+        em.getEntityManagerFactory().getCache().evictAll();
+        Query query = em.createNamedQuery("Pagamento.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        
+        Pagamento pag = (Pagamento)query.getSingleResult();
+        
+        em.refresh(pag);
+        this.setCodigo(pag.getCodigo());
+        this.setTotal(pag.getTotal());
+        this.setArtigos(pag.getArtigos());
+        this.setNumcontribuinte(pag.getNumcontribuinte());
+        this.setReparacao(pag.getReparacao());
+        this.setVenda(pag.getVenda());
+        System.out.println("ID = " + this.getCodigo());
+    }
+    
+    public static ArrayList<Pagamento> readAll(){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Pagamento.findAll");
+        
+        Collection<Pagamento> pagCollection;
+        ArrayList<Pagamento> pagList;
+        
+        pagCollection = (Collection<Pagamento>) query.getResultList();
+        
+        pagList = new ArrayList<Pagamento>(pagCollection);
+        
+        
+        return pagList;
+    }
+    
+    public static void delete(Integer codigo){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Pagamento.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Pagamento pag = (Pagamento)query.getSingleResult();
+        
+        em.getTransaction().begin();
+        em.remove(pag);
+        em.getTransaction().commit();
+    }
+    
+   
     
 }
