@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="ProjetoPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>classes.Artigo</class>
+    <class>classes.Cliente</class>
+    <class>classes.Funcionario</class>
+    <class>classes.Venda</class>
+    <class>classes.Subscricao</class>
+    <class>classes.Diagnostico</class>
+    <class>classes.Manutencao</class>
+    <class>classes.Reparacao</class>
+    <class>classes.Pagamento</class>
+    <class>classes.Fatura</class>
+    <class>classes.LinhaArtigo</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+      <property name="javax.persistence.jdbc.user" value="noro"/>
+      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+      <property name="javax.persistence.jdbc.password" value="noro"/>
+      <property name="eclipselink.allow-zero-id" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>
