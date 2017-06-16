@@ -5,13 +5,21 @@
  */
 package classes;
 
+import BLL.PersistenceManager;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Query;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,6 +42,8 @@ public class Funcionario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name="SEQ_GEN_FUNC", sequenceName="FUNCIONARIO_SEQ", allocationSize=1)
+        @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GEN_FUNC")
     @Column(name = "CODIGO")
     private Integer codigo;
     @Basic(optional = false)
@@ -48,6 +58,8 @@ public class Funcionario implements Serializable {
     @Basic(optional = false)
     @Column(name = "FUNCAO")
     private String funcao;
+    
+    private static EntityManager em;
 
     public Funcionario() {
     }
@@ -127,6 +139,80 @@ public class Funcionario implements Serializable {
     @Override
     public String toString() {
         return "classes.Funcionario[ codigo=" + codigo + " ]";
+    }
+    
+    public void createT() {
+        em = PersistenceManager.getEntityManager();
+        em.getTransaction().begin();
+        em.persist((Funcionario)this);
+        em.getTransaction().commit();
+        this.read(this.getCodigo());
+    }
+    
+    /**
+     * Lê um cliente da BD
+     * @param codigo ID do cliente a ler da BD
+     */    
+    public void read(Integer Codigo){
+        
+        em = PersistenceManager.getEntityManager();
+        em.getEntityManagerFactory().getCache().evictAll();
+        Query query = em.createNamedQuery("Funcionario.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        
+        Funcionario func = (Funcionario)query.getSingleResult();
+        
+        em.refresh(func);
+        this.setCodigo(func.getCodigo());
+        this.setNome(func.getNome());
+        this.setMorada(func.getMorada());
+        this.setContacto(func.getContacto());
+        this.setFuncao(func.getFuncao());
+        System.out.println("ID = " + this.getCodigo());
+    }
+    
+    public static ArrayList<Funcionario> readAll(){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Funcionario.findAll");
+        
+        Collection<Funcionario> funcCollection;
+        ArrayList<Funcionario> funcList;
+        
+        funcCollection = (Collection<Funcionario>) query.getResultList();
+        
+        funcList = new ArrayList<Funcionario>(funcCollection);
+        
+        
+        return funcList;
+    }
+    
+    public static void delete(Integer codigo){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Funcionario.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Funcionario func = (Funcionario)query.getSingleResult();
+        
+        em.getTransaction().begin();
+        em.remove(func);
+        em.getTransaction().commit();
+    }
+    
+    public void update(Integer codigo, String morada, String contacto, String funcao){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Funcionario.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Funcionario func = (Funcionario)query.getSingleResult();
+ 
+        em.getTransaction().begin();
+        func.setMorada(morada);
+        func.setContacto(contacto);
+        func.setFuncao(funcao);
+        em.getTransaction().commit();
+        this.read(codigo);
+
     }
     
 }
