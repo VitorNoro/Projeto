@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI.Reparador;
+package GUI;
 
-import GUI.Caixa.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -15,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author v_nor
  */
-public class PagPrincipalController implements Initializable {
+public class ReparadorController implements Initializable {
 
     /**
      * Initializes the controller class.
