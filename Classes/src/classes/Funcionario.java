@@ -36,7 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Funcionario.findByNome", query = "SELECT f FROM Funcionario f WHERE f.nome = :nome"),
     @NamedQuery(name = "Funcionario.findByContacto", query = "SELECT f FROM Funcionario f WHERE f.contacto = :contacto"),
     @NamedQuery(name = "Funcionario.findByMorada", query = "SELECT f FROM Funcionario f WHERE f.morada = :morada"),
-    @NamedQuery(name = "Funcionario.findByFuncao", query = "SELECT f FROM Funcionario f WHERE f.funcao = :funcao")})
+    @NamedQuery(name = "Funcionario.findByFuncao", query = "SELECT f FROM Funcionario f WHERE f.funcao = :funcao"),
+    @NamedQuery(name = "Funcionario.findByUsername", query = "SELECT f FROM Funcionario f WHERE f.username = :username"),
+    @NamedQuery(name = "Funcionario.findByPassword", query = "SELECT f FROM Funcionario f WHERE f.password = :password")})
 public class Funcionario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,6 +60,12 @@ public class Funcionario implements Serializable {
     @Basic(optional = false)
     @Column(name = "FUNCAO")
     private String funcao;
+    @Basic(optional = false)
+    @Column(name = "USERNAME")
+    private String username;
+    @Basic(optional = false)
+    @Column(name = "PASSWORD")
+    private String password;
     
     private static EntityManager em;
 
@@ -68,12 +76,14 @@ public class Funcionario implements Serializable {
         this.codigo = codigo;
     }
 
-    public Funcionario(Integer codigo, String nome, String contacto, String morada, String funcao) {
+    public Funcionario(Integer codigo, String nome, String contacto, String morada, String funcao, String username, String password) {
         this.codigo = codigo;
         this.nome = nome;
         this.contacto = contacto;
         this.morada = morada;
         this.funcao = funcao;
+        this.username = username;
+        this.password = password;
     }
 
     public Integer getCodigo() {
@@ -114,6 +124,22 @@ public class Funcionario implements Serializable {
 
     public void setFuncao(String funcao) {
         this.funcao = funcao;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -169,6 +195,8 @@ public class Funcionario implements Serializable {
         this.setMorada(func.getMorada());
         this.setContacto(func.getContacto());
         this.setFuncao(func.getFuncao());
+        this.setUsername(func.getUsername());
+        this.setPassword(func.getPassword());
         System.out.println("ID = " + this.getCodigo());
     }
     
@@ -199,7 +227,7 @@ public class Funcionario implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void update(Integer codigo, String morada, String contacto, String funcao){
+    public void updateDados(Integer codigo, String morada, String contacto, String funcao){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Funcionario.findByCodigo");
         query.setParameter("codigo", codigo);
@@ -210,6 +238,21 @@ public class Funcionario implements Serializable {
         func.setMorada(morada);
         func.setContacto(contacto);
         func.setFuncao(funcao);
+        em.getTransaction().commit();
+        this.read(codigo);
+
+    }
+    
+    public void updateAutenticacao(Integer codigo, String username, String password){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Funcionario.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Funcionario func = (Funcionario)query.getSingleResult();
+ 
+        em.getTransaction().begin();
+        func.setUsername(username);
+        func.setPassword(password);
         em.getTransaction().commit();
         this.read(codigo);
 
