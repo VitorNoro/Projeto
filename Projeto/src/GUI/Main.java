@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import classes.*;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -95,5 +96,14 @@ public class Main extends Application {
         return (Initializable) loader.getController();
     }
     
-    
+    public boolean autenticador(String user, String pass){
+        boolean existe = false;
+        
+        for(Funcionario f : Funcionario.readAll()){
+            if(user.equals(f.getUsername()) && pass.equals(f.getPassword()))
+                existe = true;
+        }
+        
+        return existe;
+    }
 }

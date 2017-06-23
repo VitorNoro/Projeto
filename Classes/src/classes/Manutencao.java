@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Manutencao.findByCodigo", query = "SELECT m FROM Manutencao m WHERE m.codigo = :codigo"),
     @NamedQuery(name = "Manutencao.findByEquipamento", query = "SELECT m FROM Manutencao m WHERE m.equipamento = :equipamento"),
     @NamedQuery(name = "Manutencao.findByLocalizacao", query = "SELECT m FROM Manutencao m WHERE m.localizacao = :localizacao"),
-    @NamedQuery(name = "Manutencao.findByDataagendada", query = "SELECT m FROM Manutencao m WHERE m.dataagendada = :dataagendada")})
+    @NamedQuery(name = "Manutencao.findByDataagendada", query = "SELECT m FROM Manutencao m WHERE m.dataAgendada = :dataagendada")})
 public class Manutencao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,8 +62,6 @@ public class Manutencao implements Serializable {
     @Column(name = "DATAAGENDADA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAgendada;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subscricao")
-    private Collection<Subscricao> subscricaoCollection;
     @JoinColumn(name = "SUBSCRICAO", referencedColumnName = "CODIGO")
     @ManyToOne(optional = false)
     private Subscricao subscricao;
@@ -115,14 +113,6 @@ public class Manutencao implements Serializable {
         this.dataAgendada = dataAgendada;
     }
 
-    @XmlTransient
-    public Collection<Subscricao> getSubscricaoCollection() {
-        return subscricaoCollection;
-    }
-
-    public void setSubscricaoCollection(Collection<Subscricao> subscricaoCollection) {
-        this.subscricaoCollection = subscricaoCollection;
-    }
 
     public Subscricao getSubscricao() {
         return subscricao;

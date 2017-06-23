@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import classes.Artigo;
+import classes.Funcionario;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -13,6 +15,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -22,15 +27,14 @@ import javafx.scene.control.ComboBox;
 public class LoginController implements Initializable {
     private Main application;
     
-    ObservableList<String> options = 
-    FXCollections.observableArrayList(
-        "Option 1",
-        "Option 2",
-        "Option 3"
-    );
-    
     @FXML
-    final ComboBox<String> combo = new ComboBox<String>(options);
+    public ComboBox combo;
+    @FXML 
+    public TextField userName;
+    @FXML
+    public PasswordField password;
+    @FXML 
+    public Label notificacao;
     
     
     /**
@@ -39,38 +43,39 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        combo.setItems(options);
+        combo.getItems().clear();
+        combo.getItems().addAll("Gestor", "Caixa", "Reparação");
+        
+        userName.setPromptText("Nome de utilizador");
+        password.setPromptText("Palavra passe");
     }    
-    /*
+    
     @FXML
     private void iniciar(ActionEvent event) {
         if(application.autenticador(userName.getText(), password.getText()))
-            for(Utilizador u : Main.utilizadores){
-                if(userName.getText().equals(u.getUserName().getValue())){
-                    if(u instanceof Administrador){
-                        Main.currentAdmin.add((Administrador)u);
-                        application.gotoAdmin();             
-                    }                       
-                
-                    else{
-                      Main.user.add((Investidor)u);
-                      application.gotoInvestidor();
-                    }   
-                    
+            for(Funcionario f : Funcionario.readAll()){
+                if(userName.getText().equals(f.getUsername())){
+                    switch (f.getFuncao()){
+                            case "Gestor":
+                                notificacao.setText("Gestor");
+                                String output = combo.getSelectionModel().getSelectedItem().toString();
+                                System.out.println(output);
+                                break;
+                            case "Caixa":
+                                notificacao.setText("Caixa");
+                                break;
+                            case "Reparador":
+                                notificacao.setText("Reparador");
+                                break;
+                            default:
+                                notificacao.setText("Nada");
+                                break;
+                    }
                 }      
                 }                
         else
-            label.setText("Nome ou palavra passe errados");
+            notificacao.setText("Nome ou palavra passe errados");
     }
-    
-    
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        userName.setPromptText("Nome de utilizador");
-        password.setPromptText("Palavra passe");
-        
-    }   */ 
     
     public void setApp(Main application){
         this.application = application;
