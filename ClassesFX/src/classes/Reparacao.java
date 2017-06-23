@@ -5,7 +5,6 @@
  */
 package classes;
 
-import BLL.PersistenceManager;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -63,7 +62,6 @@ public class Reparacao implements Serializable {
     @ManyToOne(optional = false)
     private Diagnostico diagnostico;
     
-    private static EntityManager em;
 
     public Reparacao() {
     }
@@ -138,77 +136,5 @@ public class Reparacao implements Serializable {
         this.pagamentoCollection = pagamentoCollection;
     }
     
-    public void createT() {
-        em = PersistenceManager.getEntityManager();
-        em.getTransaction().begin();
-        em.persist((Reparacao)this);
-        em.getTransaction().commit();
-        this.read(this.getCodigo());
-    }
-    
-    /**
-     * Lê um cliente da BD
-     * @param codigo ID do cliente a ler da BD
-     */    
-    public void read(Integer Codigo){
-        
-        em = PersistenceManager.getEntityManager();
-        em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("Reparacao.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        
-        Reparacao rep = (Reparacao)query.getSingleResult();
-        
-        em.refresh(rep);
-        this.setCodigo(rep.getCodigo());
-        this.setCusto(rep.getCusto());
-        this.setDiagnostico(rep.getDiagnostico());
-        this.setCliente(rep.getCliente());
-        System.out.println("ID = " + this.getCodigo());
-    }
-    
-    public static ArrayList<Reparacao> readAll(){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Reparacao.findAll");
-        
-        Collection<Reparacao> repCollection;
-        ArrayList<Reparacao> repList;
-        
-        repCollection = (Collection<Reparacao>) query.getResultList();
-        
-        repList = new ArrayList<Reparacao>(repCollection);
-        
-        
-        return repList;
-    }
-    
-    public static void delete(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Reparacao.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Reparacao rep = (Reparacao)query.getSingleResult();
-        
-        em.getTransaction().begin();
-        em.remove(rep);
-        em.getTransaction().commit();
-    }
-    
-    public void update(Integer codigo, float custo){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Reparacao.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Reparacao rep = (Reparacao)query.getSingleResult();
- 
-        em.getTransaction().begin();
-        rep.setCusto(custo);
-        
-        
-        em.getTransaction().commit();
-        this.read(codigo);
-
-    }
     
 }

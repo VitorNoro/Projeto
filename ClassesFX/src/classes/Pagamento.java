@@ -5,7 +5,7 @@
  */
 package classes;
 
-import BLL.PersistenceManager;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class Pagamento implements Serializable {
     @ManyToOne
     private Venda venda;
     
-    private static EntityManager em;
+  
 
     public Pagamento() {
     }
@@ -151,65 +151,7 @@ public class Pagamento implements Serializable {
         return "classes.Pagamento[ codigo=" + codigo + " ]";
     }
     
-    public void createT() {
-        em = PersistenceManager.getEntityManager();
-        em.getTransaction().begin();
-        em.persist((Pagamento)this);
-        em.getTransaction().commit();
-        this.read(this.getCodigo());
-    }
-    
-    /**
-     * Lê um cliente da BD
-     * @param codigo ID do cliente a ler da BD
-     */    
-    public void read(Integer Codigo){
-        
-        em = PersistenceManager.getEntityManager();
-        em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("Pagamento.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        
-        Pagamento pag = (Pagamento)query.getSingleResult();
-        
-        em.refresh(pag);
-        this.setCodigo(pag.getCodigo());
-        this.setTotal(pag.getTotal());
-        this.setArtigos(pag.getArtigos());
-        this.setNumcontribuinte(pag.getNumcontribuinte());
-        this.setReparacao(pag.getReparacao());
-        this.setVenda(pag.getVenda());
-        System.out.println("ID = " + this.getCodigo());
-    }
-    
-    public static ArrayList<Pagamento> readAll(){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Pagamento.findAll");
-        
-        Collection<Pagamento> pagCollection;
-        ArrayList<Pagamento> pagList;
-        
-        pagCollection = (Collection<Pagamento>) query.getResultList();
-        
-        pagList = new ArrayList<Pagamento>(pagCollection);
-        
-        
-        return pagList;
-    }
-    
-    public static void delete(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Pagamento.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Pagamento pag = (Pagamento)query.getSingleResult();
-        
-        em.getTransaction().begin();
-        em.remove(pag);
-        em.getTransaction().commit();
-    }
-    
+   
    
     
 }

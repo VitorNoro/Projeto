@@ -5,7 +5,7 @@
  */
 package classes;
 
-import BLL.PersistenceManager;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,7 +58,6 @@ public class Venda implements Serializable {
     @Column(name = "TOTAL")
     private FloatProperty total;
     
-    private static EntityManager em;
 
     public Venda() {
     }
@@ -129,57 +128,6 @@ public class Venda implements Serializable {
 
     public void setPagamentoCollection(Collection<Pagamento> pagamentoCollection) {
         this.pagamentoCollection = pagamentoCollection;
-    }
-
-    public void createT() {
-        em = PersistenceManager.getEntityManager();
-        em.getTransaction().begin();
-        em.persist((Venda)this);
-        em.getTransaction().commit();
-        this.read(this.getCodigo());
-    }
-    
-    /**
-     * Lê um cliente da BD
-     * @param codigo ID do cliente a ler da BD
-     */    
-    public void read(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("Venda.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Venda venda = (Venda)query.getSingleResult();
-        em.refresh(venda);
-        this.setCodigo(venda.getCodigo());
-        this.setTotal(venda.getTotal());
-        System.out.println("ID = " + this.getCodigo());
-    }
-    
-    public static ArrayList<Venda> readAll(){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Venda.findAll");
-        
-        ArrayList<Venda> vendaList;
-        Collection<Venda> vendaCollection;
-        
-        vendaCollection = (Collection<Venda>) query.getResultList();
-        
-        vendaList = new ArrayList<Venda>(vendaCollection);
-        
-        return vendaList;
-    }
-    
-    public static void delete(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Venda.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Venda venda = (Venda)query.getSingleResult();
-        
-        em.getTransaction().begin();
-        em.remove(venda);
-        em.getTransaction().commit();
     }
     
 }

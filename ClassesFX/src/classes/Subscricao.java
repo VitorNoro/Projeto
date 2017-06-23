@@ -5,7 +5,7 @@
  */
 package classes;
 
-import BLL.PersistenceManager;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -67,7 +67,6 @@ public class Subscricao implements Serializable {
     @ManyToOne(optional = false)
     private Cliente cliente;
     
-    private static EntityManager em;
 
     public Subscricao() {
     }
@@ -148,80 +147,4 @@ public class Subscricao implements Serializable {
         return "classes.Subscricao[ codigo=" + codigo + " ]";
     }
     
-    public void createT() {
-        em = PersistenceManager.getEntityManager();
-        em.getTransaction().begin();
-        em.persist((Subscricao)this);
-        em.getTransaction().commit();
-        this.read(this.getCodigo());
-    }
-    
-    /**
-     * Lê um cliente da BD
-     * @param codigo ID do cliente a ler da BD
-     */    
-    public void read(Integer Codigo){
-        
-        em = PersistenceManager.getEntityManager();
-        em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("Subscricao.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        
-        Subscricao subs = (Subscricao)query.getSingleResult();
-        
-        em.refresh(subs);
-        this.setCodigo(subs.getCodigo());
-        this.setNome(subs.getNome());
-        this.setFimsubscricao(subs.getFimsubscricao());
-        this.setMensalidade(subs.getMensalidade());
-        this.setCliente(subs.getCliente());
-        System.out.println("ID = " + this.getCodigo());
-    }
-    
-    public static ArrayList<Subscricao> readAll(){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Subscricao.findAll");
-        
-        Collection<Subscricao> subsCollection;
-        ArrayList<Subscricao> subsList;
-        
-        subsCollection = (Collection<Subscricao>) query.getResultList();
-        
-        subsList = new ArrayList<Subscricao>(subsCollection);
-        
-        
-        return subsList;
-    }
-    
-    public static void delete(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Subscricao.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Subscricao subs = (Subscricao)query.getSingleResult();
-        
-        em.getTransaction().begin();
-        em.remove(subs);
-        em.getTransaction().commit();
-    }
-    
-    public void update(Integer codigo, String nome, Date fimsubscricao, float mensalidade){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Subscricao.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Subscricao subs = (Subscricao)query.getSingleResult();
- 
-        em.getTransaction().begin();
-        subs.setNome(nome);
-        em.getTransaction().begin();
-        subs.setFimsubscricao(fimsubscricao);
-        em.getTransaction().begin();
-        subs.setMensalidade(mensalidade);
-        
-        em.getTransaction().commit();
-        this.read(codigo);
-
-    }
 }
