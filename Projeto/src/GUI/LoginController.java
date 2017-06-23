@@ -45,7 +45,6 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
-        userName.setCaretPosition(20);
         
         combo.getItems().clear();
         combo.getItems().addAll("Gestor", "Caixa", "Reparação");
