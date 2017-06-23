@@ -5,7 +5,6 @@
  */
 package classes;
 
-import BLL.PersistenceManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -65,8 +64,6 @@ public class Artigo implements Serializable {
     private StringProperty descricao;
     @Column(name = "NOME")
     private StringProperty nome;
-
-    private static EntityManager em;
     
     public Artigo() {
     }
@@ -160,78 +157,5 @@ public class Artigo implements Serializable {
         this.linhaartigoCollection = linhaartigoCollection;
     }
 
-    public void createT() {
-        em = PersistenceManager.getEntityManager();
-        em.getTransaction().begin();
-        em.persist((Artigo)this);
-        em.getTransaction().commit();
-        this.read(this.getCodigo());
-    }
     
-    /**
-     * Lê um cliente da BD
-     * @param codigo ID do cliente a ler da BD
-     */    
-    public void read(Integer codigo){
-        
-        em = PersistenceManager.getEntityManager();
-        em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("Artigo.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        
-        Artigo art = (Artigo)query.getSingleResult();
-        
-        em.refresh(art);
-        this.setCodigo(art.getCodigo());
-        this.setPreco(art.getPreco());
-        this.setQuantidade(art.getQuantidade());
-        this.setDescricao(art.getDescricao());
-        this.setNome(art.getNome());
-        System.out.println("ID = " + this.getCodigo());
-    }
-    
-    public static ArrayList<Artigo> readAll(){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Artigo.findAll");
-        
-        Collection<Artigo> artCollection;
-        ArrayList<Artigo> artList;
-        
-        artCollection = (Collection<Artigo>) query.getResultList();
-        
-        artList = new ArrayList<Artigo>(artCollection);
-        
-        
-        return artList;
-    }
-    
-    public static void delete(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Artigo.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Artigo art = (Artigo)query.getSingleResult();
-        
-        em.getTransaction().begin();
-        em.remove(art);
-        em.getTransaction().commit();
-    }
-    
-    public void update(Integer codigo, float preco, Integer quantidade, String descricao, String nome){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Artigo.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Artigo art = (Artigo)query.getSingleResult();
- 
-        em.getTransaction().begin();
-        art.setPreco(preco);
-        art.setDescricao(descricao);
-        art.setNome(nome);
-        art.setQuantidade(quantidade);
-        em.getTransaction().commit();
-        this.read(codigo);
-
-    }
 }

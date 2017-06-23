@@ -5,7 +5,6 @@
  */
 package classes;
 
-import BLL.PersistenceManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,7 +60,6 @@ public class Cliente implements Serializable {
     @Column(name = "CONTACTO")
     private StringProperty contacto;
     
-    private static EntityManager em;
 
     public Cliente() {
     }
@@ -161,76 +159,6 @@ public class Cliente implements Serializable {
         this.pagamentoCollection = pagamentoCollection;
     }
     
-    public void createT() {
-        em = PersistenceManager.getEntityManager();
-        em.getTransaction().begin();
-        em.persist((Cliente)this);
-        em.getTransaction().commit();
-        this.read(this.getNumContribuinte());
-    }
-    
-    /**
-     * Lê um cliente da BD
-     * @param codigo ID do cliente a ler da BD
-     */    
-    public void read(String contribuinte){
-        
-        em = PersistenceManager.getEntityManager();
-        em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("Cliente.findByNumcontribuinte");
-        query.setParameter("numcontribuinte", contribuinte);
-        
-        
-        Cliente cli = (Cliente)query.getSingleResult();
-        
-        em.refresh(cli);
-        this.setNumContribuinte(cli.getNumContribuinte());
-        this.setNome(cli.getNome());
-        this.setContacto(cli.getContacto());
-        System.out.println("ID = " + this.getNumContribuinte());
-    }
-    
-    public static ArrayList<Cliente> readAll(){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Cliente.findAll");
-        
-        Collection<Cliente> cliCollection;
-        ArrayList<Cliente> cliList;
-        
-        cliCollection = (Collection<Cliente>) query.getResultList();
-        
-        cliList = new ArrayList<Cliente>(cliCollection);
-        
-        
-        return cliList;
-    }
-    
-    public static void delete(String contribuinte){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Cliente.findByNumcontribuinte");
-        query.setParameter("numcontribuinte", contribuinte);
-        
-        Cliente cli = (Cliente)query.getSingleResult();
-        
-        em.getTransaction().begin();
-        em.remove(cli);
-        em.getTransaction().commit();
-    }
-    
-    public void update(String contribuinte, String nome, String contacto){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Cliente.findByNumcontribuinte");
-        query.setParameter("numcontribuinte", contribuinte);
-        
-        Cliente cli = (Cliente)query.getSingleResult();
- 
-        em.getTransaction().begin();
-        cli.setNome(nome);
-        cli.setContacto(contacto);
-        em.getTransaction().commit();
-        this.read(contribuinte);
-
-    }
     
     
 }

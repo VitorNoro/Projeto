@@ -5,7 +5,6 @@
  */
 package classes;
 
-import BLL.PersistenceManager;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -50,7 +49,6 @@ public class Fatura implements Serializable {
     @Column(name = "ARTIGOS")
     private StringProperty artigos;
 
-    private static EntityManager em;
 
     public Integer getCodigo() {
         return codigo.getValue();
@@ -107,51 +105,6 @@ public class Fatura implements Serializable {
     @Override
     public String toString() {
         return "classes.Fatura[ codigo=" + codigo + " ]";
-    }
-    
-     public void read(Integer Codigo){
-        
-        em = PersistenceManager.getEntityManager();
-        em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("Fatura.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        
-        Fatura fat = (Fatura)query.getSingleResult();
-        
-        em.refresh(fat);
-        this.setCodigo(fat.getCodigo());
-        this.setNumContribuinte(fat.getNumContribuinte());
-        this.setTotal(fat.getTotal());
-        this.setArtigos(fat.getArtigos());
-        System.out.println("ID = " + this.getCodigo());
-    }
-    
-    public static ArrayList<Fatura> readAll(){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Fatura.findAll");
-        
-        Collection<Fatura> fatCollection;
-        ArrayList<Fatura> fatList;
-        
-        fatCollection = (Collection<Fatura>) query.getResultList();
-        
-        fatList = new ArrayList<Fatura>(fatCollection);
-        
-        
-        return fatList;
-    }
-    
-    public static void delete(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Fatura.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Fatura fat = (Fatura)query.getSingleResult();
-        
-        em.getTransaction().begin();
-        em.remove(fat);
-        em.getTransaction().commit();
     }
     
 }

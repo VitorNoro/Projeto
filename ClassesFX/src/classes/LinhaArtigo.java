@@ -5,7 +5,6 @@
  */
 package classes;
 
-import BLL.PersistenceManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,8 +59,6 @@ public class LinhaArtigo implements Serializable {
     @JoinColumn(name = "VENDA", referencedColumnName = "CODIGO")
     @ManyToOne(optional = false)
     private Venda venda;
-
-    private static EntityManager em;
     
     public LinhaArtigo() {
     }
@@ -141,74 +138,5 @@ public class LinhaArtigo implements Serializable {
         return "classes.LinhaArtigo[ codigo=" + codigo + " ]";
     }
 
-    public void createT() {
-        em = PersistenceManager.getEntityManager();
-        em.getTransaction().begin();
-        em.persist((LinhaArtigo)this);
-        em.getTransaction().commit();
-        this.read(this.getCodigo());
-    }
-    
-    /**
-     * Lê um cliente da BD
-     * @param codigo ID do cliente a ler da BD
-     */    
-    public void read(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("LinhaArtigo.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        LinhaArtigo linha = (LinhaArtigo)query.getSingleResult();
-        
-        em.refresh(linha);
-        this.setCodigo(linha.getCodigo());
-        System.out.println(linha.getTotal());
-        this.setTotal(linha.getTotal());
-        this.setQuantidade(linha.getQuantidade());
-        this.setArtigo(linha.getArtigo());
-        this.setVenda(linha.getVenda());
-        System.out.println("ID = " + this.getCodigo());
-    }
-    
-    public static ArrayList<LinhaArtigo> readAll(){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("LinhaArtigo.findAll");
-        
-        ArrayList<LinhaArtigo> linhaList;
-        Collection<LinhaArtigo> linhaCollection;
-        
-        linhaCollection = (Collection<LinhaArtigo>) query.getResultList();
-        
-        linhaList = new ArrayList<LinhaArtigo>(linhaCollection);
-        
-        
-        return linhaList;
-    }
-    
-    public static void delete(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("LinhaArtigo.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        LinhaArtigo linha = (LinhaArtigo)query.getSingleResult();
-        
-        em.getTransaction().begin();
-        em.remove(linha);
-        em.getTransaction().commit();
-    }
-    
-    public void update(Integer codigo, Integer quantidade){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("LinhaArtigo.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        LinhaArtigo art = (LinhaArtigo)query.getSingleResult();
- 
-        em.getTransaction().begin();
-        art.setQuantidade(quantidade);
-        em.getTransaction().commit();
-        this.read(codigo);
-    }
-    
+   
 }

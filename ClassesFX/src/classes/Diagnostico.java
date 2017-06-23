@@ -5,7 +5,6 @@
  */
 package classes;
 
-import BLL.PersistenceManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,8 +60,6 @@ public class Diagnostico implements Serializable {
     @JoinColumn(name = "CLIENTE", referencedColumnName = "NUMCONTRIBUINTE")
     @ManyToOne(optional = false)
     private Cliente cliente;
-
-    private static EntityManager em;
     
     public Diagnostico() {
     }
@@ -142,77 +139,6 @@ public class Diagnostico implements Serializable {
 
     public void setReparacaoCollection(Collection<Reparacao> reparacaoCollection) {
         this.reparacaoCollection = reparacaoCollection;
-    }
-    
-    public void createT() {
-        em = PersistenceManager.getEntityManager();
-        em.getTransaction().begin();
-        em.persist((Diagnostico)this);
-        em.getTransaction().commit();
-        this.read(this.getCodigo());
-    }
-    
-    /**
-     * Lê um cliente da BD
-     * @param codigo ID do cliente a ler da BD
-     */    
-    public void read(Integer Codigo){
-        
-        em = PersistenceManager.getEntityManager();
-        em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("Diagnostico.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        
-        Diagnostico diag = (Diagnostico)query.getSingleResult();
-        
-        em.refresh(diag);
-        this.setCodigo(diag.getCodigo());
-        this.setEquipamento(diag.getEquipamento());
-        this.setProblema(diag.getProblema());
-        this.setCliente(diag.getCliente());
-        System.out.println("ID = " + this.getCodigo());
-    }
-    
-    public static ArrayList<Diagnostico> readAll(){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Diagnostico.findAll");
-        
-        Collection<Diagnostico> diagCollection;
-        ArrayList<Diagnostico> diagList;
-        
-        diagCollection = (Collection<Diagnostico>) query.getResultList();
-        
-        diagList = new ArrayList<Diagnostico>(diagCollection);
-        
-        
-        return diagList;
-    }
-    
-    public static void delete(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Diagnostico.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Diagnostico diag = (Diagnostico)query.getSingleResult();
-        
-        em.getTransaction().begin();
-        em.remove(diag);
-        em.getTransaction().commit();
-    }
-    
-    public void update(Integer codigo, String problema){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Diagnostico.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Diagnostico diag = (Diagnostico)query.getSingleResult();
- 
-        em.getTransaction().begin();
-        diag.setProblema(problema);
-        em.getTransaction().commit();
-        this.read(codigo);
-
     }
     
 }

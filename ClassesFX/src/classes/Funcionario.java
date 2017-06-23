@@ -5,7 +5,6 @@
  */
 package classes;
 
-import BLL.PersistenceManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -67,8 +66,6 @@ public class Funcionario implements Serializable {
     @Basic(optional = false)
     @Column(name = "PASSWORD")
     private StringProperty password;
-    
-    private static EntityManager em;
 
     public Funcionario() {
     }
@@ -166,97 +163,6 @@ public class Funcionario implements Serializable {
     @Override
     public String toString() {
         return "classes.Funcionario[ codigo=" + codigo + " ]";
-    }
-    
-    public void createT() {
-        em = PersistenceManager.getEntityManager();
-        em.getTransaction().begin();
-        em.persist((Funcionario)this);
-        em.getTransaction().commit();
-        this.read(this.getCodigo());
-    }
-    
-    /**
-     * Lê um cliente da BD
-     * @param codigo ID do cliente a ler da BD
-     */    
-    public void read(Integer Codigo){
-        
-        em = PersistenceManager.getEntityManager();
-        em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("Funcionario.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        
-        Funcionario func = (Funcionario)query.getSingleResult();
-        
-        em.refresh(func);
-        this.setCodigo(func.getCodigo());
-        this.setNome(func.getNome());
-        this.setMorada(func.getMorada());
-        this.setContacto(func.getContacto());
-        this.setFuncao(func.getFuncao());
-        this.setUsername(func.getUsername());
-        this.setPassword(func.getPassword());
-        System.out.println("ID = " + this.getCodigo());
-    }
-    
-    public static ArrayList<Funcionario> readAll(){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Funcionario.findAll");
-        
-        Collection<Funcionario> funcCollection;
-        ArrayList<Funcionario> funcList;
-        
-        funcCollection = (Collection<Funcionario>) query.getResultList();
-        
-        funcList = new ArrayList<Funcionario>(funcCollection);
-        
-        
-        return funcList;
-    }
-    
-    public static void delete(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Funcionario.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Funcionario func = (Funcionario)query.getSingleResult();
-        
-        em.getTransaction().begin();
-        em.remove(func);
-        em.getTransaction().commit();
-    }
-    
-    public void updateDados(Integer codigo, String morada, String contacto, String funcao){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Funcionario.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Funcionario func = (Funcionario)query.getSingleResult();
- 
-        em.getTransaction().begin();
-        func.setMorada(morada);
-        func.setContacto(contacto);
-        func.setFuncao(funcao);
-        em.getTransaction().commit();
-        this.read(codigo);
-
-    }
-    
-    public void updateAutenticacao(Integer codigo, String username, String password){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Funcionario.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Funcionario func = (Funcionario)query.getSingleResult();
- 
-        em.getTransaction().begin();
-        func.setUsername(username);
-        func.setPassword(password);
-        em.getTransaction().commit();
-        this.read(codigo);
-
     }
     
 }

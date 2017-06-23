@@ -22,7 +22,7 @@ public class Classes {
         
         Artigo art = new Artigo(10,10,"testeFX","");
         
-        art.createT();
+      
         
         System.out.println(art.getCodigo());
 

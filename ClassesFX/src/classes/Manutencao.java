@@ -5,7 +5,6 @@
  */
 package classes;
 
-import BLL.PersistenceManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,7 +68,6 @@ public class Manutencao implements Serializable {
     @ManyToOne(optional = false)
     private Subscricao subscricao;
 
-    private static EntityManager em;
     
     public Manutencao() {
     }
@@ -156,80 +154,6 @@ public class Manutencao implements Serializable {
     @Override
     public String toString() {
         return "classes.Manutencao[ codigo=" + codigo + " ]";
-    }
-    
-    public void createT() {
-        em = PersistenceManager.getEntityManager();
-        em.getTransaction().begin();
-        em.persist((Manutencao)this);
-        em.getTransaction().commit();
-        this.read(this.getCodigo());
-    }
-    
-    /**
-     * Lê um cliente da BD
-     * @param codigo ID do cliente a ler da BD
-     */    
-    public void read(Integer codigo){
-        
-        em = PersistenceManager.getEntityManager();
-        em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("Manutencao.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        
-        Manutencao man = (Manutencao)query.getSingleResult();
-        
-        em.refresh(man);
-        this.setCodigo(man.getCodigo());
-        this.setEquipamento(man.getEquipamento());
-        this.setLocalizacao(man.getLocalizacao());
-        this.setDataAgendada(man.getDataAgendada());
-        this.setSubscricao(man.getSubscricao());
-        System.out.println("ID = " + this.getCodigo());
-    }
-    
-    public static ArrayList<Manutencao> readAll(){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Manutencao.findAll");
-        
-        Collection<Manutencao> manCollection;
-        ArrayList<Manutencao> manList;
-        
-        manCollection = (Collection<Manutencao>) query.getResultList();
-        
-        manList = new ArrayList<Manutencao>(manCollection);
-        
-        
-        return manList;
-    }
-    
-    public static void delete(Integer codigo){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Manutencao.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Manutencao man = (Manutencao)query.getSingleResult();
-        
-        em.getTransaction().begin();
-        em.remove(man);
-        em.getTransaction().commit();
-    }
-    
-    public void update(Integer codigo, String equipamento, String localizacao, Date dataAgendada){
-        em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Manutencao.findByCodigo");
-        query.setParameter("codigo", codigo);
-        
-        Manutencao man = (Manutencao)query.getSingleResult();
- 
-        em.getTransaction().begin();
-        man.setEquipamento(equipamento);
-        man.setLocalizacao(localizacao);
-        man.setDataAgendada(dataAgendada);
-        em.getTransaction().commit();
-        this.read(codigo);
-
     }
     
 }
