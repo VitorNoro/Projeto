@@ -17,6 +17,7 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
@@ -30,18 +31,8 @@ public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setHeight(500);
-        primaryStage.setWidth(800);
-        primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(createContent()));
-        primaryStage.show();
-        
-    }
-    
-    public Parent createContent() {
         gotoLogin();
-        return root;
-     
+        
     }
 
     /**
@@ -50,10 +41,10 @@ public class Main extends Application {
     public static void main(String[] args) {
         Application.launch(args);
     }
-    /*
+    
     public  void gotoLogin() {
         try {
-            //rootScene = FXMLLoader.load(getClass().getResource("Login/PagPrincipal.fxml"));
+            rootScene = FXMLLoader.load(getClass().getResource("Login/PagPrincipal.fxml"));
             AnchorPane root = (AnchorPane) FXMLLoader.load(Main.class.getResource("Login/PagPrincipal.fxml"));
 
             stage = new Stage();
@@ -63,37 +54,11 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setHeight(600);
             stage.setWidth(900);
-            stage.setResizable(false);
+            stage.setResizable(true);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    */
-    public void gotoLogin() {
-        try {
-            LoginController login = (LoginController) replaceSceneContent("Login/PagPrincipal.fxml");
-            login.setApp(this);
-            
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public Initializable replaceSceneContent(String fxml) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        InputStream in = Main.class.getResourceAsStream(fxml);
-        loader.setBuilderFactory(new JavaFXBuilderFactory());
-        loader.setLocation(Main.class.getResource(fxml));
-        AnchorPane page;
-        try {
-            page = (AnchorPane) loader.load(in);
-        } finally {
-            in.close();
-        }
-        root.getChildren().removeAll();
-        root.getChildren().addAll(page);
-        return (Initializable) loader.getController();
     }
     
     public boolean autenticador(String user, String pass){
