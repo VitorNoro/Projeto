@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="ClassesFX.jnlp">
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="ClassesFX_1.jnlp">
   <information>
-    <title>ClassesFX</title>
+    <title>ClassesFX_1</title>
     <vendor>v_nor</vendor>
     <description>null</description>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="ClassesFX.jar" size="26705" download="eager" />
+    <jar href="ClassesFX_1.jar" size="20338" download="eager" />
     <jar href="lib\antlr-2.7.7.jar" size="437548" download="eager" />
     <jar href="lib\c3p0-0.9.2.1.jar" size="422423" download="eager" />
     <jar href="lib\dom4j-1.6.1.jar" size="309995" download="eager" />
@@ -31,9 +31,9 @@
     <jar href="lib\slf4j-api-1.6.1.jar" size="25734" download="eager" />
     <jar href="lib\slf4j-simple-1.6.1.jar" size="7741" download="eager" />
   </resources>
-  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="ClassesFX" >
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="ClassesFX_1" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="classes.NewFXMain"  name="ClassesFX" />
+  <jfx:javafx-desc  width="800" height="600" main-class="classes.NewFXMain"  name="ClassesFX_1" />
   <update check="always"/>
 </jnlp>
