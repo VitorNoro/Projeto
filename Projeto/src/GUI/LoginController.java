@@ -31,6 +31,7 @@ public class LoginController implements Initializable {
     public ComboBox combo;
     @FXML 
     public TextField userName;
+    
     @FXML
     public PasswordField password;
     @FXML 
@@ -43,7 +44,8 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        userName.positionCaret(30);
+        
+        userName.setCaretPosition(20);
         
         combo.getItems().clear();
         combo.getItems().addAll("Gestor", "Caixa", "Reparação");
