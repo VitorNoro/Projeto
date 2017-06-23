@@ -45,7 +45,7 @@ public class Fatura implements Serializable {
     private String numcontribuinte;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "TOTAL")
-    private BigDecimal total;
+    private float total;
     @Column(name = "ARTIGOS")
     private String artigos;
 
@@ -74,11 +74,11 @@ public class Fatura implements Serializable {
         this.numcontribuinte = numcontribuinte;
     }
 
-    public BigDecimal getTotal() {
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 

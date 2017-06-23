@@ -61,7 +61,7 @@ public class Subscricao implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @Column(name = "MENSALIDADE")
-    private BigDecimal mensalidade;
+    private float mensalidade;
     @JoinColumn(name = "CLIENTE", referencedColumnName = "NUMCONTRIBUINTE")
     @ManyToOne(optional = false)
     private Cliente cliente;
@@ -75,7 +75,7 @@ public class Subscricao implements Serializable {
         this.codigo = codigo;
     }
 
-    public Subscricao(Integer codigo, String nome, Date fimsubscricao, BigDecimal mensalidade) {
+    public Subscricao(Integer codigo, String nome, Date fimsubscricao, float mensalidade) {
         this.codigo = codigo;
         this.nome = nome;
         this.fimsubscricao = fimsubscricao;
@@ -106,11 +106,11 @@ public class Subscricao implements Serializable {
         this.fimsubscricao = fimsubscricao;
     }
 
-    public BigDecimal getMensalidade() {
+    public float getMensalidade() {
         return mensalidade;
     }
 
-    public void setMensalidade(BigDecimal mensalidade) {
+    public void setMensalidade(float mensalidade) {
         this.mensalidade = mensalidade;
     }
 
@@ -205,7 +205,7 @@ public class Subscricao implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void update(Integer codigo, String nome, Date fimsubscricao, BigDecimal mensalidade){
+    public void update(Integer codigo, String nome, Date fimsubscricao, float mensalidade){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Subscricao.findByCodigo");
         query.setParameter("codigo", codigo);

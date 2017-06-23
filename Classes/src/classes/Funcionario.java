@@ -85,6 +85,14 @@ public class Funcionario implements Serializable {
         this.username = username;
         this.password = password;
     }
+    public Funcionario(String nome, String contacto, String morada, String funcao, String username, String password) {
+        this.nome = nome;
+        this.contacto = contacto;
+        this.morada = morada;
+        this.funcao = funcao;
+        this.username = username;
+        this.password = password;
+    }
 
     public Integer getCodigo() {
         return codigo;
@@ -186,8 +194,8 @@ public class Funcionario implements Serializable {
         Query query = em.createNamedQuery("Funcionario.findByCodigo");
         query.setParameter("codigo", codigo);
         
-        
-        Funcionario func = (Funcionario)query.getSingleResult();
+        if(!(query.getResultList().isEmpty())){
+            Funcionario func = (Funcionario)query.getSingleResult();
         
         em.refresh(func);
         this.setCodigo(func.getCodigo());
@@ -198,6 +206,10 @@ public class Funcionario implements Serializable {
         this.setUsername(func.getUsername());
         this.setPassword(func.getPassword());
         System.out.println("ID = " + this.getCodigo());
+        }
+        else{
+            System.out.println("Vazio");
+        }
     }
     
     public static ArrayList<Funcionario> readAll(){

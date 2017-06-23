@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Caixa.PagPrincipalController">
-    
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@Darktheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
+   <children>
+      <Button layoutX="247.0" layoutY="240.0" mnemonicParsing="false" onAction="#iniciar" text="Iniciar" />
+      <ComboBox fx:id="combo" layoutX="31.0" layoutY="95.0" prefWidth="150.0" promptText="Selecione a função a realizar">
+        
+      </ComboBox>
+      <TextField fx:id="userName" layoutX="216.0" layoutY="117.0" />
+      <PasswordField fx:id="password" layoutX="216.0" layoutY="163.0" />
+      <Label fx:id="notificacao" layoutX="449.0" layoutY="142.0" text="Label" />
+   </children>
 </AnchorPane>
