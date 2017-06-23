@@ -18,6 +18,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -36,6 +38,10 @@ public class LoginController implements Initializable {
     public PasswordField password;
     @FXML 
     public Label notificacao;
+    @FXML
+    Pane imgPane = new Pane();
+    @FXML
+    ImageView img = new ImageView();
     
     
     /**
@@ -43,7 +49,8 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+        img.fitWidthProperty().bind(imgPane.widthProperty()); 
         
         
         combo.getItems().clear();
