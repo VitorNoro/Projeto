@@ -50,7 +50,7 @@ public class Pagamento implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @Column(name = "TOTAL")
-    private BigDecimal total;
+    private float total;
     @Column(name = "ARTIGOS")
     private String artigos;
     @JoinColumn(name = "NUMCONTRIBUINTE", referencedColumnName = "NUMCONTRIBUINTE")
@@ -72,7 +72,7 @@ public class Pagamento implements Serializable {
         this.codigo = codigo;
     }
 
-    public Pagamento(Integer codigo, BigDecimal total) {
+    public Pagamento(Integer codigo, float total) {
         this.codigo = codigo;
         this.total = total;
     }
@@ -85,11 +85,11 @@ public class Pagamento implements Serializable {
         this.codigo = codigo;
     }
 
-    public BigDecimal getTotal() {
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 

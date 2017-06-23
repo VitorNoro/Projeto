@@ -63,7 +63,7 @@ public class Manutencao implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAgendada;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subscricao")
-    private Collection<Manutencao> manutencaoCollection;
+    private Collection<Subscricao> subscricaoCollection;
     @JoinColumn(name = "SUBSCRICAO", referencedColumnName = "CODIGO")
     @ManyToOne(optional = false)
     private Subscricao subscricao;
@@ -116,12 +116,12 @@ public class Manutencao implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Manutencao> getManutencaoCollection() {
-        return manutencaoCollection;
+    public Collection<Subscricao> getSubscricaoCollection() {
+        return subscricaoCollection;
     }
 
-    public void setManutencaoCollection(Collection<Manutencao> manutencaoCollection) {
-        this.manutencaoCollection = manutencaoCollection;
+    public void setSubscricaoCollection(Collection<Subscricao> subscricaoCollection) {
+        this.subscricaoCollection = subscricaoCollection;
     }
 
     public Subscricao getSubscricao() {

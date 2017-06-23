@@ -54,7 +54,7 @@ public class Reparacao implements Serializable {
     private Integer codigo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "CUSTO")
-    private BigDecimal custo;
+    private float custo;
     @JoinColumn(name = "CLIENTE", referencedColumnName = "NUMCONTRIBUINTE")
     @ManyToOne(optional = false)
     private Cliente cliente;
@@ -79,11 +79,11 @@ public class Reparacao implements Serializable {
         this.codigo = codigo;
     }
 
-    public BigDecimal getCusto() {
+    public float getCusto() {
         return custo;
     }
 
-    public void setCusto(BigDecimal custo) {
+    public void setCusto(float custo) {
         this.custo = custo;
     }
 
@@ -194,7 +194,7 @@ public class Reparacao implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void update(Integer codigo, BigDecimal custo){
+    public void update(Integer codigo, float custo){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Reparacao.findByCodigo");
         query.setParameter("codigo", codigo);
