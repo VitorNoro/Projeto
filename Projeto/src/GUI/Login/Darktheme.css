@@ -233,9 +233,6 @@
     -fx-opacity: 0.75;
     -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
     -fx-text-fill: white;
-    -fx-background-image:url('user.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: left center;
 }
 
 .text-field:focused {
@@ -276,6 +273,30 @@
     -fx-text-fill: white;
 }
 
+.passField-User {
+    -fx-background-color: white , #444444 , #444444;
+    -fx-opacity: 0.75;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+    -fx-text-fill: white;
+    -fx-background-image:url('pass.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left center;
+}
+
+.passField-User:focused {
+    -fx-background-color: white , #555555 , #555555;
+    -fx-opacity: 0.75;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+    -fx-text-fill: white;
+}
+
+.passField-User:hover {
+    -fx-background-color: white , #555555 , #555555;
+    -fx-opacity: 0.75;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+    -fx-text-fill: white;
+}
+
 /*
     Botão para o menu
 */
@@ -284,7 +305,7 @@
     -fx-padding: 5 22 5 22;   
     -fx-border-color: #e2e2e2;
     -fx-border-width: 0;
-    -fx-background-radius: 0;
+    -fx-background-radius: 1;
     -fx-background-color: #4b7cae;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
