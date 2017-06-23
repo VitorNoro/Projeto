@@ -10,7 +10,7 @@
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@Darktheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
    <children>
       <Button layoutX="247.0" layoutY="240.0" mnemonicParsing="false" onAction="#iniciar" text="Iniciar" />
-      <ComboBox fx:id="combo" layoutX="31.0" layoutY="95.0" prefWidth="150.0" promptText="Selecione a função a realizar">
+      <ComboBox fx:id="combo" layoutX="30.0" layoutY="68.0" prefWidth="150.0" promptText="Selecione a função a realizar">
         
       </ComboBox>
       <TextField fx:id="userName" layoutX="216.0" layoutY="117.0" />

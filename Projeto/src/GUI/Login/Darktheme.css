@@ -166,6 +166,8 @@
     -fx-text-fill: white;
     -fx-background-insets: 0, 1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 0 );
+    -fx-pref-width: 200;
+    -fx-pref-height: 35;
 }    
 
 .combo-box-popup .list-view .list-cell 
@@ -198,6 +200,7 @@
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-padding: 0;
     -fx-text-fill: white;
+    -fx-pref-width: 200;
 }
 
 .combo-box-base:hover
