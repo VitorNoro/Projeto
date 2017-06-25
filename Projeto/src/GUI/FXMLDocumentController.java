@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import classes.Artigo;
+import classesFX.Artigo;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;

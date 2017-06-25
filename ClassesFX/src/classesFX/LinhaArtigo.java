@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package classes;
+package classesFX;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import javafx.beans.property.*;
@@ -17,34 +16,40 @@ import javafx.beans.property.*;
  * @author v_nor
  */
 
-public class Fatura implements Serializable {
+public class LinhaArtigo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+   
     private IntegerProperty codigo;
-   
-    private StringProperty numcontribuinte;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-   
+
     private FloatProperty total;
+   
+    private IntegerProperty quantidade;
   
-    private StringProperty artigos;
+    private Artigo artigo;
+    
+    private Venda venda;
+    
+    public LinhaArtigo() {
+    }
 
+    public LinhaArtigo(Integer codigo) {
+        this.codigo = new SimpleIntegerProperty(codigo);
+    }
 
-    public Integer getCodigo() {
+    public LinhaArtigo(Integer quantidade, Artigo artigo, Venda venda) {
+        this.quantidade = new SimpleIntegerProperty(quantidade);
+        this.artigo = artigo;
+        this.venda = venda;
+    }
+
+    public int getCodigo() {
         return codigo.getValue();
     }
 
     public void setCodigo(Integer codigo) {
         this.codigo = new SimpleIntegerProperty(codigo);
-    }
-
-    public String getNumContribuinte() {
-        return numcontribuinte.getValue();
-    }
-
-    public void setNumContribuinte(String numcontribuinte) {
-        this.numcontribuinte = new SimpleStringProperty(numcontribuinte);
     }
 
     public float getTotal() {
@@ -55,12 +60,28 @@ public class Fatura implements Serializable {
         this.total = new SimpleFloatProperty(total);
     }
 
-    public String getArtigos() {
-        return artigos.getValue();
+    public Integer getQuantidade() {
+        return quantidade.getValue();
     }
 
-    public void setArtigos(String artigos) {
-        this.artigos = new SimpleStringProperty(artigos);
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = new SimpleIntegerProperty(quantidade);
+    }
+
+    public Artigo getArtigo() {
+        return artigo;
+    }
+
+    public void setArtigo(Artigo artigo) {
+        this.artigo = artigo;
+    }
+
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
     }
 
     @Override
@@ -73,10 +94,10 @@ public class Fatura implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Fatura)) {
+        if (!(object instanceof LinhaArtigo)) {
             return false;
         }
-        Fatura other = (Fatura) object;
+        LinhaArtigo other = (LinhaArtigo) object;
         if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
@@ -85,7 +106,8 @@ public class Fatura implements Serializable {
 
     @Override
     public String toString() {
-        return "classes.Fatura[ codigo=" + codigo + " ]";
+        return "classes.LinhaArtigo[ codigo=" + codigo + " ]";
     }
-    
+
+   
 }

@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package classes;
+package classesFX;
+
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import javafx.beans.property.*;
 
 
@@ -18,31 +17,35 @@ import javafx.beans.property.*;
  * @author v_nor
  */
 
-public class Reparacao implements Serializable {
+public class Venda implements Serializable {
+
+   
+    private Collection<Pagamento> pagamentoCollection;
 
     
-    private Collection<Pagamento> pagamentoCollection;
+    private Collection<LinhaArtigo> linhaartigoCollection;
 
     private static final long serialVersionUID = 1L;
    
     private IntegerProperty codigo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
 
-    private FloatProperty custo;
-
-    private Cliente cliente;
-    
-    private Diagnostico diagnostico;
+    private FloatProperty total;
     
 
-    public Reparacao() {
+    public Venda() {
     }
 
-    public Reparacao(Integer codigo) {
+    public Venda(Integer codigo) {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public Integer getCodigo() {
+    public Venda(Integer codigo, Float total) {
+        this.codigo = new SimpleIntegerProperty(codigo);
+        this.total = new SimpleFloatProperty(total);
+    }
+
+    public int getCodigo() {
         return codigo.getValue();
     }
 
@@ -50,28 +53,12 @@ public class Reparacao implements Serializable {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public float getCusto() {
-        return custo.getValue();
+    public float getTotal() {
+        return total.getValue();
     }
 
-    public void setCusto(float custo) {
-        this.custo = new SimpleFloatProperty(custo);
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Diagnostico getDiagnostico() {
-        return diagnostico;
-    }
-
-    public void setDiagnostico(Diagnostico diagnostico) {
-        this.diagnostico = diagnostico;
+    public void setTotal(Float total) {
+        this.total = new SimpleFloatProperty(total);
     }
 
     @Override
@@ -84,10 +71,10 @@ public class Reparacao implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Reparacao)) {
+        if (!(object instanceof Venda)) {
             return false;
         }
-        Reparacao other = (Reparacao) object;
+        Venda other = (Venda) object;
         if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
@@ -96,7 +83,16 @@ public class Reparacao implements Serializable {
 
     @Override
     public String toString() {
-        return "classes.Reparacao[ codigo=" + codigo + " ]";
+        return "classes.Venda[ codigo=" + codigo + " ]";
+    }
+
+
+    public Collection<LinhaArtigo> getLinhaartigoCollection() {
+        return linhaartigoCollection;
+    }
+
+    public void setLinhaartigoCollection(Collection<LinhaArtigo> linhaartigoCollection) {
+        this.linhaartigoCollection = linhaartigoCollection;
     }
 
 
@@ -107,6 +103,5 @@ public class Reparacao implements Serializable {
     public void setPagamentoCollection(Collection<Pagamento> pagamentoCollection) {
         this.pagamentoCollection = pagamentoCollection;
     }
-    
     
 }

@@ -194,7 +194,6 @@
 
 .combo-box-base  
 {
-    -fx-skin: "com.sun.javafx.scene.control.skin.ComboBoxBaseSkin";
     -fx-background-color: #ff704d, #ff704d, #ff704d, #ff704d;
     -fx-background-radius: 5, 5, 4, 3;
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
