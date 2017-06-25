@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package classes;
-
+package classesFX;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import javafx.beans.property.*;
@@ -17,35 +17,21 @@ import javafx.beans.property.*;
  * @author v_nor
  */
 
-public class Venda implements Serializable {
-
-   
-    private Collection<Pagamento> pagamentoCollection;
-
-    
-    private Collection<LinhaArtigo> linhaartigoCollection;
+public class Fatura implements Serializable {
 
     private static final long serialVersionUID = 1L;
-   
+
     private IntegerProperty codigo;
+   
+    private StringProperty numcontribuinte;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-
+   
     private FloatProperty total;
-    
+  
+    private StringProperty artigos;
 
-    public Venda() {
-    }
 
-    public Venda(Integer codigo) {
-        this.codigo = new SimpleIntegerProperty(codigo);
-    }
-
-    public Venda(Integer codigo, Float total) {
-        this.codigo = new SimpleIntegerProperty(codigo);
-        this.total = new SimpleFloatProperty(total);
-    }
-
-    public int getCodigo() {
+    public Integer getCodigo() {
         return codigo.getValue();
     }
 
@@ -53,12 +39,28 @@ public class Venda implements Serializable {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
+    public String getNumContribuinte() {
+        return numcontribuinte.getValue();
+    }
+
+    public void setNumContribuinte(String numcontribuinte) {
+        this.numcontribuinte = new SimpleStringProperty(numcontribuinte);
+    }
+
     public float getTotal() {
         return total.getValue();
     }
 
-    public void setTotal(Float total) {
+    public void setTotal(float total) {
         this.total = new SimpleFloatProperty(total);
+    }
+
+    public String getArtigos() {
+        return artigos.getValue();
+    }
+
+    public void setArtigos(String artigos) {
+        this.artigos = new SimpleStringProperty(artigos);
     }
 
     @Override
@@ -71,10 +73,10 @@ public class Venda implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Venda)) {
+        if (!(object instanceof Fatura)) {
             return false;
         }
-        Venda other = (Venda) object;
+        Fatura other = (Fatura) object;
         if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
@@ -83,25 +85,7 @@ public class Venda implements Serializable {
 
     @Override
     public String toString() {
-        return "classes.Venda[ codigo=" + codigo + " ]";
-    }
-
-
-    public Collection<LinhaArtigo> getLinhaartigoCollection() {
-        return linhaartigoCollection;
-    }
-
-    public void setLinhaartigoCollection(Collection<LinhaArtigo> linhaartigoCollection) {
-        this.linhaartigoCollection = linhaartigoCollection;
-    }
-
-
-    public Collection<Pagamento> getPagamentoCollection() {
-        return pagamentoCollection;
-    }
-
-    public void setPagamentoCollection(Collection<Pagamento> pagamentoCollection) {
-        this.pagamentoCollection = pagamentoCollection;
+        return "classes.Fatura[ codigo=" + codigo + " ]";
     }
     
 }

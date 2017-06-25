@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="458.0" prefWidth="669.0" stylesheets="@Darktheme.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TableView fx:id="artigos" prefHeight="631.0" prefWidth="639.0">
+               <columns>
+                  <TableColumn fx:id="codArtigos" maxWidth="1.7976931348623157E308" prefWidth="97.0" resizable="false" text="Código" />
+                  <TableColumn fx:id="nomeArtigos" maxWidth="1.7976931348623157E308" prefWidth="126.0" text="Nome" />
+                  <TableColumn fx:id="descArtigos" maxWidth="1.7976931348623157E308" prefWidth="179.0" text="Descrição" />
+                  <TableColumn fx:id="precoArtigos" maxWidth="1.7976931348623157E308" minWidth="0.0" resizable="false" text="Preço" />
+                  <TableColumn fx:id="quantArtigos" maxWidth="1.7976931348623157E308" prefWidth="152.0" resizable="false" text="Quantidade" />
+               </columns>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</fx:root>

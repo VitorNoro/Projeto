@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import classes.*;
+import classes.Funcionario;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,8 +52,27 @@ public class Main extends Application {
 
             Scene scene = new Scene(rootScene);
             stage.setScene(scene);
-            stage.setHeight(600);
-            stage.setWidth(900);
+            stage.setHeight(768);
+            stage.setWidth(1024);
+            stage.setResizable(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public  void gotoGestor() {
+        try {
+            
+            rootScene = FXMLLoader.load(getClass().getResource("Gestor/PagPrincipal.fxml"));
+
+            
+            stage.setTitle("Gestor");
+
+            Scene scene = new Scene(rootScene);
+            stage.setScene(scene);
+            stage.setHeight(768);
+            stage.setWidth(1024);
             stage.setResizable(true);
             stage.show();
         } catch (Exception e) {

@@ -5,9 +5,11 @@
  */
 package GUI;
 
-import classes.Artigo;
+
 import classes.Funcionario;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +29,8 @@ import javafx.scene.layout.Pane;
  * @author v_nor
  */
 public class LoginController implements Initializable {
-    private Main application;
+    private Main application = new Main();
+    private ArrayList<Funcionario> funcs;
     
     @FXML
     public ComboBox combo;
@@ -36,8 +39,7 @@ public class LoginController implements Initializable {
     
     @FXML
     public PasswordField password;
-    @FXML 
-    public Label notificacao;
+    
     @FXML
     Pane imgPane = new Pane();
     @FXML
@@ -52,6 +54,7 @@ public class LoginController implements Initializable {
 
         img.fitWidthProperty().bind(imgPane.widthProperty()); 
         
+        funcs = Funcionario.readAll();
         
         combo.getItems().clear();
         combo.getItems().addAll("Gestor", "Caixa", "Reparação");
@@ -63,28 +66,30 @@ public class LoginController implements Initializable {
     @FXML
     private void iniciar(ActionEvent event) {
         if(application.autenticador(userName.getText(), password.getText()))
-            for(Funcionario f : Funcionario.readAll()){
+            for(Funcionario f : funcs){
                 if(userName.getText().equals(f.getUsername())){
                     switch (f.getFuncao()){
                             case "Gestor":
-                                notificacao.setText("Gestor");
-                                String output = combo.getSelectionModel().getSelectedItem().toString();
-                                System.out.println(output);
+                                //String output = combo.getSelectionModel().getSelectedItem().toString();
+                                //System.out.println(output);
+                                application.gotoGestor();
+                                
                                 break;
                             case "Caixa":
-                                notificacao.setText("Caixa");
+                                
                                 break;
                             case "Reparador":
-                                notificacao.setText("Reparador");
+                                
                                 break;
                             default:
-                                notificacao.setText("Nada");
+                                
                                 break;
                     }
                 }      
                 }                
-        else
-            notificacao.setText("Nome ou palavra passe errados");
+        else{
+            //notificacao.setText("Nome ou palavra passe errados");
+        }
     }
     
     public void setApp(Main application){

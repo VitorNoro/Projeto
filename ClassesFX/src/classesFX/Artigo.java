@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package classes;
+package classesFX;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -54,40 +54,40 @@ public class Artigo implements Serializable {
         this.nome = new SimpleStringProperty(nome);
     }
 
-    public int getCodigo() {
-        return codigo.getValue();
+    public IntegerProperty getCodigo() {
+        return codigo;
     }
 
     public void setCodigo(Integer codigo) {
         this.codigo = new SimpleIntegerProperty(codigo);;
     }
 
-    public Float getPreco() {
-        return preco.getValue();
+    public FloatProperty getPreco() {
+        return preco;
     }
 
     public void setPreco(Float preco) {
         this.preco = new SimpleFloatProperty(preco);;
     }
 
-    public Integer getQuantidade() {
-        return quantidade.getValue();
+    public IntegerProperty getQuantidade() {
+        return quantidade;
     }
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = new SimpleIntegerProperty(quantidade);
     }
 
-    public String getDescricao() {
-        return descricao.getValue();
+    public StringProperty getDescricao() {
+        return descricao;
     }
 
     public void setDescricao(String descricao) {
         this.descricao = new SimpleStringProperty(descricao);;
     }
 
-    public String getNome() {
-        return nome.getValue();
+    public StringProperty getNome() {
+        return nome;
     }
 
     public void setNome(String nome) {
