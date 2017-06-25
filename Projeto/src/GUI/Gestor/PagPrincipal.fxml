@@ -13,35 +13,44 @@
 
 <AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@Darktheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GestorController">
    <children>
-      <VBox layoutY="100.0" prefHeight="299.0" prefWidth="278.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
+      <VBox layoutY="100.0" prefHeight="418.0" prefWidth="278.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
          <children>
             <Accordion maxHeight="250.0" maxWidth="350.0" VBox.vgrow="ALWAYS">
               <panes>
-                <TitledPane animated="false" maxHeight="150.0" minHeight="150.0" prefHeight="150.0" text="untitled 1">
+                <TitledPane animated="false" maxHeight="193.0" minHeight="150.0" prefHeight="185.0" prefWidth="278.0" text="Gerir produtos">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white; -fx-opacity: 0.75;">
                            <children>
-                              <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#pop" prefHeight="33.0" prefWidth="239.0" text="Button" />
-                              <Button layoutX="14.0" layoutY="47.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="239.0" text="Button" />
+                              <Button alignment="CENTER" layoutY="73.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Eliminar produto" />
+                              <Button alignment="CENTER" layoutX="-5.0" layoutY="106.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Listar produtos" />
+                              <Button alignment="CENTER" layoutX="-6.0" layoutY="40.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Editar produto" />
+                              <Button alignment="CENTER" layoutX="2.0" layoutY="7.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="271.0" text="Adicionar produto" />
                            </children>
                         </AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="untitled 2">
+                <TitledPane animated="false" text="Gerir funcionários">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane maxHeight="250.0" minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="272.0">
+                           <children>
+                              <Button alignment="CENTER" layoutY="7.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Adicionar funcionário" />
+                              <Button alignment="CENTER" layoutY="40.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Editar funcionário" />
+                              <Button alignment="CENTER" layoutY="73.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Eliminar funcionário" />
+                              <Button alignment="CENTER" layoutX="-1.0" layoutY="106.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Listar funcionários" />
+                           </children></AnchorPane>
                   </content>
                 </TitledPane>
-                  <TitledPane animated="false" text="untitled">
+                  <TitledPane animated="false" text="Gerir fornecedores">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Button layoutY="8.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Adicionar fornecedor" />
+                              <Button layoutY="41.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Editar fornecedor" />
+                              <Button layoutY="74.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Eliminar fornecedor" />
+                              <Button layoutY="107.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Listar fornecedores" />
+                           </children></AnchorPane>
                     </content>
                   </TitledPane>
-                <TitledPane animated="false" text="untitled 3">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </TitledPane>
               </panes>
             </Accordion>
          </children>
@@ -67,5 +76,6 @@
             </Text>
          </children>
       </HBox>
+      <Button layoutX="100.0" layoutY="694.0" mnemonicParsing="false" text="Terminar sessão" />
    </children>
 </AnchorPane>
