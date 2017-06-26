@@ -25,7 +25,7 @@
                            <children>
                               <Button alignment="CENTER" layoutX="2.0" layoutY="66.0" mnemonicParsing="false" onAction="#deleteProduto" prefHeight="33.0" prefWidth="272.0" text="Eliminar produto" />
                               <Button alignment="CENTER" layoutX="-1.0" layoutY="99.0" mnemonicParsing="false" onAction="#addStock" prefHeight="33.0" prefWidth="278.0" text="Adicionar stock" />
-                              <Button alignment="CENTER" layoutX="-1.0" layoutY="33.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Editar produto" />
+                              <Button alignment="CENTER" layoutX="-1.0" layoutY="33.0" mnemonicParsing="false" onAction="#editArtigo" prefHeight="33.0" prefWidth="278.0" text="Editar produto" />
                               <Button alignment="CENTER" layoutX="2.0" mnemonicParsing="false" onAction="#addArtigo" prefHeight="33.0" prefWidth="271.0" text="Adicionar produto" />
                               <Spinner fx:id="spinnerStock" editable="true" layoutX="47.0" layoutY="138.0">
                                 <valueFactory>
@@ -74,10 +74,10 @@
             </Text>
          </children>
       </HBox>
-      <Button layoutX="93.0" layoutY="550.0" mnemonicParsing="false" text="Terminar sessão" />
+      <Button layoutX="93.0" layoutY="622.0" mnemonicParsing="false" onAction="#endSession" text="Terminar sessão" />
       <VBox layoutX="332.0" layoutY="100.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="460.0" prefWidth="669.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="332.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
          <children>
-            <AnchorPane maxHeight="768.0" maxWidth="1366.0" prefHeight="644.0" prefWidth="662.0" style="-fx-background-color: white;">
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="644.0" prefWidth="662.0" style="-fx-background-color: white;">
                <children>
                   <BorderPane fx:id="info" maxHeight="768.0" maxWidth="1366.0" prefHeight="460.0" prefWidth="669.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>

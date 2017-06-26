@@ -5,19 +5,16 @@
  */
 package GUI;
 
-import classes.Funcionario;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import classesFX.Artigo;
+import classesFX.Funcionario;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
@@ -25,12 +22,44 @@ import javafx.stage.Stage;
  * @author v_nor
  */
 public class Main extends Application {
-    private Group root = new Group();
     public static Stage stage;
     private Parent rootScene;
+    public static ObservableList<Artigo> artigoList;
+    public static ObservableList<Funcionario> funcList;
     
     @Override
     public void start(Stage primaryStage) throws Exception {
+        artigoList = FXCollections.observableArrayList();
+
+        for(classes.Artigo a : classes.Artigo.readAll()){
+            Artigo temp = new Artigo();
+            
+            temp.setCodigo(a.getCodigo());
+            temp.setPreco(a.getPreco());
+            temp.setQuantidade(a.getQuantidade());
+            temp.setDescricao(a.getDescricao());
+            temp.setNome(a.getNome());
+            
+            artigoList.add(temp);
+        }
+        
+        funcList = FXCollections.observableArrayList();
+        
+        for(classes.Funcionario f : classes.Funcionario.readAll()){
+            Funcionario temp = new Funcionario();
+            
+            temp.setCodigo(f.getCodigo());
+            temp.setNome(f.getNome());
+            temp.setMorada(f.getMorada());
+            temp.setContacto(f.getContacto());
+            temp.setFuncao(f.getFuncao());
+            temp.setUsername(f.getUsername());
+            temp.setPassword(f.getPassword());
+            
+            funcList.add(temp);
+        }
+        
+        stage = new Stage(); 
         gotoLogin();
         
     }
@@ -45,15 +74,11 @@ public class Main extends Application {
     public  void gotoLogin() {
         try {
             rootScene = FXMLLoader.load(getClass().getResource("Login/PagPrincipal.fxml"));
-            AnchorPane root = (AnchorPane) FXMLLoader.load(Main.class.getResource("Login/PagPrincipal.fxml"));
 
-            stage = new Stage();
             stage.setTitle("Login");
 
             Scene scene = new Scene(rootScene);
             stage.setScene(scene);
-            stage.setHeight(768);
-            stage.setWidth(1024);
             stage.setResizable(true);
             stage.show();
         } catch (Exception e) {
@@ -71,8 +96,7 @@ public class Main extends Application {
 
             Scene scene = new Scene(rootScene);
             stage.setScene(scene);
-            stage.setHeight(768);
-            stage.setWidth(1024);
+            stage.setMaximized(true);
             stage.setResizable(true);
             stage.show();
         } catch (Exception e) {
@@ -80,14 +104,4 @@ public class Main extends Application {
         }
     }
     
-    public boolean autenticador(String user, String pass){
-        boolean existe = false;
-        
-        for(Funcionario f : Funcionario.readAll()){
-            if(user.equals(f.getUsername()) && pass.equals(f.getPassword()))
-                existe = true;
-        }
-        
-        return existe;
-    }
 }

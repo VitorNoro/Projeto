@@ -52,33 +52,36 @@ public class GestorController implements Initializable {
     @FXML
     private Spinner<Integer> spinnerStock;
     @FXML
-    private TextField addNome;
+    private TextField prodNome;
     @FXML
-    private TextArea addDescricao;
+    private TextArea prodDescricao;
     @FXML
-    private TextField addPreco;
+    private TextField prodPreco;
     @FXML
-    private TextField addQuantidade;
+    private TextField prodQuantidade;
     
-    ObservableList<Artigo> artigoList;
+    @FXML
+    private TextField funcNome;
+    @FXML
+    private TextField funcMorada;
+    @FXML
+    private TextField funcTelefone;
+    @FXML
+    private TextField funcFuncao;
+    @FXML
+    private TextField funcUser;
+    @FXML
+    private TextField funcPass;
+    
+    Main app = new Main();
+    Artigo updateArtigo;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        artigoList = FXCollections.observableArrayList();
-        int i = 0;
-        for(classes.Artigo a : classes.Artigo.readAll()){
-            Artigo temp = new Artigo();
-            
-            temp.setCodigo(a.getCodigo());
-            temp.setPreco(a.getPreco());
-            temp.setQuantidade(a.getQuantidade());
-            temp.setDescricao(a.getDescricao());
-            temp.setNome(a.getNome());
-            
-            artigoList.add(temp);
-        }
+       
         
         MainScene scene = new MainScene();
         info.setCenter(scene);
@@ -99,7 +102,7 @@ public class GestorController implements Initializable {
         nomeArtigos.setCellValueFactory(cellData -> cellData.getValue().getNome());
         descArtigos.setCellValueFactory(cellData -> cellData.getValue().getDescricao());
         
-        FilteredList<Artigo> filteredData = new FilteredList<>(artigoList, p -> true);
+        FilteredList<Artigo> filteredData = new FilteredList<>(app.artigoList, p -> true);
 
         // 2. Set the filter Predicate whenever the filter changes.
         filterField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -135,25 +138,18 @@ public class GestorController implements Initializable {
         quantArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(5)); // w * 1/4
         nomeArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(3)); // w * 1/4
         descArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(4)); // w * 1/4
-        
-        Spinner<Integer> intSpinner = new Spinner<>(1, 999999, 0, 1);
-        SpinnerValueFactory.IntegerSpinnerValueFactory intFactory =
-                (SpinnerValueFactory.IntegerSpinnerValueFactory) intSpinner.getValueFactory();
-        int imin = intFactory.getMin(); // 0
-        int imax = intFactory.getMax(); // 10
-        int istep = intFactory.getAmountToStepBy(); // 1
     }
     
     public void deleteProduto(){
         if(artigos.getSelectionModel().isEmpty())
             erro.setText("Selecione um artigo");
         else{
-            for(Artigo a : artigoList){
-                if (a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo()){
-                    artigoList.remove(a);
-                }
+            for(Artigo a : app.artigoList){
                 
-                classes.Artigo.delete(a.getCodigo().getValue());
+                if (a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo()){
+                    classes.Artigo.delete(a.getCodigo().getValue());
+                    app.artigoList.remove(a);
+                }
             }
         }
     }
@@ -162,14 +158,14 @@ public class GestorController implements Initializable {
         if(artigos.getSelectionModel().isEmpty())
             erro.setText("Selecione um artigo");
         else{
-            for(Artigo a : artigoList){
+            for(Artigo a : app.artigoList){
                 if (a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo()){
                     a.setQuantidade(a.getQuantidade().getValue() + spinnerStock.getValue());
                     
                     artigos.refresh();
                     for(classes.Artigo art: classes.Artigo.readAll()){
                         if(a.getCodigo().getValue() == art.getCodigo()){
-                            art.update(a.getCodigo().getValue() , a.getPreco().getValue(), a.getQuantidade().getValue(), a.getDescricao().getValue(), a.getNome().getValue());
+                            art.addStock(a.getQuantidade().getValue());
                         }
                     }
                 }
@@ -179,8 +175,113 @@ public class GestorController implements Initializable {
     
     public void addArtigo(){
         switchScene("inserirProduto");
-        
-        
     }
     
+    public void confirmNewArtigo(){
+        classes.Artigo art = new classes.Artigo();
+        try{
+            int quant = Integer.parseInt(prodQuantidade.getText());
+            float preco = Float.parseFloat(prodPreco.getText().replaceAll(",", "."));
+            boolean existeN = false;
+            
+            for(classes.Artigo t : classes.Artigo.readAll()){
+                if(t.getNome().equals(prodNome.getText())){
+                    //erro.setText("Nome em uso");
+                    existeN = true;
+                }                          
+            }
+            
+            if(!(prodNome.getText().isEmpty() || prodDescricao.getText().isEmpty() || preco <= 0 || quant <= 0) && !existeN){
+                art.setNome(prodNome.getText());
+                art.setDescricao(prodDescricao.getText());
+                art.setPreco(preco);
+                art.setQuantidade(quant);
+
+                art.createT();
+
+                Artigo temp = new Artigo();
+
+                temp.setCodigo(art.getCodigo());
+                temp.setPreco(art.getPreco());
+                temp.setQuantidade(art.getQuantidade());
+                temp.setDescricao(art.getDescricao());
+                temp.setNome(art.getNome());
+
+                app.artigoList.add(temp);
+
+                pop();
+            }
+            else
+                System.out.println("ERRO");
+            
+            
+        }catch(NumberFormatException ex){
+            System.out.println("ERRRO");
+        }
+    }
+    
+    public void editArtigo(){
+        if(artigos.getSelectionModel().isEmpty())
+            erro.setText("Selecione um artigo");
+        else{
+            updateArtigo = artigos.getSelectionModel().getSelectedItem();
+            
+            switchScene("editarProduto");
+            
+            prodNome.setText(updateArtigo.getNome().getValue());
+            prodDescricao.setText(updateArtigo.getDescricao().getValue());
+            prodPreco.setText(updateArtigo.getPreco().getValue().toString());
+        }
+    }
+    
+    public void confirmEditArtigo(){
+        try{
+            float preco = Float.parseFloat(prodPreco.getText().replaceAll(",", "."));
+            boolean existeN = false;
+            
+            for(classes.Artigo t : classes.Artigo.readAll()){
+                if(t.getNome().equals(prodNome.getText())){
+                    //erro.setText("Nome em uso");
+                    existeN = true;
+                }                          
+            }
+
+            if(!(prodNome.getText().isEmpty() || prodDescricao.getText().isEmpty() || preco <= 0) && !existeN){
+            
+                for(Artigo a : app.artigoList){
+                    if (a.getCodigo() == updateArtigo.getCodigo()){
+                        a.setPreco(preco);
+                        a.setDescricao(prodDescricao.getText());
+                        a.setNome(prodNome.getText());
+
+                        artigos.refresh();
+                        for(classes.Artigo art: classes.Artigo.readAll()){
+                            if(a.getCodigo().getValue() == art.getCodigo()){
+                                art.update(art.getCodigo(), preco, prodDescricao.getText(), prodNome.getText());
+                            }
+                        }
+                    }
+                }
+                
+                pop(); 
+            }
+            else
+                System.out.println("erro");
+                               
+        }catch(NumberFormatException ex){
+            System.out.println("ERRRO");
+        }
+    }
+    
+    public void newFunc(){
+        switchScene("inserirFuncionario");
+    }
+    
+    public void newFunc2(){
+        switchScene("inserirCredenciaisFuncionario");
+    }
+    
+    public void endSession(){
+        app.gotoLogin();
+    }
 }
