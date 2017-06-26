@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -17,19 +19,28 @@
          <children>
             <Accordion maxHeight="250.0" maxWidth="350.0" VBox.vgrow="ALWAYS">
               <panes>
-                <TitledPane animated="false" maxHeight="193.0" minHeight="150.0" prefHeight="185.0" prefWidth="278.0" text="Gerir produtos">
+                <TitledPane animated="false" maxHeight="230.0" minHeight="230.0" onMousePressed="#pop" prefHeight="193.0" prefWidth="278.0" text="Gerir produtos">
                   <content>
+<<<<<<< HEAD
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white; -fx-opacity: 1;">
+=======
+                    <AnchorPane maxHeight="230.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white; -fx-opacity: 0.75;">
+>>>>>>> 591d49c33ecbe071d7b7a7577e12153c04488ff7
                            <children>
-                              <Button alignment="CENTER" layoutY="73.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Eliminar produto" />
-                              <Button alignment="CENTER" layoutX="-5.0" layoutY="106.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Listar produtos" />
-                              <Button alignment="CENTER" layoutX="-6.0" layoutY="40.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Editar produto" />
-                              <Button alignment="CENTER" layoutX="2.0" layoutY="7.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="271.0" text="Adicionar produto" />
+                              <Button alignment="CENTER" layoutX="2.0" layoutY="66.0" mnemonicParsing="false" onAction="#deleteProduto" prefHeight="33.0" prefWidth="272.0" text="Eliminar produto" />
+                              <Button alignment="CENTER" layoutX="-1.0" layoutY="99.0" mnemonicParsing="false" onAction="#addStock" prefHeight="33.0" prefWidth="278.0" text="Adicionar stock" />
+                              <Button alignment="CENTER" layoutX="-1.0" layoutY="33.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Editar produto" />
+                              <Button alignment="CENTER" layoutX="2.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="271.0" text="Adicionar produto" />
+                              <Spinner fx:id="spinnerStock" editable="true" layoutX="47.0" layoutY="138.0">
+                                <valueFactory>
+                                  <SpinnerValueFactory.IntegerSpinnerValueFactory max="9999999" min="1" />
+                                </valueFactory>
+                              </Spinner>
                            </children>
                         </AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="Gerir funcionários">
+                <TitledPane animated="false" maxHeight="230.0" minHeight="230.0" text="Gerir funcionários">
                   <content>
                     <AnchorPane maxHeight="250.0" minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="272.0">
                            <children>
