@@ -137,11 +137,25 @@ public class GestorController implements Initializable {
     
     public void deleteProduto(){
         if(artigos.getSelectionModel().isEmpty())
-            erro.setText("Selecione um título");
+            erro.setText("Selecione um artigo");
         else{
             for(Artigo a : artigoList){
                 if (a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo()){
                     artigoList.remove(a);
+                }
+            }
+        }
+    }
+    
+    public void addStock(){
+        if(artigos.getSelectionModel().isEmpty())
+            erro.setText("Selecione um artigo");
+        else{
+            for(Artigo a : artigoList){
+                if (a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo()){
+                    a.setQuantidade(a.getQuantidade().getValue() + spinnerStock.getValue());
+                    
+                    artigos.refresh();
                 }
             }
         }
