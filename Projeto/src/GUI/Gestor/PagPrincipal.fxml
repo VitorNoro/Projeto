@@ -21,7 +21,7 @@
               <panes>
                 <TitledPane animated="false" maxHeight="240.0" onMousePressed="#pop" text="Gerir produtos">
                   <content>
-                    <AnchorPane maxHeight="230.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white; -fx-opacity: 0.75;">
+                    <AnchorPane maxHeight="230.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white; -fx-opacity: 1;">
                            <children>
                               <Button alignment="CENTER" layoutX="2.0" layoutY="66.0" mnemonicParsing="false" onAction="#deleteProduto" prefHeight="33.0" prefWidth="272.0" text="Eliminar produto" />
                               <Button alignment="CENTER" layoutX="-1.0" layoutY="99.0" mnemonicParsing="false" onAction="#addStock" prefHeight="33.0" prefWidth="278.0" text="Adicionar stock" />
