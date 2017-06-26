@@ -21,6 +21,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
@@ -50,6 +51,14 @@ public class GestorController implements Initializable {
     private Label erro;
     @FXML
     private Spinner<Integer> spinnerStock;
+    @FXML
+    private TextField addNome;
+    @FXML
+    private TextArea addDescricao;
+    @FXML
+    private TextField addPreco;
+    @FXML
+    private TextField addQuantidade;
     
     ObservableList<Artigo> artigoList;
     /**
