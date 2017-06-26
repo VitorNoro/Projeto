@@ -65,15 +65,6 @@
             <Insets />
          </opaqueInsets>
       </VBox>
-      <HBox layoutX="329.0" layoutY="100.0" maxHeight="638.0" maxWidth="1366.0" prefHeight="638.0" prefWidth="659.0" style="-fx-background-color: #ff9980;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="335.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
-         <children>
-            <AnchorPane maxHeight="768.0" maxWidth="1366.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <BorderPane fx:id="info" maxHeight="768.0" maxWidth="1366.0" prefHeight="460.0" prefWidth="669.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-            </AnchorPane>
-         </children>
-      </HBox>
       <HBox alignment="CENTER" layoutX="449.0" layoutY="23.0" prefHeight="56.0" prefWidth="964.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gestor">
@@ -84,5 +75,14 @@
          </children>
       </HBox>
       <Button layoutX="93.0" layoutY="550.0" mnemonicParsing="false" text="Terminar sessão" />
+      <VBox layoutX="332.0" layoutY="100.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="460.0" prefWidth="669.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="332.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <AnchorPane maxHeight="768.0" maxWidth="1366.0" prefHeight="644.0" prefWidth="662.0" style="-fx-background-color: white;">
+               <children>
+                  <BorderPane fx:id="info" maxHeight="768.0" maxWidth="1366.0" prefHeight="460.0" prefWidth="669.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
