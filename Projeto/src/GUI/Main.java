@@ -6,7 +6,11 @@
 package GUI;
 
 
+import classesFX.Artigo;
+import classesFX.Funcionario;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -20,11 +24,42 @@ import javafx.stage.Stage;
 public class Main extends Application {
     public static Stage stage;
     private Parent rootScene;
+    public static ObservableList<Artigo> artigoList;
+    public static ObservableList<Funcionario> funcList;
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        stage = new Stage();
+        artigoList = FXCollections.observableArrayList();
+
+        for(classes.Artigo a : classes.Artigo.readAll()){
+            Artigo temp = new Artigo();
+            
+            temp.setCodigo(a.getCodigo());
+            temp.setPreco(a.getPreco());
+            temp.setQuantidade(a.getQuantidade());
+            temp.setDescricao(a.getDescricao());
+            temp.setNome(a.getNome());
+            
+            artigoList.add(temp);
+        }
         
+        funcList = FXCollections.observableArrayList();
+        
+        for(classes.Funcionario f : classes.Funcionario.readAll()){
+            Funcionario temp = new Funcionario();
+            
+            temp.setCodigo(f.getCodigo());
+            temp.setNome(f.getNome());
+            temp.setMorada(f.getMorada());
+            temp.setContacto(f.getContacto());
+            temp.setFuncao(f.getFuncao());
+            temp.setUsername(f.getUsername());
+            temp.setPassword(f.getPassword());
+            
+            funcList.add(temp);
+        }
+        
+        stage = new Stage(); 
         gotoLogin();
         
     }

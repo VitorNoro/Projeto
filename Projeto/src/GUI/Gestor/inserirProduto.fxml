@@ -52,22 +52,22 @@
       </VBox>
       <VBox alignment="CENTER_LEFT" layoutX="235.0" layoutY="121.0" prefHeight="297.0" prefWidth="434.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="235.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-            <TextField fx:id="addNome" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="400.0" style="-fx-background-color: #ffffff;">
+            <TextField fx:id="prodNome" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="400.0" style="-fx-background-color: #ffffff;">
                <VBox.margin>
                   <Insets right="20.0" />
                </VBox.margin>
             </TextField>
-            <TextArea fx:id="addDescricao" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="104.0" prefWidth="401.0" styleClass="text-field">
+            <TextArea fx:id="prodDescricao" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="104.0" prefWidth="401.0" styleClass="text-field">
                <VBox.margin>
                   <Insets right="20.0" top="20.0" />
                </VBox.margin>
             </TextArea>
-            <TextField fx:id="addPreco" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;">
+            <TextField fx:id="prodPreco" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;">
                <VBox.margin>
                   <Insets right="245.0" top="20.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="addQuantidade" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;">
+            <TextField fx:id="prodQuantidade" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;">
                <VBox.margin>
                   <Insets right="245.0" top="20.0" />
                </VBox.margin>

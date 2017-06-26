@@ -34,17 +34,13 @@ public class LoginController implements Initializable {
     private ArrayList<Funcionario> funcs;
     
     @FXML
-    public ComboBox combo;
+    private ComboBox combo;
     @FXML 
-    public TextField userName;
+    private TextField userName;
     
     @FXML
-    public PasswordField password;
-    
-    @FXML
-    AnchorPane imgPane = new AnchorPane();
-    @FXML
-    ImageView img = new ImageView();
+    private PasswordField password;
+
     
     
     /**
@@ -52,8 +48,6 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {  
-        img.fitWidthProperty().bind(imgPane.widthProperty()); 
-        img.fitHeightProperty().bind(imgPane.heightProperty()); 
         
         funcs = Funcionario.readAll();
         

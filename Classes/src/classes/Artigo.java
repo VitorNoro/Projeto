@@ -217,7 +217,7 @@ public class Artigo implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void update(Integer codigo, float preco, Integer quantidade, String descricao, String nome){
+    public void update(Integer codigo, float preco, String descricao, String nome){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Artigo.findByCodigo");
         query.setParameter("codigo", codigo);
@@ -244,7 +244,7 @@ public class Artigo implements Serializable {
         em.getTransaction().begin();
         art.setQuantidade(quantidade);
         em.getTransaction().commit();
-        this.read(codigo);
+        this.read(this.codigo);
 
     }
 }
