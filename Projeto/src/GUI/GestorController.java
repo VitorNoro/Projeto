@@ -143,6 +143,8 @@ public class GestorController implements Initializable {
                 if (a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo()){
                     artigoList.remove(a);
                 }
+                
+                classes.Artigo.delete(a.getCodigo().getValue());
             }
         }
     }
@@ -156,9 +158,20 @@ public class GestorController implements Initializable {
                     a.setQuantidade(a.getQuantidade().getValue() + spinnerStock.getValue());
                     
                     artigos.refresh();
+                    for(classes.Artigo art: classes.Artigo.readAll()){
+                        if(a.getCodigo().getValue() == art.getCodigo()){
+                            art.update(a.getCodigo().getValue() , a.getPreco().getValue(), a.getQuantidade().getValue(), a.getDescricao().getValue(), a.getNome().getValue());
+                        }
+                    }
                 }
             }
         }
+    }
+    
+    public void addArtigo(){
+        switchScene("inserirProduto");
+        
+        
     }
     
 }
