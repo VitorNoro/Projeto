@@ -74,7 +74,7 @@
             </Text>
          </children>
       </HBox>
-      <Button layoutX="93.0" layoutY="550.0" mnemonicParsing="false" text="Terminar sessão" />
+      <Button layoutX="93.0" layoutY="622.0" mnemonicParsing="false" onAction="#endSession" text="Terminar sessão" />
       <VBox layoutX="332.0" layoutY="100.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="460.0" prefWidth="669.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="332.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
          <children>
             <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="644.0" prefWidth="662.0" style="-fx-background-color: white;">

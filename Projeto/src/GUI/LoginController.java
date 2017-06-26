@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
@@ -41,7 +42,7 @@ public class LoginController implements Initializable {
     public PasswordField password;
     
     @FXML
-    Pane imgPane = new Pane();
+    AnchorPane imgPane = new AnchorPane();
     @FXML
     ImageView img = new ImageView();
     
@@ -52,6 +53,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {  
         img.fitWidthProperty().bind(imgPane.widthProperty()); 
+        img.fitHeightProperty().bind(imgPane.heightProperty()); 
         
         funcs = Funcionario.readAll();
         
@@ -64,7 +66,7 @@ public class LoginController implements Initializable {
     
     @FXML
     private void iniciar(ActionEvent event) {
-        if(application.autenticador(userName.getText(), password.getText()))
+        if(autenticador(userName.getText(), password.getText()))
             for(Funcionario f : funcs){
                 if(userName.getText().equals(f.getUsername())){
                     switch (f.getFuncao()){
@@ -95,4 +97,14 @@ public class LoginController implements Initializable {
         this.application = application;
     }
     
+    public boolean autenticador(String user, String pass){
+        boolean existe = false;
+        
+        for(Funcionario f : Funcionario.readAll()){
+            if(user.equals(f.getUsername()) && pass.equals(f.getPassword()))
+                existe = true;
+        }
+        
+        return existe;
+    }
 }

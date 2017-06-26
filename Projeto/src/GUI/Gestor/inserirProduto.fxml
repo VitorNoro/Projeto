@@ -79,7 +79,7 @@
       </VBox>
       <VBox alignment="CENTER" layoutX="473.0" layoutY="387.0" prefHeight="67.0" prefWidth="182.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="473.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="387.0">
          <children>
-            <Button mnemonicParsing="false" text="Adicionar">
+            <Button mnemonicParsing="false" onAction="#confirmNewArtigo" text="Adicionar">
                <VBox.margin>
                   <Insets left="65.0" />
                </VBox.margin>

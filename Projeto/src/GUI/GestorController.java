@@ -60,6 +60,7 @@ public class GestorController implements Initializable {
     @FXML
     private TextField addQuantidade;
     
+    Main app = new Main();
     ObservableList<Artigo> artigoList;
     /**
      * Initializes the controller class.
@@ -135,13 +136,6 @@ public class GestorController implements Initializable {
         quantArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(5)); // w * 1/4
         nomeArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(3)); // w * 1/4
         descArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(4)); // w * 1/4
-        
-        Spinner<Integer> intSpinner = new Spinner<>(1, 999999, 0, 1);
-        SpinnerValueFactory.IntegerSpinnerValueFactory intFactory =
-                (SpinnerValueFactory.IntegerSpinnerValueFactory) intSpinner.getValueFactory();
-        int imin = intFactory.getMin(); // 0
-        int imax = intFactory.getMax(); // 10
-        int istep = intFactory.getAmountToStepBy(); // 1
     }
     
     public void deleteProduto(){
@@ -179,8 +173,40 @@ public class GestorController implements Initializable {
     
     public void addArtigo(){
         switchScene("inserirProduto");
-        
-        
     }
     
+    public void confirmNewArtigo(){
+        classes.Artigo art = new classes.Artigo();
+        try{
+            int quant = Integer.parseInt(addQuantidade.getText());
+            float preco = Float.parseFloat(addPreco.getText().replaceAll(",", "."));
+
+            art.setNome(addNome.getText());
+            art.setDescricao(addDescricao.getText());
+            art.setPreco(preco);
+            art.setQuantidade(quant);
+            
+            art.createT();
+            
+            Artigo temp = new Artigo();
+            
+            temp.setCodigo(art.getCodigo());
+            temp.setPreco(art.getPreco());
+            temp.setQuantidade(art.getQuantidade());
+            temp.setDescricao(art.getDescricao());
+            temp.setNome(art.getNome());
+            
+            artigoList.add(temp);
+            
+            pop();
+            
+            
+        }catch(NumberFormatException ex){
+            System.out.println("ERRRO");
+        }
+    }
+    
+    public void endSession(){
+        app.gotoLogin();
+    }
 }
