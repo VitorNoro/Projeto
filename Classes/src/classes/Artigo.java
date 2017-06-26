@@ -233,4 +233,18 @@ public class Artigo implements Serializable {
         this.read(codigo);
 
     }
+    
+    public void addStock(Integer quantidade){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Artigo.findByCodigo");
+        query.setParameter("codigo", this.codigo);
+        
+        Artigo art = (Artigo)query.getSingleResult();
+ 
+        em.getTransaction().begin();
+        art.setQuantidade(quantidade);
+        em.getTransaction().commit();
+        this.read(codigo);
+
+    }
 }

@@ -149,11 +149,11 @@ public class GestorController implements Initializable {
             erro.setText("Selecione um artigo");
         else{
             for(Artigo a : artigoList){
+                
                 if (a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo()){
+                    classes.Artigo.delete(a.getCodigo().getValue());
                     artigoList.remove(a);
                 }
-                
-                classes.Artigo.delete(a.getCodigo().getValue());
             }
         }
     }
@@ -169,7 +169,7 @@ public class GestorController implements Initializable {
                     artigos.refresh();
                     for(classes.Artigo art: classes.Artigo.readAll()){
                         if(a.getCodigo().getValue() == art.getCodigo()){
-                            art.update(a.getCodigo().getValue() , a.getPreco().getValue(), a.getQuantidade().getValue(), a.getDescricao().getValue(), a.getNome().getValue());
+                            art.addStock(a.getQuantidade().getValue());
                         }
                     }
                 }
