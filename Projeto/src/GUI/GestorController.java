@@ -12,10 +12,16 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -38,14 +44,20 @@ public class GestorController implements Initializable {
     private TableColumn<Artigo, String> nomeArtigos;
     @FXML
     private TableColumn<Artigo, String> descArtigos;
+    @FXML
+    private TextField filterField;
+    @FXML
+    private Label erro;
+    @FXML
+    private Spinner<Integer> spinnerStock;
     
-    ObservableList<Artigo> artigo;
+    ObservableList<Artigo> artigoList;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        artigo = FXCollections.observableArrayList();
+        artigoList = FXCollections.observableArrayList();
         int i = 0;
         for(classes.Artigo a : classes.Artigo.readAll()){
             Artigo temp = new Artigo();
@@ -56,7 +68,7 @@ public class GestorController implements Initializable {
             temp.setDescricao(a.getDescricao());
             temp.setNome(a.getNome());
             
-            artigo.add(temp);
+            artigoList.add(temp);
         }
         
         MainScene scene = new MainScene();
@@ -77,13 +89,62 @@ public class GestorController implements Initializable {
         quantArtigos.setCellValueFactory(cellData -> cellData.getValue().getQuantidade().asObject());
         nomeArtigos.setCellValueFactory(cellData -> cellData.getValue().getNome());
         descArtigos.setCellValueFactory(cellData -> cellData.getValue().getDescricao());
-        artigos.setItems(artigo);
+        
+        FilteredList<Artigo> filteredData = new FilteredList<>(artigoList, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(artigo -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (artigo.getNome().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } 
+                
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(artigos.comparatorProperty());
+        
+        artigos.setItems(sortedData);
+        
+        artigos.getSelectionModel().selectFirst();
         
         codArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(10)); // w * 1/4
         precoArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(10)); // w * 1/4
         quantArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(5)); // w * 1/4
         nomeArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(3)); // w * 1/4
         descArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(4)); // w * 1/4
+        
+        Spinner<Integer> intSpinner = new Spinner<>(1, 999999, 0, 1);
+        SpinnerValueFactory.IntegerSpinnerValueFactory intFactory =
+                (SpinnerValueFactory.IntegerSpinnerValueFactory) intSpinner.getValueFactory();
+        int imin = intFactory.getMin(); // 0
+        int imax = intFactory.getMax(); // 10
+        int istep = intFactory.getAmountToStepBy(); // 1
+    }
+    
+    public void deleteProduto(){
+        if(artigos.getSelectionModel().isEmpty())
+            erro.setText("Selecione um título");
+        else{
+            for(Artigo a : artigoList){
+                if (a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo()){
+                    artigoList.remove(a);
+                }
+            }
+        }
     }
     
 }
