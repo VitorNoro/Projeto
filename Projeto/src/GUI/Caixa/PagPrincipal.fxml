@@ -1,11 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CaixaController">
-    
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CaixaController">
+   <children>
+      <VBox layoutY="100.0" maxHeight="300.0" minHeight="300.0" prefHeight="300.0" prefWidth="278.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
+         <opaqueInsets>
+            <Insets top="50.0" />
+         </opaqueInsets>
+         <children>
+            <Button mnemonicParsing="false" onAction="#change" text="Button" />
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" layoutX="449.0" layoutY="23.0" prefHeight="56.0" prefWidth="964.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Funcionário das reparações">
+               <font>
+                  <Font name="Microsoft Sans Serif" size="47.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <Button layoutX="93.0" layoutY="622.0" mnemonicParsing="false" onAction="#endSession" text="Terminar sessão" />
+      <VBox layoutX="332.0" layoutY="100.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="460.0" prefWidth="669.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="332.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="644.0" prefWidth="662.0" style="-fx-background-color: white;">
+               <children>
+                  <BorderPane fx:id="info" maxHeight="768.0" maxWidth="1366.0" prefHeight="460.0" prefWidth="669.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+   <stylesheets>
+      <URL value="@../../../../../../../Desktop/Darktheme.css" />
+      <URL value="@../Gestor/Darktheme.css" />
+   </stylesheets>
 </AnchorPane>

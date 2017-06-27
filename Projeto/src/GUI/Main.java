@@ -104,4 +104,22 @@ public class Main extends Application {
         }
     }
     
+    public  void gotoCaixa() {
+        try {
+            
+            rootScene = FXMLLoader.load(getClass().getResource("Caixa/PagPrincipal.fxml"));
+
+            
+            stage.setTitle("Caixa");
+
+            Scene scene = new Scene(rootScene);
+            stage.setScene(scene);
+            stage.setMaximized(true);
+            stage.setResizable(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

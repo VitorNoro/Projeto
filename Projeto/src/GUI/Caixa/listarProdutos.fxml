@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root fx:id="pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="458.0" prefWidth="669.0" styleClass="background" stylesheets="@Darktheme.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="TOP_RIGHT" layoutX="364.0" layoutY="-1.0" maxHeight="35.0" maxWidth="350.0" prefHeight="31.0" prefWidth="291.0" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextField fx:id="filterField" maxHeight="28.0" maxWidth="350.0" prefHeight="25.0" prefWidth="232.0" promptText="Pesquisar" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+      <HBox alignment="TOP_CENTER" layoutX="-50.0" layoutY="-32.0" prefHeight="28.0" prefWidth="275.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="394.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <Label fx:id="erro" text="Label" />
+         </children>
+      </HBox>
+      <VBox fx:id="box" layoutX="410.0" layoutY="92.0" maxWidth="800.0" prefWidth="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <TableView fx:id="artigos" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="631.0" prefWidth="650.0">
+               <columns>
+                  <TableColumn fx:id="codArtigos" maxWidth="1.7976931348623157E308" resizable="false" text="Código" />
+                  <TableColumn fx:id="nomeArtigos" maxWidth="1.7976931348623157E308" prefWidth="98.0" text="Nome" />
+                  <TableColumn fx:id="precoArtigos" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="58.0" resizable="false" text="Preço" />
+                  <TableColumn fx:id="quantArtigos" maxWidth="1.7976931348623157E308" prefWidth="100.0" resizable="false" text="Quantidade" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</fx:root>

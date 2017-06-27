@@ -65,12 +65,28 @@ public class LoginController implements Initializable {
                 if(userName.getText().equals(f.getUsername())){
                     switch (f.getFuncao()){
                             case "Gestor":
+                                switch (combo.getSelectionModel().getSelectedItem().toString()){
+                                    case "Gestor":
+                                        application.gotoGestor();
+                                        break;
+                                    case "Caixa":
+                                        application.gotoCaixa();
+                                        break;
+                                    case "Reparador":
+                                        break;
+                                    default:
+                                        System.out.println("ERRO");
+                                        break;
+                                }
+                                
                                 //String output = combo.getSelectionModel().getSelectedItem().toString();
                                 //System.out.println(output);
-                                application.gotoGestor();
+                                
                                 
                                 break;
                             case "Caixa":
+                                
+                                application.gotoCaixa();
                                 
                                 break;
                             case "Reparador":
