@@ -409,3 +409,7 @@ linear-gradient(to bottom, derive(-fx-color,-02%), derive(-fx-color,65%) 12%,   
      -fx-background-color:#ff9980
 }
 
+p.thick {
+    font-weight: 700;
+}
+
