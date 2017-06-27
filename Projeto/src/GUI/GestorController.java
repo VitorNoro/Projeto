@@ -29,6 +29,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
+import javafx.util.converter.FloatStringConverter;
 
 /**
  * FXML Controller class
@@ -123,29 +124,47 @@ public class GestorController implements Initializable {
         nomeArtigos.setCellValueFactory(cellData -> cellData.getValue().getNome());
         descArtigos.setCellValueFactory(cellData -> cellData.getValue().getDescricao());
         
-        nomeArtigos.setCellFactory(TextFieldTableCell.forTableColumn());
-        nomeArtigos.setOnEditCommit(
-            new EventHandler<CellEditEvent<Artigo, String>>() {
-                @Override
-                public void handle(CellEditEvent<Artigo, String> t) {
-                    ((Artigo) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                        ).setNome(t.getNewValue());
+
+        precoArtigos.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter(){
+            @Override
+            public Float fromString(String value) {
+                try {
+                    if(Float.parseFloat(value.replaceAll(",", ".")) > 0)
+                        return Float.parseFloat(value.replaceAll(",", "."));
+                    else
+                        return Float.NaN;
+                } catch(NumberFormatException e) {
+                    return Float.NaN;
                 }
             }
-        );
+        }));
+        
+        precoArtigos.setOnEditCommit(t -> {            
+            if(t.getNewValue().isNaN()) {
+                erro.setText("ERRO");
+                t.getRowValue().setPreco(t.getOldValue());
+            } else {
+                t.getRowValue().setPreco(t.getNewValue());
+                classes.Artigo.updatePreco(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+            }
+            artigos.refresh();
+        });
+        
+        
+        nomeArtigos.setCellFactory(TextFieldTableCell.forTableColumn());
+        nomeArtigos.setOnEditCommit((CellEditEvent<Artigo, String> t) -> {
+            if(1 == 2)
+                ((Artigo) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setNome(t.getNewValue());
+        });
 
         descArtigos.setCellFactory(TextFieldTableCell.forTableColumn());
-        descArtigos.setOnEditCommit(
-            new EventHandler<CellEditEvent<Artigo, String>>() {
-                @Override
-                public void handle(CellEditEvent<Artigo, String> t) {
-                    ((Artigo) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                        ).setNome(t.getNewValue());
-                }
-            }
-        );
+        descArtigos.setOnEditCommit((CellEditEvent<Artigo, String> t) -> {
+            ((Artigo) t.getTableView().getItems().get(
+                    t.getTablePosition().getRow())
+                    ).setNome(t.getNewValue());
+        });
         
         FilteredList<Artigo> filteredData = new FilteredList<>(app.artigoList, p -> true);
 
@@ -183,7 +202,6 @@ public class GestorController implements Initializable {
         quantArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(5)); // w * 1/4
         nomeArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(3)); // w * 1/4
         descArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(4)); // w * 1/4
-        
         
     }
     
@@ -262,59 +280,6 @@ public class GestorController implements Initializable {
                 System.out.println("ERRO");
             
             
-        }catch(NumberFormatException ex){
-            System.out.println("ERRRO");
-        }
-    }
-    
-    public void editArtigo(){
-        if(artigos.getSelectionModel().isEmpty())
-            erro.setText("Selecione um artigo");
-        else{
-            updateArtigo = artigos.getSelectionModel().getSelectedItem();
-            
-            switchScene("editarProduto");
-            
-            prodNome.setText(updateArtigo.getNome().getValue());
-            prodDescricao.setText(updateArtigo.getDescricao().getValue());
-            prodPreco.setText(updateArtigo.getPreco().getValue().toString());
-        }
-    }
-    
-    public void confirmEditArtigo(){
-        try{
-            float preco = Float.parseFloat(prodPreco.getText().replaceAll(",", "."));
-            boolean existeN = false;
-            
-            for(classes.Artigo t : classes.Artigo.readAll()){
-                if(t.getNome().equals(prodNome.getText()) && !(t.getNome().equals(updateArtigo.getNome().getValue()))){
-                    //erro.setText("Nome em uso");
-                    existeN = true;
-                }                          
-            }
-
-            if(!(prodNome.getText().isEmpty() || prodDescricao.getText().isEmpty() || preco <= 0) && !existeN){
-            
-                for(Artigo a : app.artigoList){
-                    if (a.getCodigo() == updateArtigo.getCodigo()){
-                        a.setPreco(preco);
-                        a.setDescricao(prodDescricao.getText());
-                        a.setNome(prodNome.getText());
-
-                        artigos.refresh();
-                        for(classes.Artigo art: classes.Artigo.readAll()){
-                            if(a.getCodigo().getValue() == art.getCodigo()){
-                                art.update(art.getCodigo(), preco, prodDescricao.getText(), prodNome.getText());
-                            }
-                        }
-                    }
-                }
-                
-                pop(); 
-            }
-            else
-                System.out.println("erro");
-                               
         }catch(NumberFormatException ex){
             System.out.println("ERRRO");
         }
