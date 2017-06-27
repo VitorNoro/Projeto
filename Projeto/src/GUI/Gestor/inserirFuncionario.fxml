@@ -39,31 +39,23 @@
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="29.0" layoutY="161.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="389.0" prefWidth="95.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nome">
-                           <VBox.margin>
-                              <Insets top="50.0" />
-                           </VBox.margin>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Morada">
-                           <VBox.margin>
-                              <Insets top="40.0" />
-                           </VBox.margin>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Telefone">
-                           <VBox.margin>
-                              <Insets top="110.0" />
-                           </VBox.margin>
-                        </Text>
-                        <Label text="Função">
-                           <VBox.margin>
-                              <Insets top="30.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
+                     <children>
+                        <AnchorPane prefHeight="389.0" prefWidth="113.0">
+                           <children>
+                              <Label layoutX="51.0" layoutY="48.0" text="Nome" />
+                              <Label layoutX="28.0" layoutY="106.0" text="Descrição" />
+                              <Label layoutX="38.0" layoutY="243.0" text="Telefone">
+                                 <padding>
+                                    <Insets right="5.0" />
+                                 </padding>
+                              </Label>
+                              <Label layoutX="45.0" layoutY="295.0" text="Função" />
+                           </children>
+                        </AnchorPane>
+                     </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" prefHeight="434.0" prefWidth="465.0" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="109.0">
                      <children>
@@ -83,7 +75,7 @@
                         <Insets />
                      </opaqueInsets>
                   </VBox>
-                  <VBox layoutX="366.0" layoutY="540.0" prefHeight="53.0" prefWidth="230.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="366.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="540.0">
+                  <VBox layoutX="376.0" layoutY="535.0" prefHeight="53.0" prefWidth="230.0" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="376.0" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="535.0">
                      <children>
                         <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#confirmNewArtigo" prefHeight="33.0" prefWidth="219.0" text="Seguir para Credenciais">
                            <VBox.margin>

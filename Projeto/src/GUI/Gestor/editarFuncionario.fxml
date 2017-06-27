@@ -40,21 +40,13 @@
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="29.0" layoutY="161.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="389.0" prefWidth="95.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Morada">
-                           <VBox.margin>
-                              <Insets top="40.0" />
-                           </VBox.margin>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Telefone">
-                           <VBox.margin>
-                              <Insets top="100.0" />
-                           </VBox.margin>
-                        </Text>
-                        <Label text="Função">
-                           <VBox.margin>
-                              <Insets top="50.0" />
-                           </VBox.margin>
-                        </Label>
+                        <AnchorPane prefHeight="397.0" prefWidth="95.0">
+                           <children>
+                              <Label layoutX="44.0" layoutY="33.0" text="Morada" />
+                              <Label layoutX="38.0" layoutY="163.0" text="Telefone" />
+                              <Label layoutX="48.0" layoutY="232.0" text="Função" />
+                           </children>
+                        </AnchorPane>
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -65,7 +57,7 @@
                         <AnchorPane prefHeight="430.0" prefWidth="465.0">
                            <children>
                               <TextArea fx:id="funcMorada" layoutY="85.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="82.0" prefWidth="465.0" styleClass="text-field" />
-                              <TextField fx:id="funcTelefone" layoutX="-3.0" layoutY="215.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                              <TextField fx:id="funcTelefone" layoutY="213.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
                               <ComboBox layoutX="-3.0" layoutY="278.0" prefHeight="31.0" prefWidth="216.0" />
                               <Label layoutX="-3.0" layoutY="167.0" styleClass="erro" />
                               <Label layoutX="-3.0" layoutY="246.0" styleClass="erro" />
