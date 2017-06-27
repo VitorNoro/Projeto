@@ -240,7 +240,7 @@ public class GestorController implements Initializable {
             boolean existeN = false;
             
             for(classes.Artigo t : classes.Artigo.readAll()){
-                if(t.getNome().equals(prodNome.getText())){
+                if(t.getNome().equals(prodNome.getText()) && !(t.getNome().equals(updateArtigo.getNome().getValue()))){
                     //erro.setText("Nome em uso");
                     existeN = true;
                 }                          

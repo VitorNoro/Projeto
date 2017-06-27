@@ -54,8 +54,8 @@ public class Venda implements Serializable {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public float getTotal() {
-        return total.getValue();
+    public FloatProperty getTotal() {
+        return total;
     }
 
     public void setTotal(Float total) {

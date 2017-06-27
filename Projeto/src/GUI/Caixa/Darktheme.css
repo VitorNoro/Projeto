@@ -5,21 +5,18 @@
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
 .label-header {
     -fx-font-size: 32pt;
     -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
@@ -349,8 +346,7 @@
 -fx-text-fill: #ff704d;
 }
 .titled-pane > .title 
-{  
-    -fx-padding: 5 22 5 50;   
+{    
     -fx-border-color: white;
     -fx-border-width: 2;
     -fx-background-radius: 0;

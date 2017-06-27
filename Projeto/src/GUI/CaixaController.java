@@ -18,6 +18,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -57,9 +58,7 @@ public class CaixaController implements Initializable {
     @FXML
     private TableColumn<LinhaArtigo, String> nomeArtLinha;
     @FXML
-    private TableView<Venda> venda;
-    @FXML
-    private TableColumn<Venda, Float> total;
+    private Label total;
     @FXML
     private TextField filterLinhaField;
     
@@ -121,12 +120,12 @@ public class CaixaController implements Initializable {
         quantArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(5)); // w * 1/4
         nomeArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(3)); // w * 1/4
         
-        classes.Venda venda = new classes.Venda();
-        venda.createT();
+        classes.Venda vendaBD = new classes.Venda();
+        vendaBD.createT();
         
         Venda vendaFX = new Venda();
-        vendaFX.setCodigo(venda.getCodigo());
-        vendaFX.setTotal(venda.getTotal());
+        vendaFX.setCodigo(vendaBD.getCodigo());
+        vendaFX.setTotal(vendaBD.getTotal());
         
         
         ObservableList<LinhaArtigo> linhasVenda = FXCollections.observableArrayList(vendaFX.getLinhaartigoCollection());
@@ -169,6 +168,8 @@ public class CaixaController implements Initializable {
         precoLinha.prefWidthProperty().bind(linhas.widthProperty().divide(5)); // w * 1/4
         quantLinha.prefWidthProperty().bind(linhas.widthProperty().divide(5)); // w * 1/4
         nomeArtLinha.prefWidthProperty().bind(linhas.widthProperty().divide(3)); // w * 1/4
+        
+        total.setText(vendaFX.getTotal().getValue().toString());
     }
     
     public void endSession(){
