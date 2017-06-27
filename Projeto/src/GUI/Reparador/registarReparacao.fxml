@@ -48,9 +48,9 @@
          <children>
             <AnchorPane prefHeight="221.0" prefWidth="354.0">
                <children>
-                  <TextField fx:id="prodPreco" layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
-                  <TextField fx:id="prodPreco1" layoutY="183.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
-                  <TextField fx:id="prodPreco2" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                  <TextField layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                  <TextField layoutY="183.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                  <TextField layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
                </children>
             </AnchorPane>
          </children>

@@ -38,7 +38,7 @@
          <children>
             <AnchorPane prefHeight="221.0" prefWidth="337.0">
                <children>
-                  <TextField fx:id="prodPreco1" layoutY="111.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                  <TextField layoutY="111.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
                </children>
             </AnchorPane>
          </children>
