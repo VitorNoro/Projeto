@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CaixaController">
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@Darktheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CaixaController">
    <children>
       <VBox layoutY="100.0" maxHeight="300.0" minHeight="300.0" prefHeight="300.0" prefWidth="278.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
          <opaqueInsets>
@@ -40,8 +39,4 @@
          </children>
       </VBox>
    </children>
-   <stylesheets>
-      <URL value="@../../../../../../../Desktop/Darktheme.css" />
-      <URL value="@../Gestor/Darktheme.css" />
-   </stylesheets>
 </AnchorPane>

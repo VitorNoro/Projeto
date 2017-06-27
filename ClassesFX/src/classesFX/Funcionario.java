@@ -51,56 +51,56 @@ public class Funcionario implements Serializable {
         this.password = new SimpleStringProperty(password);
     }
 
-    public Integer getCodigo() {
-        return codigo.getValue();
+    public IntegerProperty getCodigo() {
+        return codigo;
     }
 
     public void setCodigo(Integer codigo) {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public String getNome() {
-        return nome.getValue();
+    public StringProperty getNome() {
+        return nome;
     }
 
     public void setNome(String nome) {
         this.nome = new SimpleStringProperty(nome);
     }
 
-    public String getContacto() {
-        return contacto.getValue();
+    public StringProperty getContacto() {
+        return contacto;
     }
 
     public void setContacto(String contacto) {
         this.contacto = new SimpleStringProperty(contacto);
     }
 
-    public String getMorada() {
-        return morada.getValue();
+    public StringProperty getMorada() {
+        return morada;
     }
 
     public void setMorada(String morada) {
         this.morada = new SimpleStringProperty(morada);
     }
 
-    public String getFuncao() {
-        return funcao.getValue();
+    public StringProperty getFuncao() {
+        return funcao;
     }
 
     public void setFuncao(String funcao) {
         this.funcao = new SimpleStringProperty(funcao);
     }
     
-    public String getUsername() {
-        return username.getValue();
+    public StringProperty getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
         this.username = new SimpleStringProperty(username);
     }
     
-    public String getPassword() {
-        return password.getValue();
+    public StringProperty getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {

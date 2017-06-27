@@ -8,21 +8,26 @@ package GUI;
 import classesFX.Artigo;
 import GUI.Gestor.MainScene;
 import GUI.Gestor.Scene;
+import classesFX.Funcionario;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -45,6 +50,20 @@ public class GestorController implements Initializable {
     private TableColumn<Artigo, String> nomeArtigos;
     @FXML
     private TableColumn<Artigo, String> descArtigos;
+    @FXML
+    private TableView<Funcionario> funcionarios;
+    @FXML
+    private TableColumn<Funcionario, Integer> codFuncionarios;
+    @FXML
+    private TableColumn<Funcionario, String> nomeFuncionarios;
+    @FXML
+    private TableColumn<Funcionario, String> moradaFuncionarios;
+    @FXML
+    private TableColumn<Funcionario, String> contactoFuncionarios;
+    @FXML
+    private TableColumn<Funcionario, String> funcaoFuncionarios;
+    @FXML
+    private TableColumn<Funcionario, String> userFuncionarios;
     @FXML
     private TextField filterField;
     @FXML
@@ -72,10 +91,12 @@ public class GestorController implements Initializable {
     private TextField funcUser;
     @FXML
     private TextField funcPass;
+    @FXML
+    private ComboBox combo;
     
     Main app = new Main();
     Artigo updateArtigo;
-    
+    classes.Funcionario newFunc;
     /**
      * Initializes the controller class.
      */
@@ -101,6 +122,30 @@ public class GestorController implements Initializable {
         quantArtigos.setCellValueFactory(cellData -> cellData.getValue().getQuantidade().asObject());
         nomeArtigos.setCellValueFactory(cellData -> cellData.getValue().getNome());
         descArtigos.setCellValueFactory(cellData -> cellData.getValue().getDescricao());
+        
+        nomeArtigos.setCellFactory(TextFieldTableCell.forTableColumn());
+        nomeArtigos.setOnEditCommit(
+            new EventHandler<CellEditEvent<Artigo, String>>() {
+                @Override
+                public void handle(CellEditEvent<Artigo, String> t) {
+                    ((Artigo) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setNome(t.getNewValue());
+                }
+            }
+        );
+
+        descArtigos.setCellFactory(TextFieldTableCell.forTableColumn());
+        descArtigos.setOnEditCommit(
+            new EventHandler<CellEditEvent<Artigo, String>>() {
+                @Override
+                public void handle(CellEditEvent<Artigo, String> t) {
+                    ((Artigo) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setNome(t.getNewValue());
+                }
+            }
+        );
         
         FilteredList<Artigo> filteredData = new FilteredList<>(app.artigoList, p -> true);
 
@@ -138,6 +183,8 @@ public class GestorController implements Initializable {
         quantArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(5)); // w * 1/4
         nomeArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(3)); // w * 1/4
         descArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(4)); // w * 1/4
+        
+        
     }
     
     public void deleteProduto(){
@@ -273,13 +320,117 @@ public class GestorController implements Initializable {
         }
     }
     
+    public void funcs(){
+        switchScene("listarFuncionarios");
+        
+        codFuncionarios.setCellValueFactory(cellData -> cellData.getValue().getCodigo().asObject());
+        nomeFuncionarios.setCellValueFactory(cellData -> cellData.getValue().getNome());
+        moradaFuncionarios.setCellValueFactory(cellData -> cellData.getValue().getMorada());
+        contactoFuncionarios.setCellValueFactory(cellData -> cellData.getValue().getContacto());
+        funcaoFuncionarios.setCellValueFactory(cellData -> cellData.getValue().getFuncao());
+        userFuncionarios.setCellValueFactory(cellData -> cellData.getValue().getUsername());
+        
+        FilteredList<Funcionario> filteredData = new FilteredList<>(app.funcList, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(funcionario -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (funcionario.getNome().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } 
+                
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(funcionarios.comparatorProperty());
+        
+        funcionarios.setItems(sortedData);
+        
+        funcionarios.getSelectionModel().selectFirst();
+        
+        codFuncionarios.prefWidthProperty().bind(funcionarios.widthProperty().divide(10)); // w * 1/4
+        nomeFuncionarios.prefWidthProperty().bind(funcionarios.widthProperty().divide(5)); // w * 1/4
+        moradaFuncionarios.prefWidthProperty().bind(funcionarios.widthProperty().divide(4)); // w * 1/4
+        contactoFuncionarios.prefWidthProperty().bind(funcionarios.widthProperty().divide(8)); // w * 1/4
+        funcaoFuncionarios.prefWidthProperty().bind(funcionarios.widthProperty().divide(8)); // w * 1/4
+        userFuncionarios.prefWidthProperty().bind(funcionarios.widthProperty().divide(5)); // w * 1/4
+        
+    }
+    
     public void newFunc(){
         switchScene("inserirFuncionario");
+        
+        combo.getItems().clear();
+        combo.getItems().addAll("Gestor", "Caixa", "Reparação");
     }
     
     public void newFunc2(){
-        switchScene("inserirCredenciaisFuncionario");
+        
+        newFunc = new classes.Funcionario();
+        
+        for(classes.Funcionario f : classes.Funcionario.readAll()){
+            if(!(funcNome.getText().isEmpty() || funcMorada.getText().isEmpty() || funcTelefone.getText().isEmpty() || combo.getSelectionModel().isEmpty())){
+                newFunc.setNome(funcNome.getText());
+                newFunc.setMorada(funcMorada.getText());
+                newFunc.setContacto(funcTelefone.getText());
+                newFunc.setFuncao(funcFuncao.getText());
+         
+                switchScene("inserirCredenciaisFuncionario");
+            }
+            else
+                System.out.println("ERRO"); 
+        
+        }
     }
+    
+    public void confirmNewFunc(){
+        boolean existeU = false;
+        
+            for(classes.Funcionario f : classes.Funcionario.readAll()){
+                if(f.getNome().equals(funcUser.getText())){
+                    //erro.setText("Nome em uso");
+                    existeU = true;
+                }                          
+            }
+            
+            if(!(funcUser.getText().isEmpty() || funcPass.getText().isEmpty()) && !existeU){
+                newFunc.setUsername(funcUser.getText());
+                newFunc.setPassword(funcPass.getText());
+
+                newFunc.createT();
+
+                Funcionario temp = new Funcionario();
+
+                temp.setCodigo(newFunc.getCodigo());
+                temp.setNome(newFunc.getNome());
+                temp.setMorada(newFunc.getMorada());
+                temp.setContacto(newFunc.getContacto());
+                temp.setFuncao(newFunc.getFuncao());
+                temp.setUsername(newFunc.getUsername());
+                temp.setPassword(newFunc.getPassword());
+
+                app.funcList.add(temp);
+
+                funcs();
+            }
+            else
+                System.out.println("ERRO");
+    }
+    
+    
     
     public void endSession(){
         app.gotoLogin();

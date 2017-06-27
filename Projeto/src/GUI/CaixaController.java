@@ -12,6 +12,8 @@ import classesFX.LinhaArtigo;
 import classesFX.Venda;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -170,6 +172,18 @@ public class CaixaController implements Initializable {
         nomeArtLinha.prefWidthProperty().bind(linhas.widthProperty().divide(3)); // w * 1/4
         
         total.setText(vendaFX.getTotal().getValue().toString());
+    }
+    
+    public void adicionar(){
+        app.gotoLogin();
+    }
+    
+    public void remover(){
+        app.gotoLogin();
+    }
+    
+    public void removerTudo(){
+        app.gotoLogin();
     }
     
     public void endSession(){
