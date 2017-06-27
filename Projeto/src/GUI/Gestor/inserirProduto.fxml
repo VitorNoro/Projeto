@@ -5,74 +5,91 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="662.0" styleClass="fundoclaro" stylesheets="@Darktheme.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="662.0" styleClass="fundoclaro" stylesheets="@Darktheme.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="1.0" layoutY="41.0" prefHeight="48.0" prefWidth="662.0" AnchorPane.bottomAnchor="555.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="41.0">
+      <GridPane layoutX="14.0" layoutY="-1.0" prefHeight="600.0" prefWidth="650.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adicionar produto">
-               <font>
-                  <Font size="30.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="36.0" layoutY="154.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="389.0" prefWidth="95.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nome">
-               <VBox.margin>
-                  <Insets right="30.0" top="50.0" />
-               </VBox.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Descrição">
-               <VBox.margin>
-                  <Insets right="10.0" top="40.0" />
-               </VBox.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Preço">
-               <VBox.margin>
-                  <Insets right="35.0" top="105.0" />
-               </VBox.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade">
-               <VBox.margin>
-                  <Insets top="50.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="131.0" layoutY="109.0" prefHeight="434.0" prefWidth="465.0" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="109.0">
-         <children>
-            <AnchorPane prefHeight="430.0" prefWidth="465.0">
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TextField fx:id="prodNome" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="465.0" style="-fx-background-color: #ffffff;" />
-                  <TextArea fx:id="prodDescricao" layoutY="155.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="82.0" prefWidth="465.0" styleClass="text-field" />
-                  <TextField fx:id="prodQuantidade" layoutX="1.0" layoutY="344.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" />
-                  <TextField fx:id="prodPreco" layoutY="276.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                  <VBox alignment="TOP_CENTER" prefHeight="48.0" prefWidth="662.0" AnchorPane.bottomAnchor="555.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="41.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adicionar produto">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Text>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" layoutX="29.0" layoutY="161.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="389.0" prefWidth="95.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nome">
+                           <VBox.margin>
+                              <Insets right="30.0" top="50.0" />
+                           </VBox.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Descrição">
+                           <VBox.margin>
+                              <Insets right="10.0" top="40.0" />
+                           </VBox.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Preço">
+                           <VBox.margin>
+                              <Insets right="35.0" top="105.0" />
+                           </VBox.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade">
+                           <VBox.margin>
+                              <Insets top="50.0" />
+                           </VBox.margin>
+                        </Text>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="434.0" prefWidth="465.0" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="109.0">
+                     <children>
+                        <AnchorPane prefHeight="430.0" prefWidth="465.0">
+                           <children>
+                              <TextField fx:id="prodNome" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="465.0" style="-fx-background-color: #ffffff;" />
+                              <TextArea fx:id="prodDescricao" layoutY="155.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="82.0" prefWidth="465.0" styleClass="text-field" />
+                              <TextField fx:id="prodQuantidade" layoutX="1.0" layoutY="344.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" />
+                              <TextField fx:id="prodPreco" layoutY="276.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+                  <VBox prefHeight="61.0" prefWidth="186.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="477.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="543.0">
+                     <children>
+                        <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#confirmNewArtigo" text="Adicionar">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
          </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </VBox>
-      <VBox layoutX="477.0" layoutY="543.0" prefHeight="61.0" prefWidth="186.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="477.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="543.0">
-         <children>
-            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#confirmNewArtigo" text="Adicionar">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
+      </GridPane>
    </children>
 </fx:root>
