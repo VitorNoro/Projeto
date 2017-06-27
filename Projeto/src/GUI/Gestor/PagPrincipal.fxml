@@ -19,9 +19,9 @@
          <children>
             <Accordion maxHeight="300.0" maxWidth="350.0" VBox.vgrow="ALWAYS">
               <panes>
-                <TitledPane animated="false" maxHeight="240.0" onMousePressed="#pop" text="Gerir produtos">
+                <TitledPane alignment="TOP_LEFT" animated="false" maxHeight="240.0" onMousePressed="#pop" prefHeight="210.0" prefWidth="278.0" text="Produtos">
                   <content>
-                    <AnchorPane maxHeight="230.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white; -fx-opacity: 1;">
+                    <AnchorPane maxHeight="230.0" minHeight="0.0" minWidth="0.0" prefHeight="190.0" prefWidth="200.0" style="-fx-background-color: white; -fx-opacity: 1;">
                            <children>
                               <Button alignment="CENTER" layoutX="2.0" layoutY="66.0" mnemonicParsing="false" onAction="#deleteProduto" prefHeight="33.0" prefWidth="272.0" text="Eliminar produto" />
                               <Button alignment="CENTER" layoutX="-1.0" layoutY="99.0" mnemonicParsing="false" onAction="#addStock" prefHeight="33.0" prefWidth="278.0" text="Adicionar stock" />
@@ -36,7 +36,7 @@
                      </AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" maxHeight="240.0" text="Gerir funcionários">
+                <TitledPane alignment="TOP_LEFT" animated="false" maxHeight="240.0" text="Funcionários">
                   <content>
                     <AnchorPane maxHeight="250.0" minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="272.0">
                            <children>
@@ -47,7 +47,7 @@
                            </children></AnchorPane>
                   </content>
                 </TitledPane>
-                  <TitledPane animated="false" maxHeight="240.0" text="Gerir fornecedores">
+                  <TitledPane alignment="TOP_LEFT" animated="false" maxHeight="240.0" text="Fornecedores">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -56,6 +56,17 @@
                               <Button alignment="CENTER" layoutY="74.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Eliminar fornecedor" />
                               <Button alignment="CENTER" layoutY="107.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Listar fornecedores" />
                            </children></AnchorPane>
+                    </content>
+                  </TitledPane>
+                  <TitledPane alignment="TOP_LEFT" animated="false" prefHeight="219.0" prefWidth="278.0" text="Subscrições">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Button alignment="CENTER" layoutY="7.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="271.0" text="Criar subscrição" />
+                              <Button alignment="CENTER" layoutX="1.0" layoutY="40.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Editar subscrição" />
+                              <Button alignment="CENTER" layoutY="73.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Eliminar subscrição" />
+                           </children>
+                        </AnchorPane>
                     </content>
                   </TitledPane>
               </panes>
