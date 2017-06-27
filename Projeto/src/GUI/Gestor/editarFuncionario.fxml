@@ -7,91 +7,87 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="662.0" styleClass="fundoclaro" stylesheets="@Darktheme.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="662.0" styleClass="fundoclaro" stylesheets="@Darktheme.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="1.0" layoutY="41.0" prefHeight="48.0" prefWidth="662.0" AnchorPane.bottomAnchor="555.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="41.0">
+      <GridPane layoutX="14.0" layoutY="-1.0" prefHeight="600.0" prefWidth="650.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Editar funcionário">
-               <font>
-                  <Font size="30.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Text>
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="48.0" prefWidth="662.0" AnchorPane.bottomAnchor="555.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="41.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Editar funcionário">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Text>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" layoutX="29.0" layoutY="161.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="389.0" prefWidth="95.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Morada">
+                           <VBox.margin>
+                              <Insets top="40.0" />
+                           </VBox.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Telefone">
+                           <VBox.margin>
+                              <Insets top="100.0" />
+                           </VBox.margin>
+                        </Text>
+                        <Label text="Função">
+                           <VBox.margin>
+                              <Insets top="50.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="434.0" prefWidth="465.0" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="109.0">
+                     <children>
+                        <AnchorPane prefHeight="430.0" prefWidth="465.0">
+                           <children>
+                              <TextArea fx:id="funcMorada" layoutY="85.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="82.0" prefWidth="465.0" styleClass="text-field" />
+                              <TextField fx:id="funcTelefone" layoutX="-3.0" layoutY="215.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                              <ComboBox layoutX="-3.0" layoutY="278.0" prefHeight="31.0" prefWidth="216.0" />
+                              <Label layoutX="-3.0" layoutY="167.0" styleClass="erro" />
+                              <Label layoutX="-3.0" layoutY="246.0" styleClass="erro" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+                  <VBox layoutX="506.0" layoutY="540.0" prefHeight="58.0" prefWidth="110.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="506.0" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="540.0">
+                     <children>
+                        <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#confirmNewArtigo" text="Editar">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
          </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="42.0" layoutY="156.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="389.0" prefWidth="95.0" AnchorPane.bottomAnchor="99.0" AnchorPane.leftAnchor="42.0" AnchorPane.rightAnchor="525.0" AnchorPane.topAnchor="156.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Morada">
-               <VBox.margin>
-                  <Insets top="30.0" />
-               </VBox.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Telefone">
-               <VBox.margin>
-                  <Insets top="100.0" />
-               </VBox.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Função">
-               <VBox.margin>
-                  <Insets top="30.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="131.0" layoutY="162.0" prefHeight="160.0" prefWidth="424.0" AnchorPane.bottomAnchor="322.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="107.0" AnchorPane.topAnchor="162.0">
-         <children>
-            <TextArea fx:id="funcMorada" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="104.0" prefWidth="401.0" styleClass="text-field">
-               <VBox.margin>
-                  <Insets right="20.0" top="20.0" />
-               </VBox.margin>
-            </TextArea>
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </VBox>
-      <VBox alignment="CENTER" layoutX="473.0" layoutY="505.0" prefHeight="133.0" prefWidth="175.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="473.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="505.0">
-         <children>
-            <Button mnemonicParsing="false" text="Editar">
-               <VBox.margin>
-                  <Insets left="65.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="131.0" layoutY="302.0" prefHeight="68.0" prefWidth="154.0" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="377.0" AnchorPane.topAnchor="302.0">
-         <children>
-            <TextField fx:id="funcTelefone" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
-            <ComboBox fx:id="funcFuncao" prefWidth="150.0">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </ComboBox>
-         </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="299.0" layoutY="372.0" prefHeight="82.0" prefWidth="41.0" AnchorPane.bottomAnchor="284.0" AnchorPane.leftAnchor="551.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="200.0">
-         <children>
-            <Label style="-fx-text-fill: red;" styleClass="thick" stylesheets="@Darktheme.css" />
-         </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="291.0" layoutY="304.0" prefHeight="160.0" prefWidth="52.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="291.0" AnchorPane.rightAnchor="319.0" AnchorPane.topAnchor="304.0">
-         <children>
-            <Label style="-fx-text-fill: red;" styleClass="thick" />
-            <Label style="-fx-text-fill: red;" styleClass="thick">
-               <VBox.margin>
-                  <Insets top="40.0" />
-               </VBox.margin>
-            </Label>
-         </children>
-      </VBox>
+      </GridPane>
    </children>
 </fx:root>
