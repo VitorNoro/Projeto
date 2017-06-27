@@ -76,7 +76,7 @@ public class ArtigoTest {
         
         assertEquals(teste,readTeste);
         
-        //instance.update(codigo, 15, 15, "update", "update");
+        instance.update(codigo, 15, "update", "update");
         
         teste = new Artigo(codigo, 15, 15, "update", "update");
         
