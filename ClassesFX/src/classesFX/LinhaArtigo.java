@@ -52,16 +52,16 @@ public class LinhaArtigo implements Serializable {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public float getTotal() {
-        return total.getValue();
+    public FloatProperty getTotal() {
+        return total;
     }
 
     public void setTotal(float total) {
         this.total = new SimpleFloatProperty(total);
     }
 
-    public Integer getQuantidade() {
-        return quantidade.getValue();
+    public IntegerProperty getQuantidade() {
+        return quantidade;
     }
 
     public void setQuantidade(Integer quantidade) {

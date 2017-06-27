@@ -155,8 +155,7 @@
     -fx-background: white;
     -fx-background-color: transparent;
     -fx-text-fill: white;
-    -fx-padding: 3 0 2 7;
-    -fx-cell-size: 1.66667em; 
+    -fx-padding: 3 0 2 7; 
 }
 
 .combo-box-popup .list-view 
@@ -166,8 +165,6 @@
     -fx-text-fill: white;
     -fx-background-insets: 0, 1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 0 );
-    -fx-pref-width: 200;
-    -fx-pref-height: 35;
 }    
 
 .combo-box-popup .list-view .list-cell 

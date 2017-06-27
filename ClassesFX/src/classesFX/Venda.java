@@ -34,6 +34,7 @@ public class Venda implements Serializable {
     
 
     public Venda() {
+        linhaartigoCollection = new ArrayList<>();
     }
 
     public Venda(Integer codigo) {
