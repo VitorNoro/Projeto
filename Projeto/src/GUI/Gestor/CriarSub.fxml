@@ -41,9 +41,8 @@
                      <children>
                         <AnchorPane prefHeight="340.0" prefWidth="139.0">
                            <children>
-                              <Label layoutX="30.0" layoutY="59.0" text="Nome" />
-                              <Label layoutX="30.0" layoutY="195.0" text="Mensalidade" />
                               <Label layoutX="30.0" layoutY="117.0" prefHeight="21.0" prefWidth="135.0" text="Fim da subscrição" />
+                              <Label layoutX="66.0" layoutY="184.0" text="Mensalidade" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -56,10 +55,11 @@
                         <AnchorPane prefHeight="500.0" prefWidth="300.0">
                            <children>
                               <TextField fx:id="funcNome" layoutX="54.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="335.0" style="-fx-background-color: #ffffff;" />
-                              <TextField fx:id="funcTelefone" layoutX="54.0" layoutY="232.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                              <TextField fx:id="funcTelefone" layoutX="54.0" layoutY="221.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
                               <DatePicker layoutX="54.0" layoutY="158.0" />
                               <Label layoutX="54.0" layoutY="126.0" styleClass="erro" />
-                              <Label layoutX="55.0" layoutY="263.0" styleClass="erro" />
+                              <Label layoutX="54.0" layoutY="252.0" styleClass="erro" />
+                              <Label layoutY="100.0" text="Nome" />
                            </children>
                         </AnchorPane>
                      </children>
