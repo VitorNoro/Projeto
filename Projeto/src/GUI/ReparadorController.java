@@ -8,6 +8,7 @@ package GUI;
 
 import GUI.Reparador.MainScene;
 import GUI.Reparador.Scene;
+import classesFX.Artigo;
 import classesFX.Cliente;
 import classesFX.Diagnostico;
 import classesFX.Reparacao;
@@ -21,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -50,7 +52,11 @@ public class ReparadorController implements Initializable {
     @FXML
     protected TableColumn<Reparacao, Integer> repDiagnostico;
     @FXML
+    protected TableColumn<Reparacao, String> repCliente;
+    @FXML
     protected TableColumn<Reparacao, Float> repCusto;
+    @FXML
+    private Spinner spinner;
     
     
    
@@ -283,6 +289,108 @@ public class ReparadorController implements Initializable {
         }catch(NumberFormatException ex){
             System.out.println("ERRRO");
         }
+    }
+    
+    public void addReparacao(){
+        if(diagnosticos.getSelectionModel().isEmpty())
+            erro.setText("Selecione um artigo");
+        else{
+            classes.Reparacao rep = new classes.Reparacao();
+            
+            for(classes.Diagnostico d : classes.Diagnostico.readAll()){
+                if(d.getCodigo() == diagnosticos.getSelectionModel().getSelectedItem().getCodigo().getValue())
+                    rep.setDiagnostico(d);
+                for(classes.Cliente c : classes.Cliente.readAll())
+                    if(c.getNumContribuinte() == d.getCliente().getNumContribuinte())
+                        rep.setCliente(c);
+            }
+            
+            rep.setCusto((Float)spinner.getValue());
+
+            rep.createT();
+
+            Reparacao temp = new Reparacao();
+
+            temp.setCodigo(rep.getCodigo());
+            temp.setCusto(rep.getCusto());
+            temp.setCliente(rep.getCliente().getNumContribuinte());
+            temp.setDiagnostico(rep.getDiagnostico().getCodigo());
+
+            app.reparacaoList.add(temp);
+            
+        }
+    }
+    
+    public void reps(){
+        switchScene("listarReparacao");
+        
+        repCodigo.setCellValueFactory(cellData -> cellData.getValue().getCodigo().asObject());
+        repCliente.setCellValueFactory(cellData -> cellData.getValue().getCliente());
+        repDiagnostico.setCellValueFactory(cellData -> cellData.getValue().getDiagnostico().asObject());
+        repCusto.setCellValueFactory(cellData -> cellData.getValue().getCusto().asObject());
+        
+        
+         repCusto.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter(){
+            @Override
+            public Float fromString(String value) {
+                try {
+                    if(Float.parseFloat(value.replaceAll(",", ".")) > 0)
+                        return Float.parseFloat(value.replaceAll(",", "."));
+                    else
+                        return Float.NaN;
+                } catch(NumberFormatException e) {
+                    return Float.NaN;
+                }
+            }
+        }));
+        
+        repCusto.setOnEditCommit(t -> {            
+            if(t.getNewValue().isNaN()) {
+                erro.setText("ERRO");
+                t.getRowValue().setCusto(t.getOldValue());
+            } else {
+                t.getRowValue().setCusto(t.getNewValue());
+                classes.Reparacao.update(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+            }
+            reparacoes.refresh();
+        });
+           
+        FilteredList<Reparacao> filteredData = new FilteredList<>(app.reparacaoList, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(reparacao -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (reparacao.getCliente().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } 
+                
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(reparacoes.comparatorProperty());
+        
+        reparacoes.setItems(sortedData);
+        
+        reparacoes.getSelectionModel().selectFirst();
+         
+        repCodigo.prefWidthProperty().bind(reparacoes.widthProperty().divide(4)); // w * 1/4
+        repCliente.prefWidthProperty().bind(reparacoes.widthProperty().divide(4)); // w * 1/4
+        repDiagnostico.prefWidthProperty().bind(reparacoes.widthProperty().divide(4)); // w * 1/4
+        repCusto.prefWidthProperty().bind(reparacoes.widthProperty().divide(4)); // w * 1/4  
+             
     }
     
     public void endSession(){
