@@ -32,7 +32,7 @@ public class Manutencao implements Serializable {
     private Collection<Subscricao> subscricaoCollection;
 
 
-    private Subscricao subscricao;
+    private StringProperty subscricao;
 
     
     public Manutencao() {
@@ -48,32 +48,32 @@ public class Manutencao implements Serializable {
         this.dataAgendada = new SimpleObjectProperty(dataAgendada);
     }
 
-    public Integer getCodigo() {
-        return codigo.getValue();
+    public IntegerProperty  getCodigo() {
+        return codigo;
     }
 
     public void setCodigo(Integer codigo) {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public String getEquipamento() {
-        return equipamento.getValue();
+    public StringProperty  getEquipamento() {
+        return equipamento;
     }
 
     public void setEquipamento(String equipamento) {
         this.equipamento = new SimpleStringProperty(equipamento);
     }
 
-    public String getLocalizacao() {
-        return localizacao.getValue();
+    public StringProperty getLocalizacao() {
+        return localizacao;
     }
 
     public void setLocalizacao(String localizacao) {
         this.localizacao = new SimpleStringProperty(localizacao);
     }
 
-    public Date getDataAgendada() {
-        return dataAgendada.getValue();
+    public ObjectProperty<Date> getDataAgendada() {
+        return dataAgendada;
     }
 
     public void setDataAgendada(Date dataAgendada) {
@@ -89,12 +89,12 @@ public class Manutencao implements Serializable {
         this.subscricaoCollection = subscricaoCollection;
     }
 
-    public Subscricao getSubscricao() {
+    public StringProperty getSubscricao() {
         return subscricao;
     }
 
-    public void setSubscricao(Subscricao subscricao) {
-        this.subscricao = subscricao;
+    public void setSubscricao(String subscricao) {
+        this.subscricao = new SimpleStringProperty(subscricao);
     }
 
     @Override

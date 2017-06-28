@@ -205,7 +205,7 @@ public class Manutencao implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void update(Integer codigo, String equipamento, String localizacao, Date dataAgendada){
+    public static void updateEquipamento(Integer codigo, String equipamento){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Manutencao.findByCodigo");
         query.setParameter("codigo", codigo);
@@ -214,10 +214,33 @@ public class Manutencao implements Serializable {
  
         em.getTransaction().begin();
         man.setEquipamento(equipamento);
+        em.getTransaction().commit();
+
+    }
+    
+    public static void updateLocalizacao(Integer codigo, String localizacao){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Manutencao.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Manutencao man = (Manutencao)query.getSingleResult();
+ 
+        em.getTransaction().begin();
         man.setLocalizacao(localizacao);
+        em.getTransaction().commit();
+
+    }
+    
+    public static void updateData(Integer codigo, Date dataAgendada){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Manutencao.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Manutencao man = (Manutencao)query.getSingleResult();
+ 
+        em.getTransaction().begin();
         man.setDataAgendada(dataAgendada);
         em.getTransaction().commit();
-        this.read(codigo);
 
     }
     

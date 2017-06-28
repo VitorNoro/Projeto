@@ -13,10 +13,13 @@ import classes.Venda;
 import classesFX.Artigo;
 import classesFX.Cliente;
 import classesFX.Diagnostico;
+import classesFX.Manutencao;
 import classesFX.Reparacao;
+import classesFX.Subscricao;
 import static java.awt.SystemColor.info;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -74,7 +77,14 @@ public class ReparadorController implements Initializable {
     protected TextField newDiagEquipamento;
     
     
-    
+    @FXML
+    protected TableView<Subscricao> subscricao;
+    @FXML
+    protected TableColumn<Subscricao, Integer> codSubscricao;
+    @FXML
+    protected TableColumn<Subscricao, String> nomeSubscricao;
+    @FXML
+    protected TableColumn<Subscricao, String> clienteSubscricao;
     
     
     
@@ -95,8 +105,26 @@ public class ReparadorController implements Initializable {
     @FXML
     protected Label erro;
     
+    @FXML
+    protected TextField manEquipamento;
+    @FXML
+    protected TextArea manLocalizacao;
+    @FXML
+    protected DatePicker manData;
     
-    
+    @FXML
+    protected TableView<Manutencao> manutencoes;
+    @FXML
+    protected TableColumn<Manutencao, Integer> manutencaoCodigo;
+    @FXML
+    protected TableColumn<Manutencao, String> manutencaoEquipamento;
+    @FXML
+    protected TableColumn<Manutencao, String> manutencaoLocalizacao;
+    @FXML
+    protected TableColumn<Manutencao, Date> manutencaoData;
+    @FXML
+    protected TableColumn<Manutencao, String> manutencaoSubscricao;
+     
     
     @FXML
     protected TableView<Cliente> clientes;
@@ -106,6 +134,8 @@ public class ReparadorController implements Initializable {
     protected TableColumn<Cliente, String> clienteNome;
     @FXML
     protected TableColumn<Cliente, String> clienteContacto;
+    
+    private Date hoje = new Date();
     
     /**
      * Initializes the controller class.
@@ -463,6 +493,174 @@ public class ReparadorController implements Initializable {
                     break;
                 }
             }
+        }
+    }
+    
+    public void mans(){
+        switchScene("listarManutencoes");
+        
+        Callback<TableColumn<Manutencao, Date>, TableCell<Manutencao, Date>> dateCellFactory
+                = (TableColumn<Manutencao, Date> param) -> new ManDateEditingCell();
+        
+        manutencaoCodigo.setCellValueFactory(cellData -> cellData.getValue().getCodigo().asObject());
+        manutencaoEquipamento.setCellValueFactory(cellData -> cellData.getValue().getEquipamento());
+        manutencaoLocalizacao.setCellValueFactory(cellData -> cellData.getValue().getLocalizacao());
+        manutencaoData.setCellValueFactory(cellData -> cellData.getValue().getDataAgendada());
+        manutencaoSubscricao.setCellValueFactory(cellData -> cellData.getValue().getSubscricao());
+        
+        
+        manutencaoEquipamento.setCellFactory(TextFieldTableCell.forTableColumn());
+        manutencaoEquipamento.setOnEditCommit((TableColumn.CellEditEvent<Manutencao, String> t) -> {
+                ((Manutencao) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setEquipamento(t.getNewValue());
+                
+                classes.Manutencao.updateEquipamento(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+        });
+
+        manutencaoData.setCellValueFactory(cellData -> cellData.getValue().getDataAgendada());
+        manutencaoData.setCellFactory(dateCellFactory);
+        manutencaoData.setOnEditCommit(
+                (TableColumn.CellEditEvent<Manutencao, Date> t) -> {
+                    ((Manutencao) t.getTableView().getItems()
+                    .get(t.getTablePosition().getRow()))
+                    .setDataAgendada(t.getNewValue());
+                    
+                    classes.Manutencao.updateData(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+                });
+        
+        manutencaoLocalizacao.setCellFactory(TextFieldTableCell.forTableColumn());
+        manutencaoLocalizacao.setOnEditCommit((TableColumn.CellEditEvent<Manutencao, String> t) -> {
+                ((Manutencao) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setLocalizacao(t.getNewValue());
+                
+                classes.Manutencao.updateLocalizacao(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+        });
+        
+        FilteredList<Manutencao> filteredData = new FilteredList<>(app.manutencaoList, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(manutencao -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (manutencao.getSubscricao().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } 
+                
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(manutencoes.comparatorProperty());
+        
+        manutencoes.setItems(sortedData);
+        
+        manutencoes.getSelectionModel().selectFirst();
+        
+        manutencaoCodigo.prefWidthProperty().bind(manutencoes.widthProperty().divide(8)); // w * 1/4
+        manutencaoEquipamento.prefWidthProperty().bind(manutencoes.widthProperty().divide(5)); // w * 1/4
+        manutencaoLocalizacao.prefWidthProperty().bind(manutencoes.widthProperty().divide(4)); // w * 1/4
+        manutencaoData.prefWidthProperty().bind(manutencoes.widthProperty().divide(5)); // w * 1/4
+        manutencaoSubscricao.prefWidthProperty().bind(manutencoes.widthProperty().divide(5)); // w * 1/4
+        
+    }
+    
+    public void newManutencao(){
+        switchScene("adicionarManutencao");
+        
+        codSubscricao.setCellValueFactory(cellData -> cellData.getValue().getCodigo().asObject());
+        nomeSubscricao.setCellValueFactory(cellData -> cellData.getValue().getNome());
+        clienteSubscricao.setCellValueFactory(cellData -> cellData.getValue().getCliente());
+        
+        FilteredList<Subscricao> filteredData = new FilteredList<>(app.subscricaoList, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(subscricao -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (subscricao.getNome().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } 
+                
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(subscricao.comparatorProperty());
+        
+        subscricao.setItems(sortedData);
+        
+        subscricao.getSelectionModel().selectFirst();
+        
+        codSubscricao.prefWidthProperty().bind(subscricao.widthProperty().divide(4)); // w * 1/4
+        nomeSubscricao.prefWidthProperty().bind(subscricao.widthProperty().divide(2)); // w * 1/4
+        clienteSubscricao.prefWidthProperty().bind(subscricao.widthProperty().divide(4)); // w * 1/4
+    }
+    
+    public void marcarManutencao(){
+        classes.Manutencao man = new classes.Manutencao();
+        try{
+            LocalDate data = manData.getValue();
+            Date date = java.sql.Date.valueOf(data);            
+
+            if(!(manLocalizacao.getText().isEmpty() || hoje.after(date))){
+                man.setEquipamento(manEquipamento.getText());
+                man.setLocalizacao(manLocalizacao.getText());
+                man.setDataAgendada(date);
+                
+                classes.Subscricao sub = new classes.Subscricao();
+                classes.Cliente cli = new classes.Cliente();
+                
+                sub.setNome(subscricao.getSelectionModel().getSelectedItem().getNome().getValueSafe());
+                sub.setCodigo(subscricao.getSelectionModel().getSelectedItem().getCodigo().getValue());
+                cli.setNumContribuinte(subscricao.getSelectionModel().getSelectedItem().getCliente().getValueSafe());
+                
+                sub.setCliente(cli);
+
+                man.setSubscricao(sub);
+                man.createT();
+
+                Manutencao temp = new Manutencao();
+
+                temp.setCodigo(man.getCodigo());
+                temp.setEquipamento(man.getEquipamento());
+                temp.setLocalizacao(man.getLocalizacao());
+                temp.setDataAgendada(man.getDataAgendada());
+                temp.setSubscricao(man.getSubscricao().getNome());
+
+                app.manutencaoList.add(temp);
+
+                mans();
+            }
+            else
+                System.out.println("ERRO");
+            
+            
+        }catch(NumberFormatException ex){
+            System.out.println("ERRRO");
         }
     }
     

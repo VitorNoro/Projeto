@@ -18,11 +18,11 @@ import javafx.scene.control.TableCell;
  *
  * @author v_nor
  */
-public class DateEditingCell extends TableCell<Subscricao, Date> {
+public class SubDateEditingCell extends TableCell<Subscricao, Date> {
 
         private DatePicker datePicker;
 
-        public DateEditingCell() {
+        public SubDateEditingCell() {
         }
 
         @Override

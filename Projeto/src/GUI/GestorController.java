@@ -384,7 +384,7 @@ public class GestorController extends GestorControllerNodes implements Initializ
         switchScene("listarSubscricoes");
         
         Callback<TableColumn<Subscricao, Date>, TableCell<Subscricao, Date>> dateCellFactory
-                = (TableColumn<Subscricao, Date> param) -> new DateEditingCell();
+                = (TableColumn<Subscricao, Date> param) -> new SubDateEditingCell();
         
         subCodigo.setCellValueFactory(cellData -> cellData.getValue().getCodigo().asObject());
         subNome.setCellValueFactory(cellData -> cellData.getValue().getNome());

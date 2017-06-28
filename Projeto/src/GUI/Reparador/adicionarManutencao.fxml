@@ -30,7 +30,7 @@
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="48.0" prefWidth="662.0" AnchorPane.bottomAnchor="555.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="41.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adicionar diagnóstico">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Marcar Manutenção">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -62,16 +62,16 @@
                               <TextArea fx:id="manProblema" layoutX="54.0" layoutY="107.0" prefHeight="67.0" prefWidth="335.0" />
                               <Label layoutX="54.0" layoutY="126.0" styleClass="erro" />
                               <Label layoutX="55.0" layoutY="259.0" styleClass="erro" />
-                              <Label layoutX="93.0" layoutY="270.0" text="Selecione um cliente:" />
+                              <Label layoutX="76.0" layoutY="270.0" text="Selecione uma subscrição:" />
                               <TextField fx:id="filterField" layoutX="274.0" layoutY="265.0" prefHeight="31.0" prefWidth="211.0" promptText="Pesquisar" />
-                              <TableView fx:id="clientes" layoutX="14.0" layoutY="307.0" prefHeight="122.0" prefWidth="476.0">
+                              <TableView fx:id="subscricao" layoutX="14.0" layoutY="307.0" prefHeight="122.0" prefWidth="476.0">
                                  <columns>
-                                    <TableColumn fx:id="clienteContribuinte" prefWidth="229.0" text="NumContribuinte" />
-                                    <TableColumn fx:id="clienteNome" prefWidth="114.0" text="Nome" />
-                                    <TableColumn fx:id="clienteContacto" prefWidth="128.0" text="Contacto" />
+                                    <TableColumn fx:id="codSubscricao" prefWidth="102.0" text="Código" />
+                                    <TableColumn fx:id="nomeSubscricao" prefWidth="202.0" text="Nome" />
+                                    <TableColumn fx:id="clienteSubscricao" prefWidth="235.0" text="Cliente" />
                                  </columns>
                               </TableView>
-                              <DatePicker layoutX="55.0" layoutY="192.0" />
+                              <DatePicker fx:id="manData" layoutX="55.0" layoutY="192.0" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -81,7 +81,7 @@
                   </VBox>
                   <VBox layoutX="541.0" layoutY="583.0" prefHeight="58.0" prefWidth="110.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="541.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="583.0">
                      <children>
-                        <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#confirmNewDiagnostico" text="Marcar">
+                        <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#marcarManutencao" text="Marcar">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>

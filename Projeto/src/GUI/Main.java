@@ -12,6 +12,7 @@ import classesFX.Diagnostico;
 import classesFX.Fatura;
 import classesFX.Fornecedor;
 import classesFX.Funcionario;
+import classesFX.Manutencao;
 import classesFX.Reparacao;
 import java.io.IOException;
 import classesFX.Subscricao;
@@ -39,6 +40,7 @@ public class Main extends Application {
     public static ObservableList<Reparacao> reparacaoList;
     public static ObservableList<Fornecedor> fornecedorList;
     public static ObservableList<Fatura> faturaList;
+    public static ObservableList<Manutencao> manutencaoList;
     
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -153,6 +155,20 @@ public class Main extends Application {
             faturaList.add(temp);
         }
         
+        manutencaoList = FXCollections.observableArrayList();
+
+        for(classes.Manutencao a : classes.Manutencao.readAll()){
+            Manutencao temp = new Manutencao();
+            
+            temp.setCodigo(a.getCodigo());
+            temp.setEquipamento(a.getEquipamento());
+            temp.setLocalizacao(a.getLocalizacao());
+            temp.setDataAgendada(a.getDataAgendada());
+            temp.setSubscricao(a.getSubscricao().getNome());
+            
+
+            manutencaoList.add(temp);
+        }
         
         
         stage = new Stage(); 
