@@ -454,7 +454,7 @@ public class CaixaController implements Initializable {
         else{
             for(Fatura f : app.faturaList){            
                 if (f.getCodigo() == faturas.getSelectionModel().getSelectedItem().getCodigo()){
-                    classes.Fornecedor.delete(f.getCodigo().getValue());
+                    classes.Fatura.delete(f.getCodigo().getValue());
                     app.faturaList.remove(f);
                     break;
                 }

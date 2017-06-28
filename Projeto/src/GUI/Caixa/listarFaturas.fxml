@@ -15,10 +15,10 @@
          <children>
             <TableView fx:id="faturas" editable="true" prefHeight="631.0" prefWidth="650.0">
                <columns>
-                  <TableColumn fx:id="fatCodigo" maxWidth="1.7976931348623157E308" prefWidth="97.0" resizable="false" text="Código" />
-                  <TableColumn fx:id="fatContribuinte" maxWidth="1.7976931348623157E308" prefWidth="126.0" text="Núm.Contribuinte" />
-                  <TableColumn fx:id="fatTotal" maxWidth="1.7976931348623157E308" prefWidth="179.0" text="Total" />
-                  <TableColumn fx:id="fatArtigos" maxWidth="1.7976931348623157E308" minWidth="0.0" resizable="false" text="Artigos" />
+                  <TableColumn fx:id="codFatura" maxWidth="1.7976931348623157E308" prefWidth="97.0" resizable="false" text="Código" />
+                  <TableColumn fx:id="NumContribuinte" maxWidth="1.7976931348623157E308" prefWidth="126.0" text="Núm.Contribuinte" />
+                  <TableColumn fx:id="totalFatura" maxWidth="1.7976931348623157E308" prefWidth="179.0" text="Total" />
+                  <TableColumn fx:id="artigosFatura" maxWidth="1.7976931348623157E308" minWidth="0.0" resizable="false" text="Artigos" />
                </columns>
                <VBox.margin>
                   <Insets />
