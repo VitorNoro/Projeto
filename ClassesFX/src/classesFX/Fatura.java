@@ -31,32 +31,32 @@ public class Fatura implements Serializable {
     private StringProperty artigos;
 
 
-    public Integer getCodigo() {
-        return codigo.getValue();
+    public IntegerProperty getCodigo() {
+        return codigo;
     }
 
     public void setCodigo(Integer codigo) {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public String getNumContribuinte() {
-        return numcontribuinte.getValue();
+    public StringProperty getNumContribuinte() {
+        return numcontribuinte;
     }
 
     public void setNumContribuinte(String numcontribuinte) {
         this.numcontribuinte = new SimpleStringProperty(numcontribuinte);
     }
 
-    public float getTotal() {
-        return total.getValue();
+    public FloatProperty getTotal() {
+        return total;
     }
 
     public void setTotal(float total) {
         this.total = new SimpleFloatProperty(total);
     }
 
-    public String getArtigos() {
-        return artigos.getValue();
+    public StringProperty getArtigos() {
+        return artigos;
     }
 
     public void setArtigos(String artigos) {
