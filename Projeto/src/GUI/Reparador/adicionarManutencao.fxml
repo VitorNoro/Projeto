@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -43,8 +44,9 @@
                      <children>
                         <AnchorPane prefHeight="340.0" prefWidth="194.0">
                            <children>
-                              <Label layoutX="30.0" layoutY="59.0" text="Equipamento" />
-                              <Label layoutX="48.0" layoutY="117.0" prefHeight="21.0" prefWidth="135.0" text="Problemas" />
+                              <Label layoutX="27.0" layoutY="14.0" text="Equipamento" />
+                              <Label layoutX="33.0" layoutY="63.0" prefHeight="21.0" prefWidth="135.0" text="Localização" />
+                              <Label layoutX="53.0" layoutY="149.0" prefHeight="21.0" prefWidth="37.0" text="Data" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -52,23 +54,24 @@
                         <Insets />
                      </opaqueInsets>
                   </VBox>
-                  <VBox alignment="TOP_CENTER" layoutX="97.0" prefHeight="481.0" prefWidth="499.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="97.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="109.0">
+                  <VBox alignment="TOP_CENTER" layoutX="43.0" prefHeight="481.0" prefWidth="553.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="97.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="109.0">
                      <children>
-                        <AnchorPane prefHeight="500.0" prefWidth="300.0">
+                        <AnchorPane prefHeight="481.0" prefWidth="500.0">
                            <children>
-                              <TextField fx:id="newDiagEquipamento" layoutX="54.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="335.0" style="-fx-background-color: #ffffff;" />
-                              <TextArea fx:id="newDiagProblema" layoutX="54.0" layoutY="147.0" prefHeight="112.0" prefWidth="335.0" />
+                              <TextField fx:id="manEquipamento" layoutX="54.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="335.0" style="-fx-background-color: #ffffff;" />
+                              <TextArea fx:id="manProblema" layoutX="54.0" layoutY="107.0" prefHeight="67.0" prefWidth="335.0" />
                               <Label layoutX="54.0" layoutY="126.0" styleClass="erro" />
                               <Label layoutX="55.0" layoutY="259.0" styleClass="erro" />
-                              <Label layoutX="135.0" layoutY="315.0" text="Selecione um cliente:" />
-                              <TextField fx:id="filterField" layoutX="276.0" layoutY="310.0" prefHeight="31.0" prefWidth="211.0" promptText="Pesquisar" />
-                              <TableView fx:id="clientes" layoutX="12.0" layoutY="341.0" prefHeight="122.0" prefWidth="476.0">
+                              <Label layoutX="93.0" layoutY="270.0" text="Selecione um cliente:" />
+                              <TextField fx:id="filterField" layoutX="274.0" layoutY="265.0" prefHeight="31.0" prefWidth="211.0" promptText="Pesquisar" />
+                              <TableView fx:id="clientes" layoutX="14.0" layoutY="307.0" prefHeight="122.0" prefWidth="476.0">
                                  <columns>
                                     <TableColumn fx:id="clienteContribuinte" prefWidth="229.0" text="NumContribuinte" />
                                     <TableColumn fx:id="clienteNome" prefWidth="114.0" text="Nome" />
                                     <TableColumn fx:id="clienteContacto" prefWidth="128.0" text="Contacto" />
                                  </columns>
                               </TableView>
+                              <DatePicker layoutX="55.0" layoutY="192.0" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -78,7 +81,7 @@
                   </VBox>
                   <VBox layoutX="541.0" layoutY="583.0" prefHeight="58.0" prefWidth="110.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="541.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="583.0">
                      <children>
-                        <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#confirmNewDiagnostico" text="Adicionar">
+                        <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#confirmNewDiagnostico" text="Marcar">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
