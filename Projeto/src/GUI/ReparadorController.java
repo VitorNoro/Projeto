@@ -51,6 +51,8 @@ public class ReparadorController implements Initializable {
     protected TableColumn<Reparacao, Integer> repDiagnostico;
     @FXML
     protected TableColumn<Reparacao, Float> repCusto;
+    
+    
    
     
    
