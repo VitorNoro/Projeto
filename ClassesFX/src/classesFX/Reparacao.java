@@ -42,16 +42,16 @@ public class Reparacao implements Serializable {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public Integer getCodigo() {
-        return codigo.getValue();
+    public IntegerProperty getCodigo() {
+        return codigo;
     }
 
     public void setCodigo(Integer codigo) {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public float getCusto() {
-        return custo.getValue();
+    public FloatProperty getCusto() {
+        return custo;
     }
 
     public void setCusto(float custo) {

@@ -194,7 +194,7 @@ public class Reparacao implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void update(Integer codigo, float custo){
+    public static void update(Integer codigo, float custo){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Reparacao.findByCodigo");
         query.setParameter("codigo", codigo);
@@ -202,11 +202,9 @@ public class Reparacao implements Serializable {
         Reparacao rep = (Reparacao)query.getSingleResult();
  
         em.getTransaction().begin();
-        rep.setCusto(custo);
-        
-        
+        rep.setCusto(custo);         
         em.getTransaction().commit();
-        this.read(codigo);
+
 
     }
     
