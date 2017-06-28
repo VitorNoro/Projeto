@@ -588,7 +588,7 @@ public class GestorController extends GestorControllerNodes implements Initializ
     }
     
     
-     public void addFornecedor(){
+    public void addFornecedor(){
         switchScene("adicionarFornecedor");
         
     }
