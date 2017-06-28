@@ -26,7 +26,7 @@
             <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button maxHeight="50.0" maxWidth="300.0" mnemonicParsing="false" onAction="#iniciar" prefWidth="200.0" text="Iniciar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="BtnIniciar" maxHeight="50.0" maxWidth="300.0" mnemonicParsing="false" onAction="#iniciar" prefWidth="200.0" text="Iniciar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <ComboBox fx:id="combo" maxHeight="100.0" prefWidth="150.0" promptText="Selecione a função a realizar" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <TextField fx:id="userName" maxHeight="30.0" maxWidth="350.0" prefWidth="300.0" styleClass="loginField-User" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <PasswordField fx:id="password" maxHeight="30.0" maxWidth="350.0" prefWidth="300.0" styleClass="passField-User" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />

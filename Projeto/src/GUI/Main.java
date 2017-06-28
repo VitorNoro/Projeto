@@ -8,6 +8,7 @@ package GUI;
 
 import classesFX.Artigo;
 import classesFX.Funcionario;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,7 +63,14 @@ public class Main extends Application {
         stage = new Stage(); 
         gotoLogin();
         
+        
+        
     }
+    
+
+    
+    
+    
 
     /**
      * @param args the command line arguments

@@ -7,15 +7,20 @@ package GUI;
 
 
 import classes.Funcionario;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -23,6 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -39,6 +45,9 @@ public class LoginController implements Initializable {
     private TextField userName;
     
     @FXML
+    private Button BtnIniciar;
+    
+    @FXML
     private PasswordField password;
 
     
@@ -48,7 +57,16 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {  
+        // get the file name from which we recently created the scene
+        String fileName = url.getFile().substring(url.getFile().lastIndexOf('/')+1,url.getFile().length());
         
+        if(fileName.equals("PagPrincipal.fxml")){
+            fadeTrans(BtnIniciar);    
+        }
+        
+        
+      
+        //-----------------------------------------------------
         funcs = Funcionario.readAll();
         
         combo.getItems().clear();
@@ -56,7 +74,24 @@ public class LoginController implements Initializable {
         
         userName.setPromptText("Nome de utilizador");
         password.setPromptText("Palavra passe");
-    }    
+    }
+    
+    public void changeScene(javafx.event.ActionEvent event) throws IOException{
+        //carregar no botão para ir para o ecrã do gestor
+        if(event.getSource().equals(BtnIniciar)){
+            application.gotoGestor();
+        }
+    }
+
+    private void fadeTrans(Node e){
+        FadeTransition x = new FadeTransition(new Duration(2000),e);
+        x.setFromValue(0);
+        x.setToValue(100);
+        x.setCycleCount(1);
+        x.setInterpolator(Interpolator.LINEAR);
+        x.play();
+    }
+    
     
     @FXML
     private void iniciar(ActionEvent event) {
