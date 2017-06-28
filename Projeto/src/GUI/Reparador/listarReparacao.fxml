@@ -13,7 +13,7 @@
    <children>
       <VBox layoutY="31.0" prefHeight="427.0" prefWidth="669.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="31.0">
          <children>
-            <TableView fx:id="subscricoes" editable="true" prefHeight="631.0" prefWidth="650.0">
+            <TableView fx:id="reparacoes" editable="true" prefHeight="631.0" prefWidth="650.0">
                <columns>
                   <TableColumn fx:id="repCodigo" maxWidth="1.7976931348623157E308" prefWidth="97.0" resizable="false" text="Código" />
                   <TableColumn fx:id="repCliente" maxWidth="1.7976931348623157E308" prefWidth="126.0" text="Cliente" />
@@ -33,7 +33,7 @@
       </HBox>
       <HBox alignment="TOP_CENTER" layoutX="-50.0" layoutY="-32.0" prefHeight="28.0" prefWidth="275.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="394.0" AnchorPane.topAnchor="5.0">
          <children>
-            <Label fx:id="erro" text="Label" />
+            <Label fx:id="erro" styleClass="erro" />
          </children>
       </HBox>
    </children>
