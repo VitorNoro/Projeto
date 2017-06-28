@@ -13,6 +13,7 @@ import classes.Venda;
 import classesFX.Artigo;
 import classesFX.Cliente;
 import classesFX.Diagnostico;
+import classesFX.Fatura;
 import classesFX.Reparacao;
 import static java.awt.SystemColor.info;
 import java.net.URL;
@@ -106,6 +107,19 @@ public class ReparadorController implements Initializable {
     protected TableColumn<Cliente, String> clienteNome;
     @FXML
     protected TableColumn<Cliente, String> clienteContacto;
+    
+    @FXML
+    protected TableView<Fatura> faturas;
+    @FXML
+    protected TableColumn<Fatura, Integer> codFatura;
+    @FXML
+    protected TableColumn<Fatura, String> NumContribuinte;
+    @FXML
+    protected TableColumn<Fatura, Float> totalFatura;
+    @FXML
+    protected TableColumn<Fatura, String> artigosFatura;
+    @FXML
+    private Label erroFatura;
     
     /**
      * Initializes the controller class.
@@ -468,6 +482,74 @@ public class ReparadorController implements Initializable {
     
     public void endSession(){
         app.gotoLogin();
+    }
+    
+    public void fats(){
+    switchScene("listarFaturas");
+        
+        codFatura.setCellValueFactory(cellData -> cellData.getValue().getCodigo().asObject());
+        NumContribuinte.setCellValueFactory(cellData -> cellData.getValue().getNumContribuinte());
+        totalFatura.setCellValueFactory(cellData -> cellData.getValue().getTotal().asObject());
+        artigosFatura.setCellValueFactory(cellData -> cellData.getValue().getArtigos());
+        
+
+       
+        
+        
+        
+        FilteredList<Fatura> filteredData = new FilteredList<>(app.faturaList, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(fatura -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (fatura.getNumContribuinte().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } 
+                
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(faturas.comparatorProperty());
+        
+        faturas.setItems(sortedData);
+        
+        faturas.getSelectionModel().selectFirst();
+        
+      
+        
+        codFatura.prefWidthProperty().bind(faturas.widthProperty().divide(5)); // w * 1/4
+        NumContribuinte.prefWidthProperty().bind(faturas.widthProperty().divide(4)); // w * 1/4
+        totalFatura.prefWidthProperty().bind(faturas.widthProperty().divide(5)); // w * 1/4
+        artigosFatura.prefWidthProperty().bind(faturas.widthProperty().divide(3)); // w * 1/4
+        
+    }
+    
+    
+    public void deleteFatura(){
+        if(faturas.getSelectionModel().isEmpty())
+            erroFatura.setText("Selecione uma fatura");
+        else{
+            for(Fatura f : app.faturaList){            
+                if (f.getCodigo() == faturas.getSelectionModel().getSelectedItem().getCodigo()){
+                    classes.Fatura.delete(f.getCodigo().getValue());
+                    app.faturaList.remove(f);
+                    break;
+                }
+            }
+        }
     }
     
 }

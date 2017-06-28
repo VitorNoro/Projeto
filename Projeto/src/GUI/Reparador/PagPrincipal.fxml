@@ -29,7 +29,7 @@
                            <children>
                               <Button alignment="CENTER" layoutY="-2.0" mnemonicParsing="false" onAction="#addDiagnostico" onMousePressed="#addDiagnostico" prefHeight="33.0" prefWidth="272.0" text="Adicionar diagnóstico" />
                               <Button alignment="CENTER" layoutY="31.0" mnemonicParsing="false" onAction="#deleteDiagnostico" prefHeight="33.0" prefWidth="272.0" text="Apagar diagnóstico" />
-                              <TitledPane contentDisplay="CENTER" layoutX="-6.0" layoutY="62.0" prefHeight="140.0" prefWidth="272.0" style="-fx-background-color: white;" text="Passar a reparação">
+                              <TitledPane contentDisplay="CENTER" layoutX="-6.0" layoutY="62.0" prefHeight="140.0" prefWidth="272.0" style="-fx-background-color: white;" text="   Passar a reparação">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="278.0" prefHeight="87.0" prefWidth="279.0">
                                        <children>
@@ -51,12 +51,21 @@
                      </AnchorPane>
                   </content>
                 </TitledPane>
-                  <TitledPane alignment="TOP_LEFT" maxHeight="240.0" onMousePressed="#reps" prefHeight="151.0" prefWidth="278.0" text="Reparações">
+                  <TitledPane alignment="TOP_LEFT" maxHeight="240.0" onMousePressed="#reps" prefHeight="163.0" prefWidth="278.0" text="Reparações">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="117.0" prefWidth="272.0">
                            <children>
-                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#pagarReparacao" prefHeight="33.0" prefWidth="278.0" text="Pagar reparação" />
-                              <Button alignment="CENTER" layoutY="28.0" mnemonicParsing="false" onAction="#deleteReparacao" prefHeight="33.0" prefWidth="278.0" text="Cancelar reparação" />
+                              <Button alignment="CENTER" layoutX="-3.0" layoutY="14.0" mnemonicParsing="false" onAction="#pagarReparacao" prefHeight="33.0" prefWidth="278.0" text="Pagar reparação" />
+                              <Button alignment="CENTER" layoutX="-3.0" layoutY="47.0" mnemonicParsing="false" onAction="#deleteReparacao" prefHeight="33.0" prefWidth="278.0" text="Cancelar reparação" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </TitledPane>
+                  <TitledPane animated="false" onMouseClicked="#fats" text="Faturas">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Button alignment="TOP_CENTER" layoutX="1.0" layoutY="8.0" mnemonicParsing="false" onAction="#deleteFatura" prefHeight="33.0" prefWidth="271.0" text="Eliminar fatura" />
                            </children>
                         </AnchorPane>
                     </content>
