@@ -13,11 +13,8 @@ import classes.Venda;
 import classesFX.Artigo;
 import classesFX.Cliente;
 import classesFX.Diagnostico;
-<<<<<<< HEAD
 import classesFX.Manutencao;
-=======
 import classesFX.Fatura;
->>>>>>> 604733849191a2221200c51c32eba42f67347b64
 import classesFX.Reparacao;
 import classesFX.Subscricao;
 import static java.awt.SystemColor.info;
@@ -139,9 +136,7 @@ public class ReparadorController implements Initializable {
     @FXML
     protected TableColumn<Cliente, String> clienteContacto;
     
-<<<<<<< HEAD
     private Date hoje = new Date();
-=======
     @FXML
     protected TableView<Fatura> faturas;
     @FXML
@@ -154,7 +149,6 @@ public class ReparadorController implements Initializable {
     protected TableColumn<Fatura, String> artigosFatura;
     @FXML
     private Label erroFatura;
->>>>>>> 604733849191a2221200c51c32eba42f67347b64
     
     /**
      * Initializes the controller class.
