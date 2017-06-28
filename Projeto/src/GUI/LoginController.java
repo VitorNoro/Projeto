@@ -76,12 +76,7 @@ public class LoginController implements Initializable {
         password.setPromptText("Palavra passe");
     }
     
-    public void changeScene(javafx.event.ActionEvent event) throws IOException{
-        //carregar no botão para ir para o ecrã do gestor
-        if(event.getSource().equals(BtnIniciar)){
-            application.gotoGestor();
-        }
-    }
+    
 
     private void fadeTrans(Node e){
         FadeTransition x = new FadeTransition(new Duration(2000),e);
@@ -102,12 +97,14 @@ public class LoginController implements Initializable {
                             case "Gestor":
                                 switch (combo.getSelectionModel().getSelectedItem().toString()){
                                     case "Gestor":
+                                        fadeTrans(BtnIniciar);
                                         application.gotoGestor();
                                         break;
                                     case "Caixa":
                                         application.gotoCaixa();
                                         break;
-                                    case "Reparador":
+                                    case "Reparação":
+                                        application.gotoReparador();
                                         break;
                                     default:
                                         System.out.println("ERRO");
@@ -125,7 +122,7 @@ public class LoginController implements Initializable {
                                 
                                 break;
                             case "Reparador":
-                                
+                                application.gotoReparador();
                                 break;
                             default:
                                 

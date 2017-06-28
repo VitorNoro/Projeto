@@ -186,7 +186,7 @@ public class CaixaController implements Initializable {
         
         temp.setArtigo(art);
         temp.setVenda(vendaBD);
-        temp.setQuantidade();
+        //temp.setQuantidade();
         
     }
     

@@ -29,7 +29,7 @@ public class Diagnostico implements Serializable {
     
     private StringProperty problema;
 
-    private Cliente cliente;
+    private StringProperty cliente;
     
     public Diagnostico() {
     }
@@ -38,43 +38,43 @@ public class Diagnostico implements Serializable {
         this.codigo = new SimpleIntegerProperty();
     }
 
-    public Diagnostico(Integer codigo, String equipamento, String problema, Cliente cliente) {
+    public Diagnostico(Integer codigo, String equipamento, String problema, String cliente) {
         this.codigo = new SimpleIntegerProperty();
         this.equipamento = new SimpleStringProperty(equipamento);
         this.problema = new SimpleStringProperty(problema);
-        this.cliente = cliente;
+        this.cliente = new SimpleStringProperty(cliente);
     }
 
-    public Integer getCodigo() {
-        return codigo.getValue();
+    public IntegerProperty getCodigo() {
+        return codigo;
     }
 
     public void setCodigo(Integer codigo) {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public String getEquipamento() {
-        return equipamento.getValue();
+    public StringProperty getEquipamento() {
+        return equipamento;
     }
 
     public void setEquipamento(String equipamento) {
         this.equipamento = new SimpleStringProperty(equipamento);
     }
 
-    public String getProblema() {
-        return problema.getValue();
+    public StringProperty getProblema() {
+        return problema;
     }
 
     public void setProblema(String problema) {
         this.problema = new SimpleStringProperty(problema);
     }
 
-    public Cliente getCliente() {
+    public StringProperty getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(String cliente) {
+        this.cliente = new SimpleStringProperty(cliente);
     }
 
     @Override
