@@ -8,6 +8,7 @@ package GUI;
 
 import GUI.Reparador.MainScene;
 import GUI.Reparador.Scene;
+import classes.Pagamento;
 import classesFX.Artigo;
 import classesFX.Cliente;
 import classesFX.Diagnostico;
@@ -15,6 +16,7 @@ import classesFX.Reparacao;
 import static java.awt.SystemColor.info;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -265,9 +267,6 @@ public class ReparadorController implements Initializable {
                 cli.setContacto(clientes.getSelectionModel().getSelectedItem().getContacto().getValueSafe());
                 
                 diag.setCliente(cli);
-                
-                
-               
 
                 diag.createT();
 
@@ -296,16 +295,32 @@ public class ReparadorController implements Initializable {
             erro.setText("Selecione um artigo");
         else{
             classes.Reparacao rep = new classes.Reparacao();
+            classes.Diagnostico diag = new classes.Diagnostico();
+            classes.Cliente cli = new classes.Cliente();
             
-            for(classes.Diagnostico d : classes.Diagnostico.readAll()){
-                if(d.getCodigo() == diagnosticos.getSelectionModel().getSelectedItem().getCodigo().getValue())
-                    rep.setDiagnostico(d);
-                for(classes.Cliente c : classes.Cliente.readAll())
-                    if(c.getNumContribuinte() == d.getCliente().getNumContribuinte())
-                        rep.setCliente(c);
+            for(Diagnostico d : app.diagnosticoList){
+                for(Cliente c : app.clienteList){
+                    if(c.getNumContribuinte().getValue().equals(d.getCliente().getValue())){
+                        cli.setNumContribuinte(c.getNumContribuinte().getValue());
+                        cli.setContacto(c.getContacto().getValue());
+                        cli.setNome(c.getNome().getValue());
+                    }
+                }        
+                if(Objects.equals(d.getCodigo().getValue(), diagnosticos.getSelectionModel().getSelectedItem().getCodigo().getValue())){
+                    diag.setCliente(cli);
+                    diag.setCodigo(d.getCodigo().getValue());
+                    diag.setEquipamento(d.getEquipamento().getValue());
+                    diag.setProblema(d.getProblema().getValue());
+                }
+                    
+                
             }
             
-            rep.setCusto((Float)spinner.getValue());
+            System.out.println(diag.getCodigo());
+            
+            rep.setCliente(cli);
+            rep.setDiagnostico(diag);
+            rep.setCusto(Float.parseFloat(spinner.getValue().toString().replaceAll(",", ".")));
 
             rep.createT();
 
@@ -389,8 +404,56 @@ public class ReparadorController implements Initializable {
         repCodigo.prefWidthProperty().bind(reparacoes.widthProperty().divide(4)); // w * 1/4
         repCliente.prefWidthProperty().bind(reparacoes.widthProperty().divide(4)); // w * 1/4
         repDiagnostico.prefWidthProperty().bind(reparacoes.widthProperty().divide(4)); // w * 1/4
-        repCusto.prefWidthProperty().bind(reparacoes.widthProperty().divide(4)); // w * 1/4  
-             
+        repCusto.prefWidthProperty().bind(reparacoes.widthProperty().divide(4)); // w * 1/4            
+    }
+    
+    public void pagarReparacao(){
+        Pagamento pag = new Pagamento();             
+        
+        if(reparacoes.getSelectionModel().isEmpty())
+            erro.setText("Selecione uma reparação");
+        else{
+            for(Reparacao r : app.reparacaoList){            
+                if (r.getCodigo() == reparacoes.getSelectionModel().getSelectedItem().getCodigo()){
+                    classes.Reparacao.delete(r.getCodigo().getValue());
+                    classes.Diagnostico.delete(r.getDiagnostico().getValue());
+                    for(Diagnostico d : app.diagnosticoList)
+                        if(d.getCodigo().getValue() == r.getDiagnostico().getValue())
+                            app.diagnosticoList.remove(d);
+                    for(classes.Cliente c : classes.Cliente.readAll())
+                        if(c.getNumContribuinte().equals(r.getCliente().getValue()))
+                            pag.setNumcontribuinte(c);
+                    for(classes.Reparacao rep : classes.Reparacao.readAll())
+                        if(rep.getCodigo() == r.getCodigo().getValue())
+                            pag.setReparacao(rep);
+                    
+                    pag.setVenda(null);
+                    pag.setArtigos(null);
+                    pag.createT();
+                    app.reparacaoList.remove(r);
+                    break;
+                }
+            }
+        }
+    }
+    
+    public void deleteReparacao(){
+        if(reparacoes.getSelectionModel().isEmpty())
+            erro.setText("Selecione uma reparação");
+        else{
+            for(Reparacao r : app.reparacaoList){            
+                if (r.getCodigo() == reparacoes.getSelectionModel().getSelectedItem().getCodigo()){
+                    classes.Reparacao.delete(r.getCodigo().getValue());
+                    classes.Diagnostico.delete(r.getDiagnostico().getValue());
+                    for(Diagnostico d : app.diagnosticoList)
+                        if(d.getCodigo().getValue() == r.getDiagnostico().getValue())
+                            app.diagnosticoList.remove(d);
+                    
+                    app.reparacaoList.remove(r);
+                    break;
+                }
+            }
+        }
     }
     
     public void endSession(){
