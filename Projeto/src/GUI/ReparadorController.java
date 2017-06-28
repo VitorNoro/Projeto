@@ -9,6 +9,7 @@ package GUI;
 import GUI.Reparador.MainScene;
 import GUI.Reparador.Scene;
 import classes.Pagamento;
+import classes.Venda;
 import classesFX.Artigo;
 import classesFX.Cliente;
 import classesFX.Diagnostico;
@@ -16,6 +17,7 @@ import classesFX.Reparacao;
 import static java.awt.SystemColor.info;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.collections.transformation.FilteredList;
@@ -316,7 +318,6 @@ public class ReparadorController implements Initializable {
                 
             }
             
-            System.out.println(diag.getCodigo());
             
             rep.setCliente(cli);
             rep.setDiagnostico(diag);
@@ -408,29 +409,38 @@ public class ReparadorController implements Initializable {
     }
     
     public void pagarReparacao(){
-        Pagamento pag = new Pagamento();             
+        Pagamento pag = new Pagamento();    
         
         if(reparacoes.getSelectionModel().isEmpty())
             erro.setText("Selecione uma reparação");
         else{
             for(Reparacao r : app.reparacaoList){            
-                if (r.getCodigo() == reparacoes.getSelectionModel().getSelectedItem().getCodigo()){
-                    classes.Reparacao.delete(r.getCodigo().getValue());
-                    classes.Diagnostico.delete(r.getDiagnostico().getValue());
-                    for(Diagnostico d : app.diagnosticoList)
-                        if(d.getCodigo().getValue() == r.getDiagnostico().getValue())
-                            app.diagnosticoList.remove(d);
+                if (Objects.equals(r.getCodigo().getValue(), reparacoes.getSelectionModel().getSelectedItem().getCodigo().getValue())){ 
                     for(classes.Cliente c : classes.Cliente.readAll())
                         if(c.getNumContribuinte().equals(r.getCliente().getValue()))
                             pag.setNumcontribuinte(c);
                     for(classes.Reparacao rep : classes.Reparacao.readAll())
-                        if(rep.getCodigo() == r.getCodigo().getValue())
+                        if(Objects.equals(rep.getCodigo(), r.getCodigo().getValue()))
                             pag.setReparacao(rep);
                     
                     pag.setVenda(null);
-                    pag.setArtigos(null);
                     pag.createT();
+                    
+                    pag.delete(pag.getCodigo());
+                    
+                    Iterator<Diagnostico> iter = app.diagnosticoList.iterator();
+
+                    while (iter.hasNext()) {
+                        Diagnostico diag = iter.next();
+
+                        if (Objects.equals(diag.getCodigo().getValue(), r.getDiagnostico().getValue()))
+                            iter.remove();
+                    }
+                            
+                    classes.Reparacao.delete(r.getCodigo().getValue());
+                    classes.Diagnostico.delete(r.getDiagnostico().getValue());
                     app.reparacaoList.remove(r);
+                    reparacoes.refresh();
                     break;
                 }
             }
