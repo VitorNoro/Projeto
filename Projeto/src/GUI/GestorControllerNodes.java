@@ -7,6 +7,7 @@ package GUI;
 
 import classesFX.Artigo;
 import classesFX.Cliente;
+import classesFX.Fornecedor;
 import classesFX.Funcionario;
 import classesFX.Subscricao;
 import java.util.Date;
@@ -26,7 +27,7 @@ import javafx.scene.layout.BorderPane;
  * @author v_nor
  */
 public class GestorControllerNodes {
-     @FXML
+    @FXML
     protected BorderPane info;
     @FXML
     protected TableView<Artigo> artigos;
@@ -112,4 +113,31 @@ public class GestorControllerNodes {
     protected TableColumn<Cliente, String> clienteNome;
     @FXML
     protected TableColumn<Cliente, String> clienteContacto;
+    
+    
+    @FXML
+    protected TableView<Fornecedor> fornecedores;
+    @FXML
+    protected TableColumn<Fornecedor, Integer> codFornecedor;
+    @FXML
+    protected TableColumn<Fornecedor, String> fornNome;
+    @FXML
+    protected TableColumn<Fornecedor, String> fornContacto;
+    
+    @FXML
+    protected TextField newfornNome;
+    @FXML
+    protected TextField newfornContacto;
+    @FXML
+    protected Label erroForn;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

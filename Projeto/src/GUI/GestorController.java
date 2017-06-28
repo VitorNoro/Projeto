@@ -9,6 +9,7 @@ import classesFX.Artigo;
 import GUI.Gestor.MainScene;
 import GUI.Gestor.Scene;
 import classesFX.Cliente;
+import classesFX.Fornecedor;
 import classesFX.Funcionario;
 import classesFX.Subscricao;
 import java.net.URL;
@@ -586,6 +587,127 @@ public class GestorController extends GestorControllerNodes implements Initializ
         }
     }
     
+    
+     public void addFornecedor(){
+        switchScene("adicionarFornecedor");
+        
+    }
+     
+    public void forn(){
+        switchScene("listarFornecedores");
+        
+        codFornecedor.setCellValueFactory(cellData -> cellData.getValue().getCodigo().asObject());
+        fornNome.setCellValueFactory(cellData -> cellData.getValue().getNome());
+        fornContacto.setCellValueFactory(cellData -> cellData.getValue().getContacto());
+        
+
+        fornContacto.setCellFactory(TextFieldTableCell.forTableColumn());
+        fornContacto.setOnEditCommit((CellEditEvent<Fornecedor, String> t) -> {
+                ((Fornecedor) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setNome(t.getNewValue());
+                
+                classes.Fornecedor.update(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+        });
+        
+        
+        
+        FilteredList<Fornecedor> filteredData = new FilteredList<>(app.fornecedorList, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(fornecedor -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (fornecedor.getNome().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } 
+                
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(fornecedores.comparatorProperty());
+        
+        fornecedores.setItems(sortedData);
+        
+        fornecedores.getSelectionModel().selectFirst();
+        
+      
+        
+        codFornecedor.prefWidthProperty().bind(fornecedores.widthProperty().divide(5)); // w * 1/4
+        fornNome.prefWidthProperty().bind(fornecedores.widthProperty().divide(3)); // w * 1/4
+        fornContacto.prefWidthProperty().bind(fornecedores.widthProperty().divide(4)); // w * 1/4
+        
+    }
+    
+    
+    public void deleteFornecedor(){
+        if(fornecedores.getSelectionModel().isEmpty())
+            erro.setText("Selecione um fornecedor");
+        else{
+            for(Fornecedor f : app.fornecedorList){            
+                if (f.getCodigo() == fornecedores.getSelectionModel().getSelectedItem().getCodigo()){
+                    classes.Fornecedor.delete(f.getCodigo().getValue());
+                    app.fornecedorList.remove(f);
+                    break;
+                }
+            }
+        }
+    }
+    
+    public void confirmNewFornecedor(){
+        classes.Fornecedor forn = new classes.Fornecedor();
+        try{
+            forn.setNome(newfornNome.getText());
+            forn.setContacto(newfornContacto.getText());        
+
+            boolean existeN = false;
+            
+            for(classes.Fornecedor t : classes.Fornecedor.readAll()){
+                if(t.getNome().equals(newfornNome.getText())){
+                    //erroForn.setText("Nome em uso");
+                    existeN = true;
+                }                          
+            }
+            
+            if(!(newfornNome.getText().isEmpty() || newfornContacto.getText().isEmpty()) && !existeN){
+                forn.setNome(newfornNome.getText());
+                forn.setContacto(newfornContacto.getText());
+
+
+                forn.createT();
+
+                Fornecedor temp = new Fornecedor();
+
+                temp.setCodigo(forn.getCodigo());
+                temp.setNome(forn.getNome());
+                temp.setContacto(forn.getContacto());
+                
+
+                app.fornecedorList.add(temp);
+
+                forn();
+            }
+            else
+                System.out.println("ERRO");
+            
+            
+        }catch(NumberFormatException ex){
+            System.out.println("ERRRO");
+        }
+
+    }
     public void endSession(){
         app.gotoLogin();
     }

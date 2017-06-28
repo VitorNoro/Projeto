@@ -131,7 +131,7 @@ public class Fornecedor implements Serializable {
         
         em = PersistenceManager.getEntityManager();
         em.getEntityManagerFactory().getCache().evictAll();
-        Query query = em.createNamedQuery("Artigo.findByCodigo");
+        Query query = em.createNamedQuery("Fornecedor.findByCodigo");
         query.setParameter("codigo", codigo);
         
         
@@ -192,6 +192,18 @@ public class Fornecedor implements Serializable {
  
         em.getTransaction().begin();
         art.setNome(nome);
+        em.getTransaction().commit();
+    }
+    
+    public static void update(Integer codigo, String contacto){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Fornecedor.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Fornecedor forn = (Fornecedor)query.getSingleResult();
+ 
+        em.getTransaction().begin();
+        forn.setContacto(contacto);
         em.getTransaction().commit();
     }
     
