@@ -677,6 +677,20 @@ public class ReparadorController implements Initializable {
         }
     }
     
+    public void deleteManutencao(){
+        if(manutencoes.getSelectionModel().isEmpty())
+            erro.setText("Selecione uma manutenção");
+        else{
+            for(Manutencao s : app.manutencaoList){            
+                if (s.getCodigo() == manutencoes.getSelectionModel().getSelectedItem().getCodigo()){
+                    classes.Manutencao.delete(s.getCodigo().getValue());
+                    app.manutencaoList.remove(s);
+                    break;
+                }
+            }
+        }
+    }
+    
     public void endSession(){
         app.gotoLogin();
     }
