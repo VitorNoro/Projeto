@@ -10,10 +10,7 @@ import classesFX.Artigo;
 import classesFX.Cliente;
 import classesFX.Diagnostico;
 import classesFX.Funcionario;
-<<<<<<< HEAD
-=======
 import classesFX.Reparacao;
->>>>>>> 9acc5780695204e4688f8be3b7a2b2d27673202f
 import java.io.IOException;
 import classesFX.Subscricao;
 import javafx.application.Application;
