@@ -227,6 +227,7 @@ public class CaixaController implements Initializable {
             }
         }
         
+<<<<<<< HEAD
         linha.setArtigo(art);
         linha.setVenda(vendaBD);
         linha.setQuantidade(0);
@@ -240,6 +241,11 @@ public class CaixaController implements Initializable {
         linha.setQuantidade(temp.getQuantidade());
         linha.setTotal(temp.getTotal());
         linha.setVenda(temp.getVenda().getCodigo());*/
+=======
+        temp.setArtigo(art);
+        temp.setVenda(vendaBD);
+        //temp.setQuantidade();
+>>>>>>> 9acc5780695204e4688f8be3b7a2b2d27673202f
         
         sync();
         

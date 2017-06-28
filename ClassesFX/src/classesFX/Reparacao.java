@@ -30,9 +30,9 @@ public class Reparacao implements Serializable {
 
     private FloatProperty custo;
 
-    private Cliente cliente;
+    private StringProperty cliente;
     
-    private Diagnostico diagnostico;
+    private IntegerProperty diagnostico;
     
 
     public Reparacao() {
@@ -58,20 +58,20 @@ public class Reparacao implements Serializable {
         this.custo = new SimpleFloatProperty(custo);
     }
 
-    public Cliente getCliente() {
+    public StringProperty getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(String cliente) {
+        this.cliente = new SimpleStringProperty(cliente);
     }
 
-    public Diagnostico getDiagnostico() {
+    public IntegerProperty getDiagnostico() {
         return diagnostico;
     }
 
-    public void setDiagnostico(Diagnostico diagnostico) {
-        this.diagnostico = diagnostico;
+    public void setDiagnostico(Integer diagnostico) {
+        this.diagnostico = new SimpleIntegerProperty(diagnostico);
     }
 
     @Override

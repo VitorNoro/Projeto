@@ -8,7 +8,12 @@ package GUI;
 
 import classesFX.Artigo;
 import classesFX.Cliente;
+import classesFX.Diagnostico;
 import classesFX.Funcionario;
+<<<<<<< HEAD
+=======
+import classesFX.Reparacao;
+>>>>>>> 9acc5780695204e4688f8be3b7a2b2d27673202f
 import java.io.IOException;
 import classesFX.Subscricao;
 import javafx.application.Application;
@@ -31,6 +36,8 @@ public class Main extends Application {
     public static ObservableList<Funcionario> funcList;
     public static ObservableList<Subscricao> subscricaoList;
     public static ObservableList<Cliente> clienteList;
+    public static ObservableList<Diagnostico> diagnosticoList;
+    public static ObservableList<Reparacao> reparacaoList;
     
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -89,6 +96,35 @@ public class Main extends Application {
 
             clienteList.add(temp);
         }
+        
+        diagnosticoList = FXCollections.observableArrayList();
+
+        for(classes.Diagnostico a : classes.Diagnostico.readAll()){
+            Diagnostico temp = new Diagnostico();
+            
+            temp.setCodigo(a.getCodigo());
+            temp.setEquipamento(a.getEquipamento());
+            temp.setProblema(a.getProblema());
+            temp.setCliente(a.getCliente().getNumContribuinte());
+
+            diagnosticoList.add(temp);
+        }
+        
+        
+        reparacaoList = FXCollections.observableArrayList();
+
+        for(classes.Reparacao a : classes.Reparacao.readAll()){
+            Reparacao temp = new Reparacao();
+            
+            temp.setCodigo(a.getCodigo());
+            temp.setCusto(a.getCusto());
+            temp.setDiagnostico(a.getDiagnostico().getCodigo());
+            temp.setCliente(a.getCliente().getNumContribuinte());
+
+            reparacaoList.add(temp);
+        }
+        
+        
         
         stage = new Stage(); 
         gotoLogin();
@@ -149,6 +185,24 @@ public class Main extends Application {
 
             
             stage.setTitle("Caixa");
+
+            Scene scene = new Scene(rootScene);
+            stage.setScene(scene);
+            stage.setMaximized(true);
+            stage.setResizable(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+     public  void gotoReparador() {
+        try {
+            
+            rootScene = FXMLLoader.load(getClass().getResource("Reparador/PagPrincipal.fxml"));
+
+            
+            stage.setTitle("Reparador");
 
             Scene scene = new Scene(rootScene);
             stage.setScene(scene);

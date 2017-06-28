@@ -16,17 +16,16 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@Darktheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReparadorController">
    <children>
-      <VBox layoutY="100.0" maxHeight="300.0" minHeight="300.0" prefHeight="300.0" prefWidth="278.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
+      <VBox layoutY="100.0" maxHeight="300.0" minHeight="265.0" prefHeight="265.0" prefWidth="278.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
          <children>
-            <Accordion maxHeight="136.0" maxWidth="350.0" prefHeight="129.0" prefWidth="278.0" VBox.vgrow="ALWAYS">
+            <Accordion maxHeight="136.0" maxWidth="350.0" prefHeight="98.0" prefWidth="278.0" VBox.vgrow="ALWAYS">
               <panes>
-                <TitledPane alignment="TOP_LEFT" animated="false" maxHeight="240.0" onMousePressed="#pop" prefHeight="177.0" prefWidth="278.0" text="Diagnósticos">
+                <TitledPane alignment="TOP_LEFT" animated="false" maxHeight="240.0" onMousePressed="#diags" prefHeight="98.0" prefWidth="278.0" text="Diagnósticos">
                   <content>
                     <AnchorPane maxHeight="100.0" minHeight="70.0" minWidth="200.0" prefHeight="70.0" prefWidth="272.0" style="-fx-background-color: white; -fx-opacity: 1;">
                            <children>
-                              <Button alignment="CENTER" layoutY="33.0" mnemonicParsing="false" onAction="#editArtigo" prefHeight="33.0" prefWidth="278.0" text="Editar diagnóstico" />
-                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#addArtigo" prefHeight="33.0" prefWidth="278.0" text="Adicionar diagnóstico" />
-                              <Button alignment="CENTER" layoutY="66.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Apagar diagnóstico" />
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#addDiagnostico" onMousePressed="#addDiagnostico" prefHeight="33.0" prefWidth="278.0" text="Adicionar diagnóstico" />
+                              <Button alignment="CENTER" layoutX="-3.0" layoutY="33.0" mnemonicParsing="false" onAction="#deleteDiagnostico" prefHeight="33.0" prefWidth="278.0" text="Apagar diagnóstico" />
                            </children>
                      </AnchorPane>
                   </content>
@@ -40,8 +39,7 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="117.0" prefWidth="272.0">
                            <children>
                               <Button alignment="CENTER" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Registar reparação" />
-                              <Button alignment="CENTER" layoutY="28.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Editar reparação" />
-                              <Button alignment="CENTER" layoutY="58.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Apagar reparação" />
+                              <Button alignment="CENTER" layoutY="28.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="278.0" text="Apagar reparação" />
                            </children>
                         </AnchorPane>
                     </content>

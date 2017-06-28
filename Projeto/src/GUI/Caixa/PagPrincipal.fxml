@@ -16,12 +16,17 @@
             <Insets top="50.0" />
          </opaqueInsets>
          <children>
-            <Button mnemonicParsing="false" onAction="#change" text="Button" />
+            <Button mnemonicParsing="false" onAction="#change" prefHeight="33.0" prefWidth="281.0" text="Nova Venda" />
+            <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="289.0" text="Faturas">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
       <HBox alignment="CENTER" layoutX="449.0" layoutY="23.0" prefHeight="56.0" prefWidth="964.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Funcionário das reparações">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Funcionário das Vendas">
                <font>
                   <Font name="Microsoft Sans Serif" size="47.0" />
                </font>

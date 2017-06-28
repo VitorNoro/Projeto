@@ -198,7 +198,7 @@ public class Diagnostico implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void update(Integer codigo, String problema){
+    public static void update(Integer codigo, String problema){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Diagnostico.findByCodigo");
         query.setParameter("codigo", codigo);
@@ -208,7 +208,6 @@ public class Diagnostico implements Serializable {
         em.getTransaction().begin();
         diag.setProblema(problema);
         em.getTransaction().commit();
-        this.read(codigo);
 
     }
     
