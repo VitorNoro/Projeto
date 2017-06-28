@@ -9,11 +9,8 @@ package GUI;
 import classesFX.Artigo;
 import classesFX.Cliente;
 import classesFX.Funcionario;
-<<<<<<< HEAD
 import java.io.IOException;
-=======
 import classesFX.Subscricao;
->>>>>>> be2a2f8b7355eb5a6fc0b2446090f7d1e27c4474
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

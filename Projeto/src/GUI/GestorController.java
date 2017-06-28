@@ -315,19 +315,19 @@ public class GestorController extends GestorControllerNodes implements Initializ
         
         newFunc = new classes.Funcionario();
         
-        for(classes.Funcionario f : classes.Funcionario.readAll()){
+        
             if(!(funcNome.getText().isEmpty() || funcMorada.getText().isEmpty() || funcTelefone.getText().isEmpty() || combo.getSelectionModel().isEmpty())){
                 newFunc.setNome(funcNome.getText());
                 newFunc.setMorada(funcMorada.getText());
                 newFunc.setContacto(funcTelefone.getText());
-                newFunc.setFuncao(funcFuncao.getText());
+                newFunc.setFuncao(combo.getSelectionModel().getSelectedItem().toString());
          
                 switchScene("inserirCredenciaisFuncionario");
             }
             else
                 System.out.println("ERRO"); 
         
-        }
+        
     }
     
     public void confirmNewFunc(){

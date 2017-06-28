@@ -178,6 +178,9 @@ public class LinhaArtigo implements Serializable {
         
         linhaCollection = (Collection<LinhaArtigo>) query.getResultList();
         
+        for(LinhaArtigo l : linhaCollection)
+            em.refresh(l);
+        
         linhaList = new ArrayList<LinhaArtigo>(linhaCollection);
         
         
@@ -197,17 +200,17 @@ public class LinhaArtigo implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void update(Integer codigo, Integer quantidade){
+    public static void update(Integer codigo, Integer quantidade){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("LinhaArtigo.findByCodigo");
         query.setParameter("codigo", codigo);
         
         LinhaArtigo art = (LinhaArtigo)query.getSingleResult();
  
+        em.refresh(art);
         em.getTransaction().begin();
         art.setQuantidade(quantidade);
         em.getTransaction().commit();
-        this.read(codigo);
     }
     
 }

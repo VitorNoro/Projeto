@@ -43,8 +43,8 @@ public class LinhaArtigo implements Serializable {
         this.venda = new SimpleIntegerProperty(venda);
     }
 
-    public int getCodigo() {
-        return codigo.getValue();
+    public IntegerProperty getCodigo() {
+        return codigo;
     }
 
     public void setCodigo(Integer codigo) {

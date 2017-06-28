@@ -72,7 +72,7 @@ public class GestorControllerNodes {
     @FXML
     protected TextField funcNome;
     @FXML
-    protected TextField funcMorada;
+    protected TextArea funcMorada;
     @FXML
     protected TextField funcTelefone;
     @FXML
