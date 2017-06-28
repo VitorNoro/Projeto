@@ -72,12 +72,12 @@
                         </AnchorPane>
                   </content>
                 </TitledPane>
-                  <TitledPane alignment="TOP_LEFT" maxHeight="240.0" text="Fornecedores">
+                  <TitledPane alignment="TOP_LEFT" maxHeight="240.0" onMouseClicked="#forn" text="Fornecedores">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Button alignment="CENTER" layoutY="8.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Adicionar fornecedor" />
-                              <Button alignment="CENTER" layoutX="-1.0" layoutY="41.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="272.0" text="Eliminar fornecedor" />
+                              <Button alignment="CENTER" layoutY="8.0" mnemonicParsing="false" onAction="#addFornecedor" prefHeight="33.0" prefWidth="272.0" text="Adicionar fornecedor" />
+                              <Button alignment="CENTER" layoutX="-1.0" layoutY="41.0" mnemonicParsing="false" onAction="#deleteFornecedor" prefHeight="33.0" prefWidth="272.0" text="Eliminar fornecedor" />
                            </children>
                         </AnchorPane>
                     </content>

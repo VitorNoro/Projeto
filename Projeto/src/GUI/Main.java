@@ -9,6 +9,7 @@ package GUI;
 import classesFX.Artigo;
 import classesFX.Cliente;
 import classesFX.Diagnostico;
+import classesFX.Fornecedor;
 import classesFX.Funcionario;
 import classesFX.Reparacao;
 import java.io.IOException;
@@ -35,6 +36,7 @@ public class Main extends Application {
     public static ObservableList<Cliente> clienteList;
     public static ObservableList<Diagnostico> diagnosticoList;
     public static ObservableList<Reparacao> reparacaoList;
+    public static ObservableList<Fornecedor> fornecedorList;
     
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -119,6 +121,20 @@ public class Main extends Application {
             temp.setCliente(a.getCliente().getNumContribuinte());
 
             reparacaoList.add(temp);
+        }
+        
+        
+        fornecedorList = FXCollections.observableArrayList();
+
+        for(classes.Fornecedor a : classes.Fornecedor.readAll()){
+            Fornecedor temp = new Fornecedor();
+            
+            temp.setCodigo(a.getCodigo());
+            temp.setNome(a.getNome());
+            temp.setContacto(a.getContacto());
+            
+
+            fornecedorList.add(temp);
         }
         
         
