@@ -60,7 +60,7 @@ public class CaixaController implements Initializable {
     @FXML
     private TextField filterLinhaField;
     
-    private classes.Venda vendaBD;
+    private classes.Venda vendaBD = new classes.Venda();
     private Venda vendaFX;
     private ObservableList<LinhaArtigo> linhasVenda;
     
@@ -122,10 +122,10 @@ public class CaixaController implements Initializable {
         quantArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(5)); // w * 1/4
         nomeArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(3)); // w * 1/4
         
-        classes.Venda vendaBD = new classes.Venda();
+        //classes.Venda vendaBD = new classes.Venda();
         vendaBD.createT();
         
-        Venda vendaFX = new Venda();
+        
         sync();
         
         
@@ -174,28 +174,50 @@ public class CaixaController implements Initializable {
     }
     
     public void adicionar(){
-        classes.LinhaArtigo temp = new classes.LinhaArtigo();
+        classes.LinhaArtigo linha = new classes.LinhaArtigo();
         classes.Artigo art = new classes.Artigo();
         
         for(classes.Artigo a: classes.Artigo.readAll()){
-            if(a.getCodigo() == linhas.getSelectionModel().getSelectedItem().getArtigo().getValue()){
+            if(a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo().getValue()){
                 art = a;
-                break;
             }
         }
         
-        temp.setArtigo(art);
-        temp.setVenda(vendaBD);
-        temp.setQuantidade();
+        linha.setArtigo(art);
+        linha.setVenda(vendaBD);
+        linha.setQuantidade(0);
+        linha.createT();
         
+        /*LinhaArtigo linha = new LinhaArtigo();
+        
+        linha.setCodigo(temp.getCodigo());
+        linha.setArtigo(temp.getArtigo().getCodigo());
+        linha.setNomeArtigo(temp.getArtigo().getNome());
+        linha.setQuantidade(temp.getQuantidade());
+        linha.setTotal(temp.getTotal());
+        linha.setVenda(temp.getVenda().getCodigo());*/
+        
+        sync();
+        
+        linhas.refresh();
     }
     
     public void remover(){
-        app.gotoLogin();
+        classes.Artigo.delete(linhas.getSelectionModel().getSelectedItem().getCodigo());
+        
+        sync();
+        linhas.refresh();
     }
     
     public void removerTudo(){
-        app.gotoLogin();
+        for(classes.LinhaArtigo l : classes.LinhaArtigo.readAll()){
+            if(l.getVenda().getCodigo() == vendaFX.getCodigo().getValue()){
+                classes.LinhaArtigo.delete(l.getCodigo());
+            }
+        }
+        
+        sync();
+        linhas.refresh();
     }
     
     public void endSession(){
@@ -203,10 +225,15 @@ public class CaixaController implements Initializable {
     }
     
     public void sync(){
+        vendaFX = new Venda();
+        linhasVenda = FXCollections.observableArrayList();
+        
+        vendaFX.setCodigo(vendaBD.getCodigo());
         vendaFX.setTotal(vendaBD.getTotal());
         
         for(classes.LinhaArtigo l : classes.LinhaArtigo.readAll()){
-            if(l.getVenda().getCodigo() == vendaFX.getCodigo()){
+            if(l.getVenda().getCodigo() == vendaFX.getCodigo().getValue()){
+                System.out.println("AQUI");
                 LinhaArtigo temp = new LinhaArtigo();
                 
                 temp.setCodigo(l.getCodigo());
@@ -216,11 +243,14 @@ public class CaixaController implements Initializable {
                 temp.setTotal(l.getTotal());
                 temp.setVenda(l.getVenda().getCodigo());
                 
-                vendaFX.getLinhaartigoCollection().add(temp);
+                System.out.println(temp);
+                
                 linhasVenda.add(temp);
             }
-        }
+        }      
+        
      
+        total.setText(vendaFX.getTotal().getValue().toString());
     }
     
 }

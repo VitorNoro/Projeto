@@ -17,8 +17,6 @@ import javafx.beans.property.*;
  */
 
 public class LinhaArtigo implements Serializable {
-
-    private static final long serialVersionUID = 1L;
    
     private IntegerProperty codigo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

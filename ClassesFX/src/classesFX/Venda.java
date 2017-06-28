@@ -46,8 +46,8 @@ public class Venda implements Serializable {
         this.total = new SimpleFloatProperty(total);
     }
 
-    public int getCodigo() {
-        return codigo.getValue();
+    public IntegerProperty getCodigo() {
+        return codigo;
     }
 
     public void setCodigo(Integer codigo) {
