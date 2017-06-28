@@ -239,7 +239,20 @@ public class Funcionario implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void updateDados(Integer codigo, String morada, String contacto, String funcao){
+    public static void updateNome(Integer codigo, String nome){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Funcionario.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Funcionario func = (Funcionario)query.getSingleResult();
+ 
+        em.getTransaction().begin();
+        func.setNome(nome);
+        em.getTransaction().commit();
+
+    }
+    
+    public static void updateMorada(Integer codigo, String morada){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Funcionario.findByCodigo");
         query.setParameter("codigo", codigo);
@@ -248,14 +261,37 @@ public class Funcionario implements Serializable {
  
         em.getTransaction().begin();
         func.setMorada(morada);
-        func.setContacto(contacto);
-        func.setFuncao(funcao);
         em.getTransaction().commit();
-        this.read(codigo);
 
     }
     
-    public void updateAutenticacao(Integer codigo, String username, String password){
+    public static void updateContacto(Integer codigo, String contacto){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Funcionario.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Funcionario func = (Funcionario)query.getSingleResult();
+ 
+        em.getTransaction().begin();
+        func.setContacto(contacto);
+        em.getTransaction().commit();
+
+    }
+    
+    public static void updateFuncao(Integer codigo, String funcao){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Funcionario.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Funcionario func = (Funcionario)query.getSingleResult();
+ 
+        em.getTransaction().begin();
+        func.setFuncao(funcao);
+        em.getTransaction().commit();
+
+    }
+    
+    public static void updateAutenticacao(Integer codigo, String username, String password){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Funcionario.findByCodigo");
         query.setParameter("codigo", codigo);
@@ -266,7 +302,6 @@ public class Funcionario implements Serializable {
         func.setUsername(username);
         func.setPassword(password);
         em.getTransaction().commit();
-        this.read(codigo);
 
     }
     

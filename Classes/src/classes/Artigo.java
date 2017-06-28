@@ -217,7 +217,7 @@ public class Artigo implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void update(Integer codigo, float preco, String descricao, String nome){
+    public static void updatePreco(Integer codigo, float preco){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Artigo.findByCodigo");
         query.setParameter("codigo", codigo);
@@ -226,11 +226,31 @@ public class Artigo implements Serializable {
  
         em.getTransaction().begin();
         art.setPreco(preco);
-        art.setDescricao(descricao);
-        art.setNome(nome);
-        art.setQuantidade(quantidade);
         em.getTransaction().commit();
-        this.read(codigo);
+    }
+    
+    public static void updateNome(Integer codigo, String nome){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Artigo.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Artigo art = (Artigo)query.getSingleResult();
+ 
+        em.getTransaction().begin();
+        art.setNome(nome);
+        em.getTransaction().commit();
+    }
+    
+    public static void updateDescricao(Integer codigo, String descricao){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Artigo.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Artigo art = (Artigo)query.getSingleResult();
+ 
+        em.getTransaction().begin();
+        art.setDescricao(descricao);
+        em.getTransaction().commit();
 
     }
     

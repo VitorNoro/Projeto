@@ -51,24 +51,24 @@ public class Cliente implements Serializable {
         this.contacto = new SimpleStringProperty(contacto);
     }
 
-    public String getNumContribuinte() {
-        return numcontribuinte.getValue();
+    public StringProperty getNumContribuinte() {
+        return numcontribuinte;
     }
 
     public void setNumContribuinte(String numcontribuinte) {
         this.numcontribuinte = new SimpleStringProperty(numcontribuinte);
     }
 
-    public String getNome() {
-        return nome.getValue();
+    public StringProperty getNome() {
+        return nome;
     }
 
     public void setNome(String nome) {
         this.nome = new SimpleStringProperty(nome);
     }
 
-    public String getContacto() {
-        return contacto.getValue();
+    public StringProperty getContacto() {
+        return contacto;
     }
 
     public void setContacto(String contacto) {

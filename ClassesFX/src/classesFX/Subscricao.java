@@ -33,7 +33,7 @@ public class Subscricao implements Serializable {
 
     private FloatProperty mensalidade;
     
-    private Cliente cliente;
+    private StringProperty cliente;
     
 
     public Subscricao() {
@@ -50,44 +50,44 @@ public class Subscricao implements Serializable {
         this.mensalidade = new SimpleFloatProperty(mensalidade);
     }
 
-    public Integer getCodigo() {
-        return codigo.getValue();
+    public IntegerProperty getCodigo() {
+        return codigo;
     }
 
     public void setCodigo(Integer codigo) {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public String getNome() {
-        return nome.getValue();
+    public StringProperty getNome() {
+        return nome;
     }
 
     public void setNome(String nome) {
         this.nome = new SimpleStringProperty(nome);
     }
 
-    public Date getFimsubscricao() {
-        return fimsubscricao.getValue();
+    public ObjectProperty<Date> getFimsubscricao() {
+        return fimsubscricao;
     }
 
     public void setFimsubscricao(Date fimsubscricao) {
         this.fimsubscricao = new SimpleObjectProperty(fimsubscricao);
     }
 
-    public float getMensalidade() {
-        return mensalidade.getValue();
+    public FloatProperty getMensalidade() {
+        return mensalidade;
     }
 
     public void setMensalidade(float mensalidade) {
         this.mensalidade = new SimpleFloatProperty(mensalidade);
     }
 
-    public Cliente getCliente() {
+    public StringProperty getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(String cliente) {
+        this.cliente = new SimpleStringProperty(cliente);
     }
 
     @Override

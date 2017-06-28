@@ -8,95 +8,34 @@ package GUI;
 import classesFX.Artigo;
 import GUI.Gestor.MainScene;
 import GUI.Gestor.Scene;
+import classesFX.Cliente;
 import classesFX.Funcionario;
+import classesFX.Subscricao;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.BorderPane;
+import javafx.util.Callback;
+import javafx.util.converter.FloatStringConverter;
 
 /**
  * FXML Controller class
  *
  * @author v_nor
  */
-public class GestorController implements Initializable {
-    @FXML
-    protected BorderPane info;
-    @FXML
-    private TableView<Artigo> artigos;
-    @FXML
-    private TableColumn<Artigo, Integer> codArtigos;
-    @FXML
-    private TableColumn<Artigo, Float> precoArtigos;
-    @FXML
-    private TableColumn<Artigo, Integer> quantArtigos;
-    @FXML
-    private TableColumn<Artigo, String> nomeArtigos;
-    @FXML
-    private TableColumn<Artigo, String> descArtigos;
-    @FXML
-    private TableView<Funcionario> funcionarios;
-    @FXML
-    private TableColumn<Funcionario, Integer> codFuncionarios;
-    @FXML
-    private TableColumn<Funcionario, String> nomeFuncionarios;
-    @FXML
-    private TableColumn<Funcionario, String> moradaFuncionarios;
-    @FXML
-    private TableColumn<Funcionario, String> contactoFuncionarios;
-    @FXML
-    private TableColumn<Funcionario, String> funcaoFuncionarios;
-    @FXML
-    private TableColumn<Funcionario, String> userFuncionarios;
-    @FXML
-    private TextField filterField;
-    @FXML
-    private Label erro;
-    @FXML
-    private Spinner<Integer> spinnerStock;
-    @FXML
-    private TextField prodNome;
-    @FXML
-    private TextArea prodDescricao;
-    @FXML
-    private TextField prodPreco;
-    @FXML
-    private TextField prodQuantidade;
+public class GestorController extends GestorControllerNodes implements Initializable {
     
-    @FXML
-    private TextField funcNome;
-    @FXML
-    private TextField funcMorada;
-    @FXML
-    private TextField funcTelefone;
-    @FXML
-    private TextField funcFuncao;
-    @FXML
-    private TextField funcUser;
-    @FXML
-    private TextField funcPass;
-    @FXML
-    private ComboBox combo;
-    
-    Main app = new Main();
-    Artigo updateArtigo;
-    classes.Funcionario newFunc;
+    private Main app = new Main();
+    private Artigo updateArtigo;
+    private classes.Funcionario newFunc;
+    private Date hoje = new Date();
     /**
      * Initializes the controller class.
      */
@@ -123,29 +62,50 @@ public class GestorController implements Initializable {
         nomeArtigos.setCellValueFactory(cellData -> cellData.getValue().getNome());
         descArtigos.setCellValueFactory(cellData -> cellData.getValue().getDescricao());
         
-        nomeArtigos.setCellFactory(TextFieldTableCell.forTableColumn());
-        nomeArtigos.setOnEditCommit(
-            new EventHandler<CellEditEvent<Artigo, String>>() {
-                @Override
-                public void handle(CellEditEvent<Artigo, String> t) {
-                    ((Artigo) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                        ).setNome(t.getNewValue());
+
+        precoArtigos.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter(){
+            @Override
+            public Float fromString(String value) {
+                try {
+                    if(Float.parseFloat(value.replaceAll(",", ".")) > 0)
+                        return Float.parseFloat(value.replaceAll(",", "."));
+                    else
+                        return Float.NaN;
+                } catch(NumberFormatException e) {
+                    return Float.NaN;
                 }
             }
-        );
+        }));
+        
+        precoArtigos.setOnEditCommit(t -> {            
+            if(t.getNewValue().isNaN()) {
+                erro.setText("ERRO");
+                t.getRowValue().setPreco(t.getOldValue());
+            } else {
+                t.getRowValue().setPreco(t.getNewValue());
+                classes.Artigo.updatePreco(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+            }
+            artigos.refresh();
+        });
+        
+        
+        nomeArtigos.setCellFactory(TextFieldTableCell.forTableColumn());
+        nomeArtigos.setOnEditCommit((CellEditEvent<Artigo, String> t) -> {
+                ((Artigo) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setNome(t.getNewValue());
+                
+                classes.Artigo.updateNome(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+        });
 
         descArtigos.setCellFactory(TextFieldTableCell.forTableColumn());
-        descArtigos.setOnEditCommit(
-            new EventHandler<CellEditEvent<Artigo, String>>() {
-                @Override
-                public void handle(CellEditEvent<Artigo, String> t) {
-                    ((Artigo) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                        ).setNome(t.getNewValue());
-                }
-            }
-        );
+        descArtigos.setOnEditCommit((CellEditEvent<Artigo, String> t) -> {
+            ((Artigo) t.getTableView().getItems().get(
+                    t.getTablePosition().getRow())
+                    ).setNome(t.getNewValue());
+            
+            classes.Artigo.updateDescricao(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+        });
         
         FilteredList<Artigo> filteredData = new FilteredList<>(app.artigoList, p -> true);
 
@@ -184,7 +144,6 @@ public class GestorController implements Initializable {
         nomeArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(3)); // w * 1/4
         descArtigos.prefWidthProperty().bind(artigos.widthProperty().divide(4)); // w * 1/4
         
-        
     }
     
     public void deleteProduto(){
@@ -196,6 +155,7 @@ public class GestorController implements Initializable {
                 if (a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo()){
                     classes.Artigo.delete(a.getCodigo().getValue());
                     app.artigoList.remove(a);
+                    break;
                 }
             }
         }
@@ -267,59 +227,6 @@ public class GestorController implements Initializable {
         }
     }
     
-    public void editArtigo(){
-        if(artigos.getSelectionModel().isEmpty())
-            erro.setText("Selecione um artigo");
-        else{
-            updateArtigo = artigos.getSelectionModel().getSelectedItem();
-            
-            switchScene("editarProduto");
-            
-            prodNome.setText(updateArtigo.getNome().getValue());
-            prodDescricao.setText(updateArtigo.getDescricao().getValue());
-            prodPreco.setText(updateArtigo.getPreco().getValue().toString());
-        }
-    }
-    
-    public void confirmEditArtigo(){
-        try{
-            float preco = Float.parseFloat(prodPreco.getText().replaceAll(",", "."));
-            boolean existeN = false;
-            
-            for(classes.Artigo t : classes.Artigo.readAll()){
-                if(t.getNome().equals(prodNome.getText()) && !(t.getNome().equals(updateArtigo.getNome().getValue()))){
-                    //erro.setText("Nome em uso");
-                    existeN = true;
-                }                          
-            }
-
-            if(!(prodNome.getText().isEmpty() || prodDescricao.getText().isEmpty() || preco <= 0) && !existeN){
-            
-                for(Artigo a : app.artigoList){
-                    if (a.getCodigo() == updateArtigo.getCodigo()){
-                        a.setPreco(preco);
-                        a.setDescricao(prodDescricao.getText());
-                        a.setNome(prodNome.getText());
-
-                        artigos.refresh();
-                        for(classes.Artigo art: classes.Artigo.readAll()){
-                            if(a.getCodigo().getValue() == art.getCodigo()){
-                                art.update(art.getCodigo(), preco, prodDescricao.getText(), prodNome.getText());
-                            }
-                        }
-                    }
-                }
-                
-                pop(); 
-            }
-            else
-                System.out.println("erro");
-                               
-        }catch(NumberFormatException ex){
-            System.out.println("ERRRO");
-        }
-    }
-    
     public void funcs(){
         switchScene("listarFuncionarios");
         
@@ -329,6 +236,33 @@ public class GestorController implements Initializable {
         contactoFuncionarios.setCellValueFactory(cellData -> cellData.getValue().getContacto());
         funcaoFuncionarios.setCellValueFactory(cellData -> cellData.getValue().getFuncao());
         userFuncionarios.setCellValueFactory(cellData -> cellData.getValue().getUsername());
+        
+        nomeFuncionarios.setCellFactory(TextFieldTableCell.forTableColumn());
+        nomeFuncionarios.setOnEditCommit((CellEditEvent<Funcionario, String> t) -> {
+                ((Funcionario) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setNome(t.getNewValue());
+                
+                classes.Funcionario.updateNome(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+        });
+        
+        moradaFuncionarios.setCellFactory(TextFieldTableCell.forTableColumn());
+        moradaFuncionarios.setOnEditCommit((CellEditEvent<Funcionario, String> t) -> {
+                ((Funcionario) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setNome(t.getNewValue());
+                
+                classes.Funcionario.updateMorada(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+        });
+        
+        contactoFuncionarios.setCellFactory(TextFieldTableCell.forTableColumn());
+        contactoFuncionarios.setOnEditCommit((CellEditEvent<Funcionario, String> t) -> {
+                ((Funcionario) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setNome(t.getNewValue());
+                
+                classes.Funcionario.updateContacto(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+        });
         
         FilteredList<Funcionario> filteredData = new FilteredList<>(app.funcList, p -> true);
 
@@ -430,7 +364,227 @@ public class GestorController implements Initializable {
                 System.out.println("ERRO");
     }
     
+    public void deleteFuncionario(){
+        if(funcionarios.getSelectionModel().isEmpty())
+            erro.setText("Selecione um funcionario");
+        else{
+            for(Funcionario f : app.funcList){
+                
+                if (f.getCodigo() == funcionarios.getSelectionModel().getSelectedItem().getCodigo()){
+                    classes.Funcionario.delete(f.getCodigo().getValue());
+                    app.funcList.remove(f);
+                    break;
+                }
+            }
+        }
+    }
     
+    public void subs(){
+        switchScene("listarSubscricoes");
+        
+        Callback<TableColumn<Subscricao, Date>, TableCell<Subscricao, Date>> dateCellFactory
+                = (TableColumn<Subscricao, Date> param) -> new DateEditingCell();
+        
+        subCodigo.setCellValueFactory(cellData -> cellData.getValue().getCodigo().asObject());
+        subNome.setCellValueFactory(cellData -> cellData.getValue().getNome());
+        subFim.setCellValueFactory(cellData -> cellData.getValue().getFimsubscricao());
+        subMensalidade.setCellValueFactory(cellData -> cellData.getValue().getMensalidade().asObject());
+        subCliente.setCellValueFactory(cellData -> cellData.getValue().getCliente());
+        
+        
+        subNome.setCellFactory(TextFieldTableCell.forTableColumn());
+        subNome.setOnEditCommit((CellEditEvent<Subscricao, String> t) -> {
+                ((Subscricao) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setNome(t.getNewValue());
+                
+                classes.Subscricao.update(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+        });
+
+        subFim.setCellValueFactory(cellData -> cellData.getValue().getFimsubscricao());
+        subFim.setCellFactory(dateCellFactory);
+        subFim.setOnEditCommit(
+                (TableColumn.CellEditEvent<Subscricao, Date> t) -> {
+                    ((Subscricao) t.getTableView().getItems()
+                    .get(t.getTablePosition().getRow()))
+                    .setFimsubscricao(t.getNewValue());
+                    
+                    classes.Subscricao.update(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+                });
+        
+        subMensalidade.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter(){
+            @Override
+            public Float fromString(String value) {
+                try {
+                    if(Float.parseFloat(value.replaceAll(",", ".")) > 0)
+                        return Float.parseFloat(value.replaceAll(",", "."));
+                    else
+                        return Float.NaN;
+                } catch(NumberFormatException e) {
+                    return Float.NaN;
+                }
+            }
+        }));
+        
+        subMensalidade.setOnEditCommit(t -> {            
+            if(t.getNewValue().isNaN()) {
+                erro.setText("ERRO");
+                t.getRowValue().setMensalidade(t.getOldValue());
+            } else {
+                t.getRowValue().setMensalidade(t.getNewValue());
+                classes.Subscricao.update(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+            }
+            artigos.refresh();
+        });
+        
+        FilteredList<Subscricao> filteredData = new FilteredList<>(app.subscricaoList, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(subscricao -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (subscricao.getNome().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } 
+                
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(subscricoes.comparatorProperty());
+        
+        subscricoes.setItems(sortedData);
+        
+        subscricoes.getSelectionModel().selectFirst();
+        
+        subCodigo.prefWidthProperty().bind(subscricoes.widthProperty().divide(8)); // w * 1/4
+        subNome.prefWidthProperty().bind(subscricoes.widthProperty().divide(5)); // w * 1/4
+        subFim.prefWidthProperty().bind(subscricoes.widthProperty().divide(4)); // w * 1/4
+        subMensalidade.prefWidthProperty().bind(subscricoes.widthProperty().divide(5)); // w * 1/4
+        subCliente.prefWidthProperty().bind(subscricoes.widthProperty().divide(5)); // w * 1/4
+        
+    }
+    
+    public void deleteSubscricao(){
+        if(subscricoes.getSelectionModel().isEmpty())
+            erro.setText("Selecione uma subscrição");
+        else{
+            for(Subscricao s : app.subscricaoList){            
+                if (s.getCodigo() == subscricoes.getSelectionModel().getSelectedItem().getCodigo()){
+                    classes.Subscricao.delete(s.getCodigo().getValue());
+                    app.subscricaoList.remove(s);
+                    break;
+                }
+            }
+        }
+    }
+    
+    public void addSubscricao(){
+        switchScene("CriarSub");
+        
+        clienteContribuinte.setCellValueFactory(cellData -> cellData.getValue().getNumContribuinte());
+        clienteNome.setCellValueFactory(cellData -> cellData.getValue().getNome());
+        clienteContacto.setCellValueFactory(cellData -> cellData.getValue().getContacto());
+        
+        FilteredList<Cliente> filteredData = new FilteredList<>(app.clienteList, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(cliente -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (cliente.getNome().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } 
+                
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(clientes.comparatorProperty());
+        
+        clientes.setItems(sortedData);
+        
+        clientes.getSelectionModel().selectFirst();
+        
+        clienteContribuinte.prefWidthProperty().bind(clientes.widthProperty().divide(4)); // w * 1/4
+        clienteNome.prefWidthProperty().bind(clientes.widthProperty().divide(2)); // w * 1/4
+        clienteContacto.prefWidthProperty().bind(clientes.widthProperty().divide(4)); // w * 1/4
+
+    }
+    
+    public void confirmNewSubscricao(){
+        classes.Subscricao sub = new classes.Subscricao();
+        try{
+            float mensalidade = Float.parseFloat(newSubMensalidade.getText().replaceAll(",", "."));
+            LocalDate data = newSubFim.getValue();
+            Date date = java.sql.Date.valueOf(data);            
+
+            boolean existeN = false;
+            
+            for(classes.Artigo t : classes.Artigo.readAll()){
+                if(t.getNome().equals(newSubNome.getText())){
+                    //erro.setText("Nome em uso");
+                    existeN = true;
+                }                          
+            }
+            
+            if(!(newSubNome.getText().isEmpty() || hoje.after(date) || mensalidade <= 0) && !existeN){
+                sub.setNome(newSubNome.getText());
+                sub.setFimsubscricao(date);
+                sub.setMensalidade(mensalidade);
+                
+                classes.Cliente cli = new classes.Cliente();
+                
+                cli.setNome(clientes.getSelectionModel().getSelectedItem().getNome().getValueSafe());
+                cli.setNumContribuinte(clientes.getSelectionModel().getSelectedItem().getNumContribuinte().getValueSafe());
+                cli.setContacto(clientes.getSelectionModel().getSelectedItem().getContacto().getValueSafe());
+                
+                sub.setCliente(cli);
+
+                sub.createT();
+
+                Subscricao temp = new Subscricao();
+
+                temp.setCodigo(sub.getCodigo());
+                temp.setNome(sub.getNome());
+                temp.setFimsubscricao(sub.getFimsubscricao());
+                temp.setMensalidade(sub.getMensalidade());
+                temp.setCliente(sub.getCliente().getNumContribuinte());
+
+                app.subscricaoList.add(temp);
+
+                subs();
+            }
+            else
+                System.out.println("ERRO");
+            
+            
+        }catch(NumberFormatException ex){
+            System.out.println("ERRRO");
+        }
+    }
     
     public void endSession(){
         app.gotoLogin();
