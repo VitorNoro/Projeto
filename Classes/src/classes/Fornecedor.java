@@ -135,28 +135,28 @@ public class Fornecedor implements Serializable {
         query.setParameter("codigo", codigo);
         
         
-        Fornecedor art = (Fornecedor)query.getSingleResult();
+        Fornecedor forn = (Fornecedor)query.getSingleResult();
         
-        em.refresh(art);
-        this.setCodigo(art.getCodigo());
-        this.setContacto(art.getContacto());
-        this.setNome(art.getNome());
+        em.refresh(forn);
+        this.setCodigo(forn.getCodigo());
+        this.setContacto(forn.getContacto());
+        this.setNome(forn.getNome());
 
     }
     
     public static ArrayList<Fornecedor> readAll(){
         em = PersistenceManager.getEntityManager();
-        Query query = em.createNamedQuery("Artigo.findAll");
+        Query query = em.createNamedQuery("Fornecedor.findAll");
         
-        Collection<Fornecedor> artCollection;
-        ArrayList<Fornecedor> artList;
+        Collection<Fornecedor> fornCollection;
+        ArrayList<Fornecedor> fornList;
         
-        artCollection = (Collection<Fornecedor>) query.getResultList();
+        fornCollection = (Collection<Fornecedor>) query.getResultList();
         
-        artList = new ArrayList<Fornecedor>(artCollection);
+        fornList = new ArrayList<Fornecedor>(fornCollection);
         
         
-        return artList;
+        return fornList;
     }
     
     public static void delete(Integer codigo){
@@ -164,13 +164,13 @@ public class Fornecedor implements Serializable {
         Query query = em.createNamedQuery("Artigo.findByCodigo");
         query.setParameter("codigo", codigo);
         
-        Fornecedor art = (Fornecedor)query.getSingleResult();
+        Fornecedor forn = (Fornecedor)query.getSingleResult();
         
         em.getTransaction().begin();
-        em.remove(art);
+        em.remove(forn);
         em.getTransaction().commit();
     }
-    
+    /*
     public static void updatePreco(Integer codigo, String contacto){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Artigo.findByCodigo");
@@ -194,7 +194,7 @@ public class Fornecedor implements Serializable {
         art.setNome(nome);
         em.getTransaction().commit();
     }
-    
+    */
     public static void update(Integer codigo, String contacto){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Fornecedor.findByCodigo");

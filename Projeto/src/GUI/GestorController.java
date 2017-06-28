@@ -605,7 +605,7 @@ public class GestorController extends GestorControllerNodes implements Initializ
         fornContacto.setOnEditCommit((CellEditEvent<Fornecedor, String> t) -> {
                 ((Fornecedor) t.getTableView().getItems().get(
                         t.getTablePosition().getRow())
-                        ).setNome(t.getNewValue());
+                        ).setContacto(t.getNewValue());
                 
                 classes.Fornecedor.update(t.getRowValue().getCodigo().getValue(), t.getNewValue());
         });
@@ -625,7 +625,7 @@ public class GestorController extends GestorControllerNodes implements Initializ
                 // Compare first name and last name of every person with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (fornecedor.getNome().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                if (fornecedor.getContacto().getValue().toLowerCase().contains(lowerCaseFilter)) {
                     return true; // Filter matches first name.
                 } 
                 
