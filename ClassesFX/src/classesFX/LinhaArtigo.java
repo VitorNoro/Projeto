@@ -27,9 +27,10 @@ public class LinhaArtigo implements Serializable {
    
     private IntegerProperty quantidade;
   
-    private Artigo artigo;
+    private IntegerProperty artigo;
     
-    private Venda venda;
+    private IntegerProperty venda;
+    private StringProperty nomeArtigo;
     
     public LinhaArtigo() {
     }
@@ -38,10 +39,10 @@ public class LinhaArtigo implements Serializable {
         this.codigo = new SimpleIntegerProperty(codigo);
     }
 
-    public LinhaArtigo(Integer quantidade, Artigo artigo, Venda venda) {
+    public LinhaArtigo(Integer quantidade, Integer artigo, Integer venda) {
         this.quantidade = new SimpleIntegerProperty(quantidade);
-        this.artigo = artigo;
-        this.venda = venda;
+        this.artigo = new SimpleIntegerProperty(artigo);
+        this.venda = new SimpleIntegerProperty(venda);
     }
 
     public int getCodigo() {
@@ -68,22 +69,32 @@ public class LinhaArtigo implements Serializable {
         this.quantidade = new SimpleIntegerProperty(quantidade);
     }
 
-    public Artigo getArtigo() {
+    public IntegerProperty getArtigo() {
         return artigo;
     }
 
-    public void setArtigo(Artigo artigo) {
-        this.artigo = artigo;
+    public void setArtigo(Integer artigo) {
+        this.artigo = new SimpleIntegerProperty(artigo);
     }
 
-    public Venda getVenda() {
+    public IntegerProperty getVenda() {
         return venda;
     }
 
-    public void setVenda(Venda venda) {
-        this.venda = venda;
+    public void setVenda(Integer venda) {
+        this.venda = new SimpleIntegerProperty(venda);
     }
 
+    public StringProperty getNomeArtigo() {
+        return nomeArtigo;
+    }
+
+    public void setNomeArtigo(String nomeArtigo) {
+        this.nomeArtigo = new SimpleStringProperty(nomeArtigo);
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

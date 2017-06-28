@@ -205,7 +205,7 @@ public class Subscricao implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void update(Integer codigo, String nome, Date fimsubscricao, float mensalidade){
+    public static void update(Integer codigo, String nome){
         em = PersistenceManager.getEntityManager();
         Query query = em.createNamedQuery("Subscricao.findByCodigo");
         query.setParameter("codigo", codigo);
@@ -213,14 +213,31 @@ public class Subscricao implements Serializable {
         Subscricao subs = (Subscricao)query.getSingleResult();
  
         em.getTransaction().begin();
-        subs.setNome(nome);
+        subs.setNome(nome);     
+        em.getTransaction().commit();
+    }
+    
+    public static void update(Integer codigo, Date fimsubscricao){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Subscricao.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Subscricao subs = (Subscricao)query.getSingleResult();
+ 
         em.getTransaction().begin();
         subs.setFimsubscricao(fimsubscricao);
-        em.getTransaction().begin();
-        subs.setMensalidade(mensalidade);
-        
         em.getTransaction().commit();
-        this.read(codigo);
-
+    }
+    
+    public static void update(Integer codigo, float mensalidade){
+        em = PersistenceManager.getEntityManager();
+        Query query = em.createNamedQuery("Subscricao.findByCodigo");
+        query.setParameter("codigo", codigo);
+        
+        Subscricao subs = (Subscricao)query.getSingleResult();
+ 
+        em.getTransaction().begin();
+        subs.setMensalidade(mensalidade);     
+        em.getTransaction().commit();
     }
 }

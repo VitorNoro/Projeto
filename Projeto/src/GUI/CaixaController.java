@@ -12,8 +12,6 @@ import classesFX.LinhaArtigo;
 import classesFX.Venda;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -24,9 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -63,6 +59,10 @@ public class CaixaController implements Initializable {
     private Label total;
     @FXML
     private TextField filterLinhaField;
+    
+    private classes.Venda vendaBD;
+    private Venda vendaFX;
+    private ObservableList<LinhaArtigo> linhasVenda;
     
     /**
      * Initializes the controller class.
@@ -126,16 +126,15 @@ public class CaixaController implements Initializable {
         vendaBD.createT();
         
         Venda vendaFX = new Venda();
-        vendaFX.setCodigo(vendaBD.getCodigo());
-        vendaFX.setTotal(vendaBD.getTotal());
+        sync();
         
         
-        ObservableList<LinhaArtigo> linhasVenda = FXCollections.observableArrayList(vendaFX.getLinhaartigoCollection());
+        linhasVenda = FXCollections.observableArrayList(vendaFX.getLinhaartigoCollection());
         
-        codArtLinha.setCellValueFactory(cellData -> cellData.getValue().getArtigo().getCodigo().asObject());
+        codArtLinha.setCellValueFactory(cellData -> cellData.getValue().getArtigo().asObject());
         precoLinha.setCellValueFactory(cellData -> cellData.getValue().getTotal().asObject());
         quantLinha.setCellValueFactory(cellData -> cellData.getValue().getQuantidade().asObject());
-        nomeArtLinha.setCellValueFactory(cellData -> cellData.getValue().getArtigo().getNome());
+        nomeArtLinha.setCellValueFactory(cellData -> cellData.getValue().getNomeArtigo());
         
         FilteredList<LinhaArtigo> filteredLinhaData = new FilteredList<>(linhasVenda, p -> true);
 
@@ -150,7 +149,7 @@ public class CaixaController implements Initializable {
                 // Compare first name and last name of every person with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (linha.getArtigo().getNome().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                if (linha.getNomeArtigo().getValue().toLowerCase().contains(lowerCaseFilter)) {
                     return true; // Filter matches first name.
                 } 
                 
@@ -175,7 +174,20 @@ public class CaixaController implements Initializable {
     }
     
     public void adicionar(){
-        app.gotoLogin();
+        classes.LinhaArtigo temp = new classes.LinhaArtigo();
+        classes.Artigo art = new classes.Artigo();
+        
+        for(classes.Artigo a: classes.Artigo.readAll()){
+            if(a.getCodigo() == linhas.getSelectionModel().getSelectedItem().getArtigo().getValue()){
+                art = a;
+                break;
+            }
+        }
+        
+        temp.setArtigo(art);
+        temp.setVenda(vendaBD);
+        temp.setQuantidade();
+        
     }
     
     public void remover(){
@@ -188,6 +200,27 @@ public class CaixaController implements Initializable {
     
     public void endSession(){
         app.gotoLogin();
+    }
+    
+    public void sync(){
+        vendaFX.setTotal(vendaBD.getTotal());
+        
+        for(classes.LinhaArtigo l : classes.LinhaArtigo.readAll()){
+            if(l.getVenda().getCodigo() == vendaFX.getCodigo()){
+                LinhaArtigo temp = new LinhaArtigo();
+                
+                temp.setCodigo(l.getCodigo());
+                temp.setArtigo(l.getArtigo().getCodigo());
+                temp.setNomeArtigo(l.getArtigo().getNome());
+                temp.setQuantidade(l.getQuantidade());
+                temp.setTotal(l.getTotal());
+                temp.setVenda(l.getVenda().getCodigo());
+                
+                vendaFX.getLinhaartigoCollection().add(temp);
+                linhasVenda.add(temp);
+            }
+        }
+     
     }
     
 }

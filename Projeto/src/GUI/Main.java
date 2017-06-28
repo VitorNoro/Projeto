@@ -7,7 +7,9 @@ package GUI;
 
 
 import classesFX.Artigo;
+import classesFX.Cliente;
 import classesFX.Funcionario;
+import classesFX.Subscricao;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +28,8 @@ public class Main extends Application {
     private Parent rootScene;
     public static ObservableList<Artigo> artigoList;
     public static ObservableList<Funcionario> funcList;
+    public static ObservableList<Subscricao> subscricaoList;
+    public static ObservableList<Cliente> clienteList;
     
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -57,6 +61,32 @@ public class Main extends Application {
             temp.setPassword(f.getPassword());
             
             funcList.add(temp);
+        }
+        
+        subscricaoList = FXCollections.observableArrayList();
+
+        for(classes.Subscricao a : classes.Subscricao.readAll()){
+            Subscricao temp = new Subscricao();
+            
+            temp.setCodigo(a.getCodigo());
+            temp.setNome(a.getNome());
+            temp.setFimsubscricao(a.getFimsubscricao());
+            temp.setMensalidade(a.getMensalidade());
+            temp.setCliente(a.getCliente().getNumContribuinte());
+            
+            subscricaoList.add(temp);
+        }
+        
+        clienteList = FXCollections.observableArrayList();
+
+        for(classes.Cliente a : classes.Cliente.readAll()){
+            Cliente temp = new Cliente();
+            
+            temp.setNumContribuinte(a.getNumContribuinte());
+            temp.setNome(a.getNome());
+            temp.setContacto(a.getContacto());
+
+            clienteList.add(temp);
         }
         
         stage = new Stage(); 
