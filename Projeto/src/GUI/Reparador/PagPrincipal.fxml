@@ -65,8 +65,8 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Button layoutY="45.0" mnemonicParsing="false" onAction="#deleteManutencao" prefWidth="272.0" text="Eliminar manutenção" />
-                              <Button layoutY="12.0" mnemonicParsing="false" onAction="#newManutencao" prefWidth="272.0" text="Adicionar manutenção" />
+                              <Button alignment="CENTER" layoutY="45.0" mnemonicParsing="false" onAction="#deleteManutencao" prefWidth="272.0" text="Eliminar manutenção" />
+                              <Button alignment="CENTER" layoutY="12.0" mnemonicParsing="false" onAction="#newManutencao" prefWidth="272.0" text="Adicionar manutenção" />
                            </children>
                         </AnchorPane>
                     </content>

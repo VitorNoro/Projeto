@@ -68,6 +68,7 @@
                               <Label layoutX="-3.0" layoutY="126.0" styleClass="erro" />
                               <Label layoutX="-3.0" layoutY="237.0" styleClass="erro" />
                               <Label layoutX="-3.0" layoutY="318.0" styleClass="erro" />
+                              <Label layoutX="-4.0" layoutY="370.0" styleClass="erro" />
                            </children>
                         </AnchorPane>
                      </children>

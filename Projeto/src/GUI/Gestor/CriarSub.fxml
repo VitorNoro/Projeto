@@ -70,7 +70,8 @@
                                 </columns>
                               </TableView>
                               <Label layoutX="113.0" layoutY="263.0" text="Selecione um cliente:" />
-                              <TextField fx:id="filterField" layoutX="293.0" layoutY="261.0" promptText="Pesquisar" />
+                              <TextField fx:id="filterField" layoutX="296.0" layoutY="258.0" promptText="Pesquisar" />
+                              <Label layoutX="54.0" layoutY="189.0" styleClass="erro" />
                            </children>
                         </AnchorPane>
                      </children>

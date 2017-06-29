@@ -60,8 +60,8 @@
                            <children>
                               <TextField fx:id="manEquipamento" layoutX="54.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="335.0" style="-fx-background-color: #ffffff;" />
                               <TextArea fx:id="manProblema" layoutX="54.0" layoutY="107.0" prefHeight="67.0" prefWidth="335.0" />
-                              <Label layoutX="54.0" layoutY="126.0" styleClass="erro" />
-                              <Label layoutX="55.0" layoutY="259.0" styleClass="erro" />
+                              <Label layoutX="55.0" layoutY="174.0" styleClass="erro" />
+                              <Label layoutX="54.0" layoutY="223.0" styleClass="erro" />
                               <Label layoutX="76.0" layoutY="270.0" text="Selecione uma subscrição:" />
                               <TextField fx:id="filterField" layoutX="274.0" layoutY="265.0" prefHeight="31.0" prefWidth="211.0" promptText="Pesquisar" />
                               <TableView fx:id="subscricao" layoutX="14.0" layoutY="307.0" prefHeight="122.0" prefWidth="476.0">
@@ -72,6 +72,7 @@
                                  </columns>
                               </TableView>
                               <DatePicker fx:id="manData" layoutX="55.0" layoutY="192.0" />
+                              <Label layoutX="54.0" layoutY="81.0" styleClass="erro" />
                            </children>
                         </AnchorPane>
                      </children>
