@@ -27,7 +27,7 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="603.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="erro" text="Label" />
+                  <Label fx:id="erro" textFill="RED" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <TextField fx:id="filterArtField" maxHeight="28.0" maxWidth="200.0" prefHeight="28.0" prefWidth="209.0" promptText="Pesquisar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />

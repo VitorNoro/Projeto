@@ -141,19 +141,7 @@ public class Main extends Application {
             fornecedorList.add(temp);
         }
         
-        faturaList = FXCollections.observableArrayList();
-
-        for(classes.Fatura a : classes.Fatura.readAll()){
-            Fatura temp = new Fatura();
-            
-            temp.setCodigo(a.getCodigo());
-            temp.setNumContribuinte(a.getNumContribuinte());
-            temp.setTotal(a.getTotal());
-            temp.setArtigos(a.getArtigos());
-            
-
-            faturaList.add(temp);
-        }
+        getFaturas();
         
         manutencaoList = FXCollections.observableArrayList();
 
@@ -180,7 +168,21 @@ public class Main extends Application {
     
 
     
-    
+    public void getFaturas(){
+        faturaList = FXCollections.observableArrayList();
+
+        for(classes.Fatura a : classes.Fatura.readAll()){
+            Fatura temp = new Fatura();
+            
+            temp.setCodigo(a.getCodigo());
+            temp.setNumContribuinte(a.getNumContribuinte());
+            temp.setTotal(a.getTotal());
+            temp.setArtigos(a.getArtigos());
+            
+
+            faturaList.add(temp);
+        }
+    }
     
 
     /**
@@ -199,6 +201,7 @@ public class Main extends Application {
             Scene scene = new Scene(rootScene);
             stage.setScene(scene);
             stage.setResizable(true);
+            stage.setMaximized(false);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

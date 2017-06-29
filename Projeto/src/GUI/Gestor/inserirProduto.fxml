@@ -60,10 +60,9 @@
                               <TextArea fx:id="prodDescricao" layoutY="155.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="82.0" prefWidth="465.0" styleClass="text-field" />
                               <TextField fx:id="prodQuantidade" layoutX="1.0" layoutY="344.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" />
                               <TextField fx:id="prodPreco" layoutY="276.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
-                              <Label layoutX="1.0" layoutY="126.0" />
-                              <Label layoutX="2.0" layoutY="237.0" />
-                              <Label layoutX="3.0" layoutY="307.0" />
-                              <Label layoutX="4.0" layoutY="375.0" />
+                              <Label fx:id="erroNome" layoutX="1.0" layoutY="126.0" style="-fx-text-fill: red;" />
+                              <Label fx:id="erroPreco" layoutX="3.0" layoutY="307.0" style="-fx-text-fill: red;" />
+                              <Label fx:id="erroQuant" layoutX="4.0" layoutY="375.0" style="-fx-text-fill: red;" />
                            </children>
                         </AnchorPane>
                      </children>

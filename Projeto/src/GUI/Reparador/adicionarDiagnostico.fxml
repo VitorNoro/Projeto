@@ -58,9 +58,8 @@
                            <children>
                               <TextField fx:id="newDiagEquipamento" layoutX="54.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="335.0" style="-fx-background-color: #ffffff;" />
                               <TextArea fx:id="newDiagProblema" layoutX="54.0" layoutY="147.0" prefHeight="112.0" prefWidth="335.0" />
-                              <Label layoutX="54.0" layoutY="126.0" styleClass="erro" />
-                              <Label layoutX="55.0" layoutY="259.0" styleClass="erro" />
-                              <Label layoutX="135.0" layoutY="315.0" text="Selecione um cliente:" />
+                              <Label fx:id="erroEquipamento" layoutX="54.0" layoutY="126.0" styleClass="erro" />
+                              <Label layoutX="109.0" layoutY="315.0" text="Selecione um cliente:" />
                               <TextField fx:id="filterField" layoutX="276.0" layoutY="310.0" prefHeight="31.0" prefWidth="211.0" promptText="Pesquisar" />
                               <TableView fx:id="clientes" layoutX="12.0" layoutY="341.0" prefHeight="122.0" prefWidth="476.0">
                                  <columns>
@@ -69,6 +68,7 @@
                                     <TableColumn fx:id="clienteContacto" prefWidth="128.0" text="Contacto" />
                                  </columns>
                               </TableView>
+                              <Label fx:id="erroCliente" layoutX="221.0" layoutY="278.0" styleClass="erro" />
                            </children>
                         </AnchorPane>
                      </children>

@@ -66,6 +66,8 @@ public class CaixaController implements Initializable {
     @FXML
     private Label total;
     @FXML
+    private Label erro;
+    @FXML
     private TextField filterLinhaField;
     @FXML
     private TextField filterField;
@@ -88,8 +90,6 @@ public class CaixaController implements Initializable {
     protected TableColumn<Fatura, Float> totalFatura;
     @FXML
     protected TableColumn<Fatura, String> artigosFatura;
-    @FXML
-    private Label erro;
     
     
     private classes.Venda vendaBD = new classes.Venda();
@@ -233,45 +233,57 @@ public class CaixaController implements Initializable {
     }
     
     public void adicionar(){
-        classes.LinhaArtigo linha = new classes.LinhaArtigo();
-        classes.Artigo art = new classes.Artigo();
-        
-        for(classes.Artigo a: classes.Artigo.readAll()){
-            if(a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo().getValue()){
-                art = a;
-            }
+        if(artigos.getSelectionModel().isEmpty()){
+            erro.setText("Selecione um artigo");
         }
-        
+        else{
+            erro.setText("");
+            classes.LinhaArtigo linha = new classes.LinhaArtigo();
+            classes.Artigo art = new classes.Artigo();
 
-        linha.setArtigo(art);
-        linha.setVenda(vendaBD);
-        linha.setQuantidade(0);
-        linha.createT();
-        
-        /*LinhaArtigo linha = new LinhaArtigo();
-        
-        linha.setCodigo(temp.getCodigo());
-        linha.setArtigo(temp.getArtigo().getCodigo());
-        linha.setNomeArtigo(temp.getArtigo().getNome());
-        linha.setQuantidade(temp.getQuantidade());
-        linha.setTotal(temp.getTotal());
-        linha.setVenda(temp.getVenda().getCodigo());*/
+            for(classes.Artigo a: classes.Artigo.readAll()){
+                if(a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo().getValue()){
+                    art = a;
+                }
+            }
 
-        //temp.setArtigo(art);
-        //temp.setVenda(vendaBD);
-        //temp.setQuantidade();
 
-        
-        sync();
-        
-        linhas.refresh();
+            linha.setArtigo(art);
+            linha.setVenda(vendaBD);
+            linha.setQuantidade(0);
+            linha.createT();
+
+            /*LinhaArtigo linha = new LinhaArtigo();
+
+            linha.setCodigo(temp.getCodigo());
+            linha.setArtigo(temp.getArtigo().getCodigo());
+            linha.setNomeArtigo(temp.getArtigo().getNome());
+            linha.setQuantidade(temp.getQuantidade());
+            linha.setTotal(temp.getTotal());
+            linha.setVenda(temp.getVenda().getCodigo());*/
+
+            //temp.setArtigo(art);
+            //temp.setVenda(vendaBD);
+            //temp.setQuantidade();
+
+            
+            sync();
+
+            linhas.refresh();
+        }
     }
     
     public void remover(){
-        classes.LinhaArtigo.delete(linhas.getSelectionModel().getSelectedItem().getCodigo().getValue());
+        if(linhas.getSelectionModel().isEmpty()){
+            erro.setText("Selecione uma linha de artgo");
+        }
+        else{
+            erro.setText("");
+            classes.LinhaArtigo.delete(linhas.getSelectionModel().getSelectedItem().getCodigo().getValue());
         
-        sync();
-        linhas.refresh();
+            sync();
+            linhas.refresh(); 
+        }   
     }
     
     public void removerTudo(){
@@ -287,6 +299,7 @@ public class CaixaController implements Initializable {
     
     public void confirmar(){
         if(vendaFX.getTotal().getValue() > 0){
+            erro.setText("");
             switchScene("selectClientes");
 
             clienteContribuinte.setCellValueFactory(cellData -> cellData.getValue().getNumContribuinte());
@@ -351,8 +364,7 @@ public class CaixaController implements Initializable {
             clienteNome.prefWidthProperty().bind(clientes.widthProperty().divide(2)); // w * 1/4
             clienteContacto.prefWidthProperty().bind(clientes.widthProperty().divide(4)); // w * 1/4
         }else{
-            System.out.println("erro");
-                    
+            erro.setText("Adicione pelo menos um artigo");
         }
     }
     
@@ -397,16 +409,13 @@ public class CaixaController implements Initializable {
     public void fats(){
         switchScene("listarFaturas");
         
+        app.getFaturas();
+        
         codFatura.setCellValueFactory(cellData -> cellData.getValue().getCodigo().asObject());
         NumContribuinte.setCellValueFactory(cellData -> cellData.getValue().getNumContribuinte());
         totalFatura.setCellValueFactory(cellData -> cellData.getValue().getTotal().asObject());
         artigosFatura.setCellValueFactory(cellData -> cellData.getValue().getArtigos());
-        
-
-       
-        
-        
-        
+    
         FilteredList<Fatura> filteredData = new FilteredList<>(app.faturaList, p -> true);
 
         // 2. Set the filter Predicate whenever the filter changes.

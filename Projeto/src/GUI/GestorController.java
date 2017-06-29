@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import javafx.util.converter.FloatStringConverter;
@@ -80,9 +81,10 @@ public class GestorController extends GestorControllerNodes implements Initializ
         
         precoArtigos.setOnEditCommit(t -> {            
             if(t.getNewValue().isNaN()) {
-                erro.setText("ERRO");
+                erro.setText("Insira um valor válido");
                 t.getRowValue().setPreco(t.getOldValue());
             } else {
+                erro.setText("");
                 t.getRowValue().setPreco(t.getNewValue());
                 classes.Artigo.updatePreco(t.getRowValue().getCodigo().getValue(), t.getNewValue());
             }
@@ -92,11 +94,23 @@ public class GestorController extends GestorControllerNodes implements Initializ
         
         nomeArtigos.setCellFactory(TextFieldTableCell.forTableColumn());
         nomeArtigos.setOnEditCommit((CellEditEvent<Artigo, String> t) -> {
+            boolean existe = false;
+            
+            for(Artigo a : app.artigoList){
+                if(a.getNome().getValue().equals(t.getNewValue())){
+                    erro.setText("Já existe um artigo com esse nome");
+                    existe = true;
+                }                          
+            }
+            
+            if(!existe){
                 ((Artigo) t.getTableView().getItems().get(
                         t.getTablePosition().getRow())
                         ).setNome(t.getNewValue());
                 
                 classes.Artigo.updateNome(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+                erro.setText("");
+            }
         });
 
         descArtigos.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -151,6 +165,7 @@ public class GestorController extends GestorControllerNodes implements Initializ
         if(artigos.getSelectionModel().isEmpty())
             erro.setText("Selecione um artigo");
         else{
+            erro.setText("");
             for(Artigo a : app.artigoList){
                 
                 if (a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo()){
@@ -166,6 +181,7 @@ public class GestorController extends GestorControllerNodes implements Initializ
         if(artigos.getSelectionModel().isEmpty())
             erro.setText("Selecione um artigo");
         else{
+            erro.setText("");
             for(Artigo a : app.artigoList){
                 if (a.getCodigo() == artigos.getSelectionModel().getSelectedItem().getCodigo()){
                     a.setQuantidade(a.getQuantidade().getValue() + spinnerStock.getValue());
@@ -187,19 +203,36 @@ public class GestorController extends GestorControllerNodes implements Initializ
     
     public void confirmNewArtigo(){
         classes.Artigo art = new classes.Artigo();
+        int quant = -1;
+        float preco = -1;
         try{
-            int quant = Integer.parseInt(prodQuantidade.getText());
-            float preco = Float.parseFloat(prodPreco.getText().replaceAll(",", "."));
+            quant = Integer.parseInt(prodQuantidade.getText());
+            preco = Float.parseFloat(prodPreco.getText().replaceAll(",", "."));
             boolean existeN = false;
+            
+            erroNome.setText("");
             
             for(classes.Artigo t : classes.Artigo.readAll()){
                 if(t.getNome().equals(prodNome.getText())){
-                    //erro.setText("Nome em uso");
+                    erroNome.setText("Nome em uso");
                     existeN = true;
                 }                          
             }
             
-            if(!(prodNome.getText().isEmpty() || prodDescricao.getText().isEmpty() || preco <= 0 || quant <= 0) && !existeN){
+            if(quant < 0)
+                erroQuant.setText("Insira um valor válido para a quantidade");
+            else
+                erroQuant.setText("");
+            if(preco <= 0)
+                erroPreco.setText("Insira um valor válido para o preço");
+            else
+                erroPreco.setText("");
+            if(prodNome.getText().isEmpty())
+                erroNome.setText("Insira um nome");
+            else
+                erroNome.setText("");
+            
+            if(!(prodNome.getText().isEmpty() || preco <= 0 || quant < 0) && !existeN){
                 art.setNome(prodNome.getText());
                 art.setDescricao(prodDescricao.getText());
                 art.setPreco(preco);
@@ -218,13 +251,21 @@ public class GestorController extends GestorControllerNodes implements Initializ
                 app.artigoList.add(temp);
 
                 pop();
-            }
-            else
-                System.out.println("ERRO");
-            
+            }          
             
         }catch(NumberFormatException ex){
-            System.out.println("ERRRO");
+            if(quant == -1)
+                erroQuant.setText("Insira um valor válido para a quantidade");
+            else
+                erroQuant.setText("");
+            if(preco == -1)
+                erroPreco.setText("Insira um valor válido para o preço");
+            else
+                erroPreco.setText("");
+            if(prodNome.getText().isEmpty())
+                erroNome.setText("Insira um nome");
+            else
+                erroNome.setText("");
         }
     }
     
@@ -258,11 +299,29 @@ public class GestorController extends GestorControllerNodes implements Initializ
         
         contactoFuncionarios.setCellFactory(TextFieldTableCell.forTableColumn());
         contactoFuncionarios.setOnEditCommit((CellEditEvent<Funcionario, String> t) -> {
+            if(t.getNewValue().isEmpty() || t.getNewValue().length() != 9)
+                erro.setText("Insira um número de telefone válido");
+            else{
+                erro.setText("");
                 ((Funcionario) t.getTableView().getItems().get(
                         t.getTablePosition().getRow())
                         ).setNome(t.getNewValue());
                 
                 classes.Funcionario.updateContacto(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+            }
+        });
+        
+        funcaoFuncionarios.setCellFactory((TableColumn<Funcionario, String> p) -> {
+                ComboBoxTableCell<Funcionario, String> cell = new ComboBoxTableCell<>("Gestor","Caixa","Reparador");
+                cell.setComboBoxEditable(true);
+                return cell;
+        });
+        funcaoFuncionarios.setOnEditCommit((CellEditEvent<Funcionario, String> t) -> {
+                ((Funcionario) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setNome(t.getNewValue());
+                
+                classes.Funcionario.updateFuncao(t.getRowValue().getCodigo().getValue(), t.getNewValue());
         });
         
         FilteredList<Funcionario> filteredData = new FilteredList<>(app.funcList, p -> true);
@@ -312,21 +371,37 @@ public class GestorController extends GestorControllerNodes implements Initializ
         combo.getItems().addAll("Gestor", "Caixa", "Reparação");
     }
     
-    public void newFunc2(){
-        
+    public void newFunc2(){       
         newFunc = new classes.Funcionario();
         
+        if(funcNome.getText().isEmpty())
+            erroNome.setText("Insira um nome");
+        else
+            erroNome.setText("");
         
-            if(!(funcNome.getText().isEmpty() || funcMorada.getText().isEmpty() || funcTelefone.getText().isEmpty() || combo.getSelectionModel().isEmpty())){
-                newFunc.setNome(funcNome.getText());
-                newFunc.setMorada(funcMorada.getText());
-                newFunc.setContacto(funcTelefone.getText());
-                newFunc.setFuncao(combo.getSelectionModel().getSelectedItem().toString());
-         
-                switchScene("inserirCredenciaisFuncionario");
-            }
-            else
-                System.out.println("ERRO"); 
+        if(funcMorada.getText().isEmpty())
+            erroMorada.setText("Insira uma morada");
+        else
+            erroMorada.setText("");
+        
+        if(funcTelefone.getText().isEmpty() || funcTelefone.getText().length() != 9)
+            erroTelefone.setText("Insira um número de telefone válido");
+        else
+            erroTelefone.setText("");
+        
+        if(combo.getSelectionModel().isEmpty())
+            erroFuncao.setText("Selecione uma função");
+        else
+            erroFuncao.setText("");
+        
+        if(!(funcNome.getText().isEmpty() || funcMorada.getText().isEmpty() || funcTelefone.getText().isEmpty() || combo.getSelectionModel().isEmpty())){
+            newFunc.setNome(funcNome.getText());
+            newFunc.setMorada(funcMorada.getText());
+            newFunc.setContacto(funcTelefone.getText());
+            newFunc.setFuncao(combo.getSelectionModel().getSelectedItem().toString());
+
+            switchScene("inserirCredenciaisFuncionario");
+        }
         
         
     }
@@ -335,12 +410,23 @@ public class GestorController extends GestorControllerNodes implements Initializ
         boolean existeU = false;
         
             for(classes.Funcionario f : classes.Funcionario.readAll()){
-                if(f.getNome().equals(funcUser.getText())){
-                    //erro.setText("Nome em uso");
+                if(f.getUsername().equals(funcUser.getText())){
+                    erroUsername.setText("O nome de utilizador já existe");
                     existeU = true;
                 }                          
             }
             
+            if(!existeU)
+                erroUsername.setText("");
+            if(funcUser.getText().isEmpty())
+                erroUsername.setText("Insira um nome de utilizador");
+            else
+                erroUsername.setText("");
+            if(funcPass.getText().isEmpty())
+                erroPassword.setText("Insira uma palavra passe");
+            else
+                erroPassword.setText("");
+                    
             if(!(funcUser.getText().isEmpty() || funcPass.getText().isEmpty()) && !existeU){
                 newFunc.setUsername(funcUser.getText());
                 newFunc.setPassword(funcPass.getText());
@@ -361,8 +447,7 @@ public class GestorController extends GestorControllerNodes implements Initializ
 
                 funcs();
             }
-            else
-                System.out.println("ERRO");
+
     }
     
     public void deleteFuncionario(){
@@ -406,11 +491,18 @@ public class GestorController extends GestorControllerNodes implements Initializ
         subFim.setCellFactory(dateCellFactory);
         subFim.setOnEditCommit(
                 (TableColumn.CellEditEvent<Subscricao, Date> t) -> {
-                    ((Subscricao) t.getTableView().getItems()
-                    .get(t.getTablePosition().getRow()))
-                    .setFimsubscricao(t.getNewValue());
+                    if(t.getNewValue().after(hoje)){
+                        erro.setText("");
+                        
+                        ((Subscricao) t.getTableView().getItems()
+                        .get(t.getTablePosition().getRow()))
+                        .setFimsubscricao(t.getNewValue());
+
+                        classes.Subscricao.update(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+                    }
+                    else
+                        erro.setText("Insira uma data futura");
                     
-                    classes.Subscricao.update(t.getRowValue().getCodigo().getValue(), t.getNewValue());
                 });
         
         subMensalidade.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter(){
@@ -429,9 +521,10 @@ public class GestorController extends GestorControllerNodes implements Initializ
         
         subMensalidade.setOnEditCommit(t -> {            
             if(t.getNewValue().isNaN()) {
-                erro.setText("ERRO");
+                erro.setText("Insira um valor válido");
                 t.getRowValue().setMensalidade(t.getOldValue());
             } else {
+                erro.setText("");
                 t.getRowValue().setMensalidade(t.getNewValue());
                 classes.Subscricao.update(t.getRowValue().getCodigo().getValue(), t.getNewValue());
             }
@@ -481,6 +574,7 @@ public class GestorController extends GestorControllerNodes implements Initializ
         if(subscricoes.getSelectionModel().isEmpty())
             erro.setText("Selecione uma subscrição");
         else{
+            erro.setText("");
             for(Subscricao s : app.subscricaoList){            
                 if (s.getCodigo() == subscricoes.getSelectionModel().getSelectedItem().getCodigo()){
                     classes.Subscricao.delete(s.getCodigo().getValue());
@@ -537,8 +631,9 @@ public class GestorController extends GestorControllerNodes implements Initializ
     
     public void confirmNewSubscricao(){
         classes.Subscricao sub = new classes.Subscricao();
+        float mensalidade = -1;
         try{
-            float mensalidade = Float.parseFloat(newSubMensalidade.getText().replaceAll(",", "."));
+            mensalidade = Float.parseFloat(newSubMensalidade.getText().replaceAll(",", "."));
             LocalDate data = newSubFim.getValue();
             Date date = java.sql.Date.valueOf(data);            
 
@@ -546,12 +641,32 @@ public class GestorController extends GestorControllerNodes implements Initializ
             
             for(classes.Artigo t : classes.Artigo.readAll()){
                 if(t.getNome().equals(newSubNome.getText())){
-                    //erro.setText("Nome em uso");
                     existeN = true;
                 }                          
             }
             
-            if(!(newSubNome.getText().isEmpty() || hoje.after(date) || mensalidade <= 0) && !existeN){
+            if(mensalidade <= 0)
+                erroMensalidade.setText("Insira um valor válido para a mensalidade");
+            else
+                erroQuant.setText("");
+            if(existeN)
+                erroNome.setText("Já existe uma subscrição com este nome");
+            else
+                erroPreco.setText("");
+            if(newSubNome.getText().isEmpty())
+                erroNome.setText("Insira um nome");
+            else
+                erroNome.setText("");
+            if(hoje.after(date))
+                erroFim.setText("Insira uma data futura");
+            else
+                erroFim.setText("");
+            if(clientes.getSelectionModel().isEmpty())
+                erroCliente.setText("Insira uma data futura");
+            else
+                erroCliente.setText("");
+            
+            if(!(newSubNome.getText().isEmpty() || hoje.after(date) || mensalidade <= 0 || clientes.getSelectionModel().isEmpty()) && !existeN){
                 sub.setNome(newSubNome.getText());
                 sub.setFimsubscricao(date);
                 sub.setMensalidade(mensalidade);
@@ -583,7 +698,14 @@ public class GestorController extends GestorControllerNodes implements Initializ
             
             
         }catch(NumberFormatException ex){
-            System.out.println("ERRRO");
+            if(mensalidade == -1)
+                erroMensalidade.setText("Insira um valor válido para a mensalidade");
+            else
+                erroQuant.setText("");
+            if(newSubNome.getText().isEmpty())
+                erroNome.setText("Insira um nome");
+            else
+                erroNome.setText("");
         }
     }
     
@@ -667,16 +789,13 @@ public class GestorController extends GestorControllerNodes implements Initializ
     }
     
     public void confirmNewFornecedor(){
-        classes.Fornecedor forn = new classes.Fornecedor();
-        try{
-            forn.setNome(newfornNome.getText());
-            forn.setContacto(newfornContacto.getText());        
+        classes.Fornecedor forn = new classes.Fornecedor();      
 
             boolean existeN = false;
             
             for(classes.Fornecedor t : classes.Fornecedor.readAll()){
                 if(t.getNome().equals(newfornNome.getText())){
-                    //erroForn.setText("Nome em uso");
+                    erroForn.setText("Nome em uso");
                     existeN = true;
                 }                          
             }
@@ -701,12 +820,7 @@ public class GestorController extends GestorControllerNodes implements Initializ
             }
             else
                 System.out.println("ERRO");
-            
-            
-        }catch(NumberFormatException ex){
-            System.out.println("ERRRO");
-        }
-
+           
     }
     public void endSession(){
         app.gotoLogin();

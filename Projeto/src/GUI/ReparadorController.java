@@ -49,6 +49,7 @@ import javafx.util.converter.FloatStringConverter;
 public class ReparadorController implements Initializable {
     private Main app = new Main();
     private classes.Diagnostico newDiag;
+    private Date hoje = new Date();
     
     @FXML
     protected BorderPane info;
@@ -135,8 +136,7 @@ public class ReparadorController implements Initializable {
     protected TableColumn<Cliente, String> clienteNome;
     @FXML
     protected TableColumn<Cliente, String> clienteContacto;
-    
-    private Date hoje = new Date();
+
     @FXML
     protected TableView<Fatura> faturas;
     @FXML
@@ -149,6 +149,17 @@ public class ReparadorController implements Initializable {
     protected TableColumn<Fatura, String> artigosFatura;
     @FXML
     private Label erroFatura;
+    
+    @FXML
+    private Label erroEquipamento;
+    @FXML
+    private Label erroCliente;
+    @FXML
+    private Label erroLocalizacao;
+    @FXML
+    private Label erroData;
+    @FXML
+    private Label erroSubscricao;
     
     /**
      * Initializes the controller class.
@@ -167,7 +178,6 @@ public class ReparadorController implements Initializable {
     
     public void diags(){
         switchScene("listarDiagnostico");
-        
         
         diagCodigo.setCellValueFactory(cellData -> cellData.getValue().getCodigo().asObject());
         diagCliente.setCellValueFactory(cellData -> cellData.getValue().getCliente());
@@ -231,7 +241,7 @@ public class ReparadorController implements Initializable {
     
     public void deleteDiagnostico(){
         if(diagnosticos.getSelectionModel().isEmpty())
-            erro.setText("Selecione uma subscrição");
+            erro.setText("Selecione um diagnóstico");
         else{
             for(Diagnostico d : app.diagnosticoList){            
                 if (d.getCodigo() == diagnosticos.getSelectionModel().getSelectedItem().getCodigo()){
@@ -290,18 +300,17 @@ public class ReparadorController implements Initializable {
     
     public void confirmNewDiagnostico(){
         classes.Diagnostico diag = new classes.Diagnostico();
-        try{
-
-            boolean existeN = false;
-            
-            for(classes.Diagnostico t : classes.Diagnostico.readAll()){
-                if(t.getProblema().equals(newDiagProblema.getText())){
-                    //erro.setText("Esses detalhes já foram escritos antes");
-                    existeN = true;
-                }                          
-            }
-            
-            if(!( newDiagProblema.getText().isEmpty()) && !existeN){
+        
+        if( newDiagEquipamento.getText().isEmpty())
+            erroEquipamento.setText("Insira o equipamento a diagnosticar");
+        else
+            erroEquipamento.setText("");
+        if(clientes.getSelectionModel().isEmpty())
+            erroCliente.setText("Por favor selecione um cliente");
+        else
+            erroCliente.setText("");
+        
+            if(!(newDiagEquipamento.getText().isEmpty() || clientes.getSelectionModel().isEmpty())){
                 diag.setEquipamento(newDiagEquipamento.getText());
                 diag.setProblema(newDiagProblema.getText());
                
@@ -326,19 +335,14 @@ public class ReparadorController implements Initializable {
 
                 diags();
             }
-            else
-                System.out.println("ERRO");
-            
-            
-        }catch(NumberFormatException ex){
-            System.out.println("ERRRO");
-        }
+
     }
     
     public void addReparacao(){
         if(diagnosticos.getSelectionModel().isEmpty())
-            erro.setText("Selecione um artigo");
+            erro.setText("Selecione um diagnóstico");
         else{
+            erro.setText("");
             classes.Reparacao rep = new classes.Reparacao();
             classes.Diagnostico diag = new classes.Diagnostico();
             classes.Cliente cli = new classes.Cliente();
@@ -405,9 +409,10 @@ public class ReparadorController implements Initializable {
         
         repCusto.setOnEditCommit(t -> {            
             if(t.getNewValue().isNaN()) {
-                erro.setText("ERRO");
+                erro.setText("Insira um valor válido");
                 t.getRowValue().setCusto(t.getOldValue());
             } else {
+                erro.setText("");
                 t.getRowValue().setCusto(t.getNewValue());
                 classes.Reparacao.update(t.getRowValue().getCodigo().getValue(), t.getNewValue());
             }
@@ -457,6 +462,7 @@ public class ReparadorController implements Initializable {
         if(reparacoes.getSelectionModel().isEmpty())
             erro.setText("Selecione uma reparação");
         else{
+            erro.setText("");
             for(Reparacao r : app.reparacaoList){            
                 if (Objects.equals(r.getCodigo().getValue(), reparacoes.getSelectionModel().getSelectedItem().getCodigo().getValue())){ 
                     for(classes.Cliente c : classes.Cliente.readAll())
@@ -535,11 +541,17 @@ public class ReparadorController implements Initializable {
         manutencaoData.setCellFactory(dateCellFactory);
         manutencaoData.setOnEditCommit(
                 (TableColumn.CellEditEvent<Manutencao, Date> t) -> {
-                    ((Manutencao) t.getTableView().getItems()
-                    .get(t.getTablePosition().getRow()))
-                    .setDataAgendada(t.getNewValue());
-                    
-                    classes.Manutencao.updateData(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+                    if(t.getNewValue().after(hoje)){
+                        erro.setText("");
+                        
+                        ((Manutencao) t.getTableView().getItems()
+                        .get(t.getTablePosition().getRow()))
+                        .setDataAgendada(t.getNewValue());
+
+                        classes.Manutencao.updateData(t.getRowValue().getCodigo().getValue(), t.getNewValue());
+                    }
+                    else
+                        erro.setText("Insira uma data futura");
                 });
         
         manutencaoLocalizacao.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -635,11 +647,23 @@ public class ReparadorController implements Initializable {
     
     public void marcarManutencao(){
         classes.Manutencao man = new classes.Manutencao();
-        try{
             LocalDate data = manData.getValue();
-            Date date = java.sql.Date.valueOf(data);            
+            Date date = java.sql.Date.valueOf(data); 
+            
+            if(manLocalizacao.getText().isEmpty())
+                erroLocalizacao.setText("Insira a localização");
+            else
+                erroLocalizacao.setText("");
+            if(subscricao.getSelectionModel().isEmpty())
+                erroSubscricao.setText("Por favor selecione uma subscrição");
+            else
+                erroSubscricao.setText("");
+            if(hoje.after(date))
+                erroData.setText("Selecione uma data futura");
+            else
+                erroData.setText("");
 
-            if(!(manLocalizacao.getText().isEmpty() || hoje.after(date))){
+            if(!(manLocalizacao.getText().isEmpty() || hoje.after(date) || subscricao.getSelectionModel().isEmpty())){
                 man.setEquipamento(manEquipamento.getText());
                 man.setLocalizacao(manLocalizacao.getText());
                 man.setDataAgendada(date);
@@ -668,19 +692,14 @@ public class ReparadorController implements Initializable {
 
                 mans();
             }
-            else
-                System.out.println("ERRO");
             
-            
-        }catch(NumberFormatException ex){
-            System.out.println("ERRRO");
-        }
     }
     
     public void deleteManutencao(){
         if(manutencoes.getSelectionModel().isEmpty())
             erro.setText("Selecione uma manutenção");
         else{
+            erro.setText("");
             for(Manutencao s : app.manutencaoList){            
                 if (s.getCodigo() == manutencoes.getSelectionModel().getSelectedItem().getCodigo()){
                     classes.Manutencao.delete(s.getCodigo().getValue());
@@ -696,17 +715,14 @@ public class ReparadorController implements Initializable {
     }
     
     public void fats(){
-    switchScene("listarFaturas");
+        switchScene("listarFaturas");
+        
+        app.getFaturas();
         
         codFatura.setCellValueFactory(cellData -> cellData.getValue().getCodigo().asObject());
         NumContribuinte.setCellValueFactory(cellData -> cellData.getValue().getNumContribuinte());
         totalFatura.setCellValueFactory(cellData -> cellData.getValue().getTotal().asObject());
         artigosFatura.setCellValueFactory(cellData -> cellData.getValue().getArtigos());
-        
-
-       
-        
-        
         
         FilteredList<Fatura> filteredData = new FilteredList<>(app.faturaList, p -> true);
 
@@ -753,6 +769,7 @@ public class ReparadorController implements Initializable {
         if(faturas.getSelectionModel().isEmpty())
             erroFatura.setText("Selecione uma fatura");
         else{
+            erroFatura.setText("");
             for(Fatura f : app.faturaList){            
                 if (f.getCodigo() == faturas.getSelectionModel().getSelectedItem().getCodigo()){
                     classes.Fatura.delete(f.getCodigo().getValue());

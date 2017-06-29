@@ -7,15 +7,11 @@ package GUI;
 
 
 import classes.Funcionario;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,9 +21,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 /**
@@ -49,6 +42,8 @@ public class LoginController implements Initializable {
     
     @FXML
     private PasswordField password;
+    @FXML
+    private Label erro;
 
     
     
@@ -107,22 +102,42 @@ public class LoginController implements Initializable {
                                         application.gotoReparador();
                                         break;
                                     default:
-                                        System.out.println("ERRO");
+                                        erro.setText("Selecione uma função a realizar");
+                                        break;
+                                }
+                                break;
+                            case "Caixa":
+                                switch (combo.getSelectionModel().getSelectedItem().toString()){
+                                    case "Gestor":
+                                        erro.setText("Não tem permissão para realizar esta função");
+                                        break;
+                                    case "Caixa":
+                                        application.gotoCaixa();
+                                        break;
+                                    case "Reparação":
+                                        erro.setText("Não tem permissão para realizar esta função");
+                                        break;
+                                    default:
+                                        erro.setText("Selecione uma função a realizar");
                                         break;
                                 }
                                 
-                                //String output = combo.getSelectionModel().getSelectedItem().toString();
-                                //System.out.println(output);
-                                
-                                
-                                break;
-                            case "Caixa":
-                                
-                                application.gotoCaixa();
-                                
                                 break;
                             case "Reparador":
-                                application.gotoReparador();
+                                switch (combo.getSelectionModel().getSelectedItem().toString()){
+                                    case "Gestor":
+                                        erro.setText("Não tem permissão para realizar esta função");
+                                        break;
+                                    case "Caixa":
+                                        erro.setText("Não tem permissão para realizar esta função");
+                                        break;
+                                    case "Reparação":
+                                        application.gotoReparador();
+                                        break;
+                                    default:
+                                        erro.setText("Selecione uma função a realizar");
+                                        break;
+                                }
                                 break;
                             default:
                                 
@@ -131,12 +146,8 @@ public class LoginController implements Initializable {
                 }      
                 }                
         else{
-            //notificacao.setText("Nome ou palavra passe errados");
+            erro.setText("Nome ou palavra passe errados");
         }
-    }
-    
-    public void setApp(Main application){
-        this.application = application;
     }
     
     public boolean autenticador(String user, String pass){

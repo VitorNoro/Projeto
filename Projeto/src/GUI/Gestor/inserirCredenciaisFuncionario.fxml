@@ -55,8 +55,8 @@
                            <children>
                               <TextField fx:id="funcUser" layoutX="115.0" layoutY="121.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="215.0" style="-fx-background-color: #ffffff;" />
                               <PasswordField fx:id="funcPass" layoutX="115.0" layoutY="180.0" prefHeight="31.0" prefWidth="215.0" />
-                              <Label layoutX="115.0" layoutY="152.0" styleClass="erro" />
-                              <Label layoutX="115.0" layoutY="211.0" styleClass="erro" />
+                              <Label fx:id="erroUsername" layoutX="115.0" layoutY="152.0" styleClass="erro" />
+                              <Label fx:id="erroPassword" layoutX="115.0" layoutY="211.0" styleClass="erro" />
                               <Label layoutX="14.0" layoutY="185.0" text="Palavra Passe" />
                            </children>
                         </AnchorPane>

@@ -131,13 +131,29 @@ public class GestorControllerNodes {
     @FXML
     protected Label erroForn;
     
-    
-    
-    
-    
-    
-    
-    
-    
+    @FXML
+    protected Label erroNome;
+    @FXML
+    protected Label erroPreco;
+    @FXML
+    protected Label erroQuant;
+    @FXML
+    protected Label erroMorada;
+    @FXML
+    protected Label erroTelefone;
+    @FXML
+    protected Label erroFuncao;
+    @FXML
+    protected Label erroUsername;
+    @FXML
+    protected Label erroPassword;
+    @FXML
+    protected Label erroFim;
+    @FXML
+    protected Label erroSub;
+    @FXML
+    protected Label erroMensalidade;
+    @FXML
+    protected Label erroCliente;
     
 }

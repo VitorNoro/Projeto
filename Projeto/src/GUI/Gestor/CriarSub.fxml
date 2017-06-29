@@ -59,8 +59,8 @@
                               <TextField fx:id="newSubNome" layoutX="54.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="335.0" style="-fx-background-color: #ffffff;" />
                               <TextField fx:id="newSubMensalidade" layoutX="54.0" layoutY="221.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
                               <DatePicker fx:id="newSubFim" layoutX="54.0" layoutY="158.0" />
-                              <Label layoutX="54.0" layoutY="126.0" styleClass="erro" />
-                              <Label layoutX="54.0" layoutY="252.0" styleClass="erro" />
+                              <Label fx:id="erroNome" layoutX="54.0" layoutY="126.0" styleClass="erro" />
+                              <Label fx:id="erroMensalidade" layoutX="54.0" layoutY="252.0" styleClass="erro" />
                               <Label layoutY="100.0" text="Nome" />
                               <TableView fx:id="clientes" layoutX="-34.0" layoutY="290.0" prefHeight="122.0" prefWidth="476.0">
                                 <columns>
@@ -71,7 +71,8 @@
                               </TableView>
                               <Label layoutX="113.0" layoutY="263.0" text="Selecione um cliente:" />
                               <TextField fx:id="filterField" layoutX="296.0" layoutY="258.0" promptText="Pesquisar" />
-                              <Label layoutX="54.0" layoutY="189.0" styleClass="erro" />
+                              <Label fx:id="erroFim" layoutX="54.0" layoutY="189.0" styleClass="erro" />
+                              <Label fx:id="erroCliente" layoutX="370.0" layoutY="223.0" styleClass="erro" />
                            </children>
                         </AnchorPane>
                      </children>
